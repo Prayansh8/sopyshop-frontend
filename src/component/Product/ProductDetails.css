@@ -1,0 +1,269 @@
+.productDetailsContainer {
+  background-color: rgb(255, 255, 255);
+  padding: 12vh;
+}
+
+.productDetails {
+  display: flex;
+  margin: 0 auto;
+  width: 100%;
+}
+.productImgBlock-1 {
+  margin: 2px auto;
+  width: 50%;
+}
+.productImgBlock-1-1 {
+  margin: 2px auto;
+  width: 60%;
+  padding: 2px;
+}
+
+.productImg {
+  width: 100%;
+}
+
+.productDetailsBlock {
+  width: 50%;
+  padding: 2px 2vh;
+}
+
+.productDetailsBlock-1 {
+  width: 75%;
+}
+
+.detailsBlock-1 {
+  border-bottom: 2px solid rgb(187, 187, 187);
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+.detailsBlock-1 h1 {
+  font-size: 5vh;
+  margin: 0 0 0.8vh;
+}
+.detailsBlock-1 p {
+  font-size: 10px;
+  color: gray;
+  margin: 0;
+}
+
+.detailsBlock-2 {
+  border-bottom: 2px solid rgb(187, 187, 187);
+  margin: 0;
+  padding: 6px 0;
+  padding-bottom: 8px;
+  display: flex;
+}
+
+.detailsBlock-2 spam {
+  margin: auto 0px;
+}
+
+.detailsBlock-3 {
+  border-bottom: 2px solid rgb(187, 187, 187);
+  margin: 0;
+}
+
+.detailsBlock-3-1 {
+  padding: 14px 0;
+  border-bottom: 2px solid rgb(187, 187, 187);
+}
+/* price */
+.detailsBlock-3-1 h1 {
+  font-size: 40px;
+  margin: 0 0 8px;
+}
+
+/* Product Quantity */
+.detailsBlock-3-1-1 {
+  margin: auto;
+  display: flex;
+}
+.detailsBlock-3-1-1 button {
+  border: 1px solid rgb(201, 95, 57);
+  border-radius: 14px;
+  padding: 5px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: tomato;
+  color: white;
+}
+
+.detailsBlock-3-1-2 {
+  margin: auto 2vh auto 0;
+}
+.qty {
+  width: 40px;
+  text-align: center;
+  margin: 0 4px;
+  border-radius: 6px;
+  font-size: 17px;
+}
+.qtyplus {
+  width: 28px;
+  border-radius: 6px;
+  font-size: 17px;
+}
+.qtyminus {
+  width: 28px;
+  border-radius: 6px;
+  font-size: 17px;
+}
+
+/* Stock */
+.detailsBlock-3-2 {
+  padding: 12px 0;
+}
+.detailsBlock-3-2 p {
+  margin: 0;
+}
+.redColor {
+  color: red;
+}
+.greenColor {
+  color: green;
+}
+
+/* Discription */
+.discription {
+  padding: 4px 0;
+  margin: 8px 0;
+}
+
+.discription spam {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* reviews */
+.submitReviews {
+  border: 1px solid rgb(201, 95, 57);
+  border-radius: 14px;
+  padding: 5px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: tomato;
+  color: white;
+  margin: 4px 0;
+}
+
+/* Review Heading */
+.review-heading {
+  font-size: 24px;
+  color: black;
+  border-bottom: 2px solid rgb(192, 192, 192);
+  text-align: center;
+  width: 20vmax;
+  padding: 0 1vmax;
+  margin: 0 auto;
+}
+
+.productReviewsContainer {
+  margin: 2vh;
+}
+.productReviewsBox {
+  display: flex;
+  overflow: auto;
+  margin: 4vh auto;
+  padding: 2vh;
+}
+.productReviews {
+  border: 2px solid rgba(179, 179, 179, 0.64);
+  margin: 8px;
+  width: 30%;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  height: 60vh;
+  overflow: auto;
+}
+
+.productReviews h5 {
+  font-size: 24px;
+}
+
+.productReviews p {
+  margin: 0;
+  font-size: 24px;
+}
+.productReviews:hover {
+  box-shadow: 0 0 5px rgba(15, 15, 15, 0.26);
+  transform: translateY(-1px);
+}
+
+@media screen and (max-width: 600px) {
+  .productDetailsContainer {
+    padding: 2vh 0;
+  }
+
+  .productDetails {
+    display: block;
+  }
+
+  .productImgBlock-1 {
+    width: 100%;
+  }
+
+  .productImgBlock-1-1 {
+    width: 90%;
+    padding: 2px auto;
+  }
+
+  .productDetailsBlock {
+    width: 100%;
+    padding: 2px 2vh;
+  }
+  .productDetailsBlock-1 {
+    width: 95%;
+  }
+
+  .submitReviews {
+    border: 1px solid rgb(201, 95, 57);
+    border-radius: 14px;
+    padding: 5px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: tomato;
+    color: white;
+    margin: 4px 0;
+  }
+
+  /* Review Heading */
+  .review-heading {
+    font-size: 26px;
+  }
+
+  .productReviewsContainer {
+    margin: 0;
+  }
+  .productReviewsBox {
+    margin: 0vh auto;
+  }
+  .productReviews {
+    border: 2px solid rgba(179, 179, 179, 0.64);
+    margin: 0px 1vh;
+    width: 30%;
+    font-size: 18px;
+    padding: 2px;
+    height: 35vh;
+    overflow: auto;
+  }
+  .productReviews:hover {
+    box-shadow: 0 0 5px rgba(15, 15, 15, 0.26);
+    transform: translateY(-1px);
+  }
+
+  .productReviews img {
+    width: 100%;
+  }
+  .productReviews h5 {
+    font-size: 18px;
+  }
+  .productReviews p {
+    margin: 0;
+    font-size: 12px;
+    color: rgb(112, 112, 112);
+    font-weight: 400;
+  }
+}

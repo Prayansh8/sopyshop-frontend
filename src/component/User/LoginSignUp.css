@@ -1,0 +1,171 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.loginSignupContainer{
+  width: 100%;
+  height: 30vmax;
+}
+
+.loginSignupBox {
+  width: 30vmax;
+  margin: 10% auto;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 2px solid rgb(175, 175, 175);
+  padding: 4px auto;
+  border-radius: 2px;
+  box-shadow: 1px 1px #d8d8d8;
+  height: auto;
+}
+
+.loginForm {
+  width: 100%;
+  padding: 4px 12px;
+  margin: 8px 0;
+}
+
+.loginFormEmail {
+  margin: 10px 0;
+}
+
+.loginFormEmail input {
+  font-size: 20px;
+  padding: 2px 35px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.loginFormPassword {
+  margin: 10px 0;
+}
+
+.loginFormPassword input {
+  font-size: 20px;
+  padding: 2px 35px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.loginFormEmail svg,
+.loginFormPassword svg {
+  position: absolute;
+  margin: 7px 6px 0;
+  padding: 2px;
+  font-size: 24px;
+}
+
+.forwardPassword {
+  color: black;
+  text-decoration: none;
+  float: right;
+}
+
+.submitBtn {
+  font-size: 18px;
+  background-color: tomato;
+  padding: 2px 30px;
+  border-radius: 12px;
+  width: 100%;
+  margin: 10px auto;
+}
+
+.RagisterFormText {
+  margin: 10px 0;
+}
+.RagisterFormText input {
+  font-size: 20px;
+  padding: 2px 35px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.RagisterFormText svg {
+  position: absolute;
+  margin: 7px 6px 0;
+  padding: 2px;
+  font-size: 24px;
+}
+
+.loginBtn,
+.ragisterBtn {
+  width: 50%;
+}
+
+@media screen and (max-width: 600px) {
+  .loginSignupContainer{
+    height: 70vmax;
+  }
+  .loginSignupBox {
+    width: 80%;
+    margin: 25% auto;
+    height: auto;
+  }
+
+  .loginForm {
+    width: 100%;
+    padding: 4px 6px;
+    margin: 8px 0;
+  }
+
+  .loginFormEmail,
+  .loginFormPassword {
+    margin: 10px 0;
+  }
+
+  .loginFormEmail input,
+  .loginFormPassword input {
+    font-size: 20px;
+    padding: 4px 35px;
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  .loginFormEmail svg,
+  .loginFormPassword svg {
+    position: absolute;
+    margin: 7px 6px 0;
+    padding: 2px;
+    font-size: 24px;
+  }
+
+  .forwardPassword {
+    color: black;
+    text-decoration: none;
+    float: right;
+  }
+
+  .submitBtn {
+    font-size: 18px;
+    background-color: tomato;
+    padding: 2px 30px;
+    border-radius: 12px;
+    width: 100%;
+    margin: 10px auto;
+  }
+
+  .RagisterFormText {
+    margin: 10px 0;
+  }
+  .RagisterFormText input {
+    font-size: 20px;
+    padding: 2px 35px;
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  .RagisterFormText svg {
+    position: absolute;
+    margin: 7px 6px 0;
+    padding: 2px;
+    font-size: 24px;
+  }
+
+  .loginBtn,
+  .ragisterBtn {
+    width: 50%;
+    font-size: 24px;
+    font-weight: 900;
+  }
+}

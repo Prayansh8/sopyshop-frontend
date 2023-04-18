@@ -1,0 +1,111 @@
+.cardProducts {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2vh auto;
+}
+
+.heading {
+  text-align: center;
+  border-bottom: 2px solid rgb(177, 176, 176);
+  width: 15%;
+  padding: 4px;
+  margin: 4vh auto;
+}
+
+/* pagination */
+.paginationBoc {
+  width: 20%;
+  margin: 2px auto;
+  justify-content: center;
+}
+.page-link {
+  color: black;
+  font-size: 18px;
+  align-items: center;
+  margin: auto;
+}
+
+
+.pageItemActive {
+  color: red;
+}
+
+.pageLinkActive {
+  background-color: rgb(223, 215, 214);
+  color: blue;
+}
+
+/* Filter Box */
+.filter-h{
+  font-size: 30px;
+  padding: 4px 0;
+  border-bottom: 2px solid;
+}
+.fillterBox {
+  width: 100%;
+  cursor: pointer;
+  margin: 4vh 0;
+  padding: 0 4px;
+}
+.fillterBoxSlider{
+  padding: 0 12px;
+  width: 90%;
+}
+.fillterBoxSlider span {
+  font-size: 12px;
+}
+.price-h{
+  font-size: 20px;
+}
+
+.cate-h{
+  font-size: 20px;
+}
+
+.catogeryContainer{
+  margin: 1vh 0;
+}
+
+.catogeryBox{
+  cursor: pointer;
+  padding: 2px 12px;
+}
+
+.catogeryBox li{
+  list-style: none;
+  color: white;
+  font-size: 16px;
+  margin: 5px 0px;
+  font-weight: 400;
+  padding: 0;
+}
+
+.catogeryBox li:hover{
+  color: tomato;
+}
+
+.productbar{
+  width: 84%;
+}
+/* sidewar */
+.sidewar{
+  width: 16%;
+}
+.sidewarBox{
+  color: white;
+  padding: 2vh;
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}

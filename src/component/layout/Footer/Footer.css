@@ -1,0 +1,51 @@
+.footer {
+  margin-top: 10vmax;
+  padding: 2vmax;
+  background-color: rgb(34, 33, 33);
+  color: white;
+  align-items: center;
+}
+
+.leftFooter h1 {
+  font-size: 24px;
+}
+
+.leftFooter a img {
+  height: 4vmax;
+  width: 10vmax;
+}
+
+@media only screen and (max-width: 600px) {
+  .leftFooter h1 {
+    font-size: 7px;
+  }
+
+  .leftFooter p {
+    font-size: 5px;
+    margin-bottom: 0;
+  }
+
+  .leftFooter a img {
+    height: 2vmax;
+    width: 5vmax;
+    font-size: 5px;
+  }
+  .midFooter h1 {
+    font-size: 7px;
+  }
+  .midFooter p {
+    font-size: 5px;
+  }
+  .midFooter img {
+    font-size: 8px;
+    height: 2vmax;
+    width: 6vmax;
+  }
+  .rightFooter h1 {
+    margin-bottom: 0;
+    font-size: 5px;
+  }
+  .rightFooter div a {
+    font-size: 6px;
+  }
+}
