@@ -16,23 +16,24 @@
 .paginationBoc {
   width: 20%;
   margin: 2px auto;
-  justify-content: center;
 }
-.page-link {
+
+.itemClass {
+  list-style: none;
+  margin: 2px 4px;
+}
+.itemClass a{
+  border-radius: 4px;
+  padding: 6px 14px;
+  border: 1px solid black;
+  text-decoration: none;
+  background-color: tomato;
   color: black;
-  font-size: 18px;
-  align-items: center;
-  margin: auto;
 }
 
-
-.pageItemActive {
-  color: red;
-}
-
-.pageLinkActive {
-  background-color: rgb(223, 215, 214);
-  color: blue;
+.itemClass a:hover{
+  background-color: rgb(165, 93, 80);
+  color: rgb(66, 66, 66);
 }
 
 /* Filter Box */
