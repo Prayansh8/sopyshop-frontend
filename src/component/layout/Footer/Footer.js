@@ -1,6 +1,7 @@
 import React from "react";
 import "./Footer.css";
 import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
+import logo from "../../../images/logo.png";
 
 export default function Footer() {
   return (
@@ -25,7 +26,7 @@ export default function Footer() {
               </a>
             </div>
             <div className="midFooter col-sm-4 w-50 m-auto text-center">
-              <img src="https://example.com/logo.png" alt="Company logo" />
+              <img src={logo} alt="Company logo" />
               <h1>Ecommerce</h1>
               <p>Copyright © 2023 Company Name</p>
             </div>

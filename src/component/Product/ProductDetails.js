@@ -27,6 +27,7 @@ const ProductDetails = () => {
     value: product.ratings,
     isHalf: true,
   };
+
   return (
     <>
       <Fragment>
@@ -41,11 +42,13 @@ const ProductDetails = () => {
                     <Carousel>
                       {product.images &&
                         product.images.map((item, i) => (
-                          <img
-                            className="productImg"
-                            src={item.url}
-                            alt={`${i} Slide`}
-                          />
+                          <div key={item.id}>
+                            <img
+                              className="productImg"
+                              src={item.url}
+                              alt={`${i} Slide`}
+                            />
+                          </div>
                         ))}
                     </Carousel>
                   </div>
@@ -68,19 +71,19 @@ const ProductDetails = () => {
                             <input
                               type="button"
                               value="-"
-                              class="qtyminus minus"
+                              className="qtyminus minus"
                               field="quantity"
                             />
                             <input
                               type="text"
                               name="quantity"
                               value="0"
-                              class="qty"
+                              className="qty"
                             />
                             <input
                               type="button"
                               value="+"
-                              class="qtyplus plus"
+                              className="qtyplus plus"
                               field="quantity"
                             />
                           </div>
@@ -116,7 +119,8 @@ const ProductDetails = () => {
                 <div className="container productReviewsBox">
                   {product.reviews &&
                     product.reviews.map((reviews) => (
-                      <ReviewsCard review={reviews} />
+                        <ReviewsCard review={reviews} />
+                    
                     ))}
                 </div>
               ) : (

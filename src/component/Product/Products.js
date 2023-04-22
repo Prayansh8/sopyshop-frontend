@@ -16,11 +16,12 @@ export default function Products() {
   const [price, setPrice] = useState([0, 25000]);
   const [category, setCategory] = useState("");
 
-  const [currentPage, setCurrentPage] = useState([0, 25000]);
+  const [currentPage, setCurrentPage] = useState();
 
   const dispatch = useDispatch();
-  const { products, loading, productsCount, resultPerPage } =
-    useSelector((state) => state.products);
+  const { products, loading, productsCount, resultPerPage } = useSelector(
+    (state) => state.products
+  );
 
   const handlePriceChange = (e, newPrice) => {
     setPrice(newPrice);
@@ -55,7 +56,6 @@ export default function Products() {
                       max={25000}
                     />
                   </div>
-
                   <div className="catogeryContainer">
                     <h2 className="cate-h">Categories</h2>
                     <ul className="catogeryBox">
@@ -84,24 +84,19 @@ export default function Products() {
                     ))}
                 </div>
 
-                {resultPerPage < productsCount && (
-                  <div className="paginationBoc">
-                    <Pagination
-                      activePage={currentPage}
-                      itemsCountPerPage={resultPerPage}
-                      totalItemsCount={productsCount}
-                      onChange={setCountPageNo}
-                      nextPageText="Next"
-                      prevPageText="Prev"
-                      firstPageText="First"
-                      lastPageText="Last"
-                      itemclassName="page-item"
-                      linkclassName="page-link"
-                      activeclassName="pageItemActive"
-                      activeLinkclassName="pageLinkActive"
-                    />
-                  </div>
-                )}
+                <div className="paginationBoc">
+                  <Pagination
+                    activePage={currentPage}
+                    itemsCountPerPage={resultPerPage}
+                    totalItemsCount={productsCount}
+                    onChange={setCountPageNo}
+                    nextPageText="Next"
+                    prevPageText="Prev"
+                    firstPageText="First"
+                    lastPageText="Last"
+                    itemClass="itemClass"
+                  />
+                </div>
               </div>
             </div>
           </div>

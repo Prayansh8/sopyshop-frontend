@@ -1,11 +1,11 @@
 import React from "react";
-import { FaShoppingCart, FaUser, FaSearch } from "react-icons/fa";
+import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import logo from "../../../images/logo.png";
 import { Link } from "react-router-dom";
 import "./Header.css";
+import profile from "../../../images/avatar.png";
 
-export default function Header() {
-
+export default function Header({ user, isAuthenticated }) {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -37,29 +37,55 @@ export default function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-white" to="/contact">
-                  Contact
+                <Link className="nav-link text-white" to="/account">
+                  Account
                 </Link>
               </li>
             </ul>
           </div>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
-                <Link className="nav-link text-white" to="/cart">
-                  <FaShoppingCart className="text-white" />
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link text-white" to="/profile">
-                  <FaUser className="text-white" />
-                </Link>
-              </li>
-              <li className="nav-item">
+              <li className="nav-item nav-li">
                 <Link className="nav-link text-white" to="/search">
                   <FaSearch className="text-white" />
                 </Link>
               </li>
+              <li className="nav-item nav-li ">
+                <Link className="nav-link text-white" to="/cart">
+                  <FaShoppingCart className="text-white" />
+                </Link>
+              </li>
+              {isAuthenticated ? (
+                <li className="nav-item nav-li">
+                  <Link
+                    to="/account"
+                    className="d-flex align-items-center text-white text-decoration-none m-auto"
+                  >
+                    <img
+                      src={user.avatar[0].url}
+                      alt="Profile"
+                      width={32}
+                      height={32}
+                      className="rounded-circle me-2"
+                    />
+                  </Link>
+                </li>
+              ) : (
+                <li className="nav-item nav-li">
+                  <Link
+                    to="/account"
+                    className="d-flex align-items-center text-white text-decoration-none m-auto"
+                  >
+                    <img
+                      src={profile}
+                      alt="Profile"
+                      width={32}
+                      height={32}
+                      className="rounded-circle me-2"
+                    />
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>

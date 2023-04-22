@@ -9,13 +9,11 @@ import Loader from "../layout/Loader/Loader";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const { loading, error, products, productsCount } = useSelector(
-    (state) => state.products
-  );
+  const { loading, error, products } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(getProducts());
-  }, [getProducts, error]);
+  }, [dispatch, error]);
 
   return (
     <>
