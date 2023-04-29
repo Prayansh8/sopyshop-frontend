@@ -46,7 +46,7 @@ export const ragister = (myData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAILURE,
-      payload: error.response.data.detail,
+      payload: error.response.data,
     });
   }
 };
