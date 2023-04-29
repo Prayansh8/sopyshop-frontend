@@ -62,7 +62,7 @@ export default function Header({ user, isAuthenticated }) {
                     className="d-flex align-items-center text-white text-decoration-none m-auto"
                   >
                     <img
-                      src={user.avatar[0].url}
+                      src={user.avatar}
                       alt="Profile"
                       width={32}
                       height={32}

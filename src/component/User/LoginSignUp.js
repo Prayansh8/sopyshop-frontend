@@ -1,10 +1,5 @@
 import React, { Fragment, useState } from "react";
-import {
-  AccountCircleOutlined,
-  Face,
-  LockOpen,
-  MailOutlineOutlined,
-} from "@mui/icons-material";
+import { Face, LockOpen, MailOutlineOutlined } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import "./LoginSignUp.css";
 import { Box, Tab } from "@mui/material";
@@ -27,15 +22,11 @@ export default function LoginSignUp() {
   const [loginpassword, setLoginPassword] = useState("");
   const [value, setValue] = React.useState("1");
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState(profile);
-  const [user, setUser] = useState({
-    name: "",
-    userName: "",
-    email: "",
-    password: "",
-  });
-  const { name, userName, email, password } = user;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -44,33 +35,22 @@ export default function LoginSignUp() {
   const loginSubmit = (e) => {
     e.preventDefault();
     dispatch(login(loginEmail, loginpassword));
-    navigate("/")
+    navigate("/");
+  };
+
+  const handleImageChange = (e) => {
+    setAvatar(e.target.files[0]);
+    setAvatarPreview(URL.createObjectURL(e.target.files[0]));
   };
 
   const ragisterSubmit = (e) => {
     e.preventDefault();
-    const myForm = new FormData();
-    myForm.set("name", name);
-    myForm.set("userName", userName);
-    myForm.set("email", email);
-    myForm.set("password", password);
-    myForm.set("avatar", avatar);
-    dispatch(ragister(myForm));
-  };
-
-  const ragisterDataChanges = (e) => {
-    if (e.target.name === "avatar") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setAvatarPreview(reader.result);
-          setAvatar(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
-      setUser({ ...user, [e.target.name]: e.target.value });
-    }
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("avatar", avatar);
+    dispatch(ragister(formData));
   };
 
   useEffect(() => {
@@ -150,18 +130,7 @@ export default function LoginSignUp() {
                           value={name}
                           name="name"
                           required
-                          onChange={ragisterDataChanges}
-                        />
-                      </div>
-                      <div className="RagisterFormText">
-                        <AccountCircleOutlined />
-                        <input
-                          type="text"
-                          placeholder="userName"
-                          value={userName}
-                          name="userName"
-                          required
-                          onChange={ragisterDataChanges}
+                          onChange={(e) => setName(e.target.value)}
                         />
                       </div>
                       <div className="RagisterFormText">
@@ -172,7 +141,7 @@ export default function LoginSignUp() {
                           name="email"
                           value={email}
                           required
-                          onChange={ragisterDataChanges}
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                       <div className="RagisterFormText">
@@ -183,7 +152,7 @@ export default function LoginSignUp() {
                           name="password"
                           value={password}
                           required
-                          onChange={ragisterDataChanges}
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                       </div>
                       <div className="registerImage">
@@ -191,8 +160,8 @@ export default function LoginSignUp() {
                         <input
                           type="file"
                           name="avatar"
-                          accept="image/"
-                          onChange={ragisterDataChanges}
+                          accept="image/*"
+                          onChange={handleImageChange}
                         />
                       </div>
                       <input

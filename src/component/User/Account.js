@@ -31,7 +31,7 @@ export default function Account({ user, loading, isAuthenticated }) {
               <div className="container text-center d-flex">
                 <div className="w-50">
                   <img
-                    src={user.avatar[0].url ? user.avatar[0].url : profile}
+                    src={user.avatar}
                     alt="Profile"
                     width={300}
                     height={300}
@@ -40,7 +40,6 @@ export default function Account({ user, loading, isAuthenticated }) {
                 </div>
                 <div className="w-50">
                   <h2>name: {user.name}</h2>
-                  <h2>userName: {user.username}</h2>
                   <h2>Email: {user.email}</h2>
                   <h2>user: {user.role}</h2>
                   <div id="dashboard">

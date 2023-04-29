@@ -15,7 +15,9 @@ import Account from "./component/User/Account";
 import { useSelector } from "react-redux";
 
 function App() {
-  const { user, isAuthenticated, loading } = useSelector((state) => state.user);
+  const { user, isAuthenticated, loading } = useSelector(
+    (state) => state.loadUser
+  );
 
   React.useEffect(() => {
     WebFont.load({
