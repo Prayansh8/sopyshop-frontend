@@ -13,6 +13,7 @@ import store from "./store";
 import { loadUser } from "./actions/userAction";
 import Account from "./component/User/Account";
 import { useSelector } from "react-redux";
+import UpdateUser from "./component/User/UpdateUser";
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
@@ -43,6 +44,7 @@ function App() {
           <Route path="/products/:keyword" element={<Products />} />
           <Route extact path="/search" element={<Search />} />
           <Route extact path="/login" element={<LoginSignUp />} />
+          <Route extact path="/update" element={<UpdateUser />} />
           <Route
             extact
             path="/account"

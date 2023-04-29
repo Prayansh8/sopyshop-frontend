@@ -1,0 +1,56 @@
+.accountContainer {
+  margin: 8vh auto;
+  padding: 8vh 20px;
+  border: 1px solid rgb(175, 175, 175);
+}
+
+.detailsHed{
+    margin: auto;
+}
+.detailsHed h1{
+    text-align: center;
+    border-bottom: 3px solid rgb(54, 54, 54);
+}
+
+.accountImg {
+  width: 50%;
+}
+
+.accountDetails {
+  width: 50%;
+  margin: auto 0;
+}
+.accountDetails-1 {
+  width: 100%;
+}
+
+.acc-table {
+  width: 100%;
+}
+.acc-table tr th {
+  font-size: 24px;
+  border: 2px solid black;
+}
+
+.acc-table tr td {
+  font-size: 24px;
+  border: 2px solid black;
+  padding: 4px 14px;
+  text-align: left;
+}
+
+.editBtnDiv{
+    margin: 6px 0;
+}
+.editBtn {
+  font-size: 18px;
+  background-color: tomato;
+  padding: 3px 40px;
+  border-radius: 12px;
+  margin: 10px auto;
+  font-weight: 600;
+  width: 50%;
+}
+.editBtn:hover {
+  background-color: rgba(171, 152, 152, 0.19);
+}
