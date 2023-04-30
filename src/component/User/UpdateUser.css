@@ -1,0 +1,41 @@
+.userUpdate{
+    width: 40%;
+    margin: 5vh auto;
+    border: 2px solid black;
+    padding: 20px 30px;
+    border-radius: 16px;
+}
+
+.updateFormText {
+    margin: 10px 0;
+  }
+  .updateFormText input {
+    font-size: 20px;
+    padding: 2px 35px;
+    border-radius: 10px;
+    width: 100%;
+  }
+  
+  .updateFormText svg {
+    position: absolute;
+    margin: 7px 6px 0;
+    padding: 2px;
+    font-size: 24px;
+  }
+  
+  .updateBtn {
+    width: 50%;
+  }
+  
+  .registerImage{
+    width: 100%;
+    display: flex;
+  }
+  .registerImage img{
+    width: 40px;
+    height:40px;
+    border-radius: 50%;
+  }
+  .registerImage input{
+    margin: auto 4px;
+  }

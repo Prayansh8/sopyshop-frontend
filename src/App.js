@@ -44,7 +44,6 @@ function App() {
           <Route path="/products/:keyword" element={<Products />} />
           <Route extact path="/search" element={<Search />} />
           <Route extact path="/login" element={<LoginSignUp />} />
-          <Route extact path="/update" element={<UpdateUser />} />
           <Route
             extact
             path="/account"
@@ -56,6 +55,13 @@ function App() {
               />
             }
           />
+          {isAuthenticated && (
+            <Route
+              extact
+              path="/update"
+              element={<UpdateUser user={user} loading={loading} />}
+            />
+          )}
         </Routes>
         <Footer />
       </BrowserRouter>

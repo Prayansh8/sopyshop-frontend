@@ -1,19 +1,27 @@
+.det-coun {
+  display: flex;
+}
+
 .accountContainer {
   margin: 8vh auto;
   padding: 8vh 20px;
-  border: 1px solid rgb(175, 175, 175);
 }
 
-.detailsHed{
-    margin: auto;
+.detailsHed {
+  margin: auto auto 2vh;
+  border-bottom: 3px solid black;
 }
-.detailsHed h1{
-    text-align: center;
-    border-bottom: 3px solid rgb(54, 54, 54);
+.detailsHed h1 {
+  text-align: center;
 }
 
 .accountImg {
   width: 50%;
+}
+.accountImg div img{
+  width: 350px;
+  height: 320px;
+  border: 3px solid rgb(123, 123, 123);
 }
 
 .accountDetails {
@@ -39,8 +47,8 @@
   text-align: left;
 }
 
-.editBtnDiv{
-    margin: 6px 0;
+.editBtnDiv {
+  margin: 6px 0;
 }
 .editBtn {
   font-size: 18px;
@@ -53,4 +61,72 @@
 }
 .editBtn:hover {
   background-color: rgba(171, 152, 152, 0.19);
+}
+
+.editBtnDetails{
+  font-size: 18px;
+  background-color: tomato;
+  padding: 3px 40px;
+  border-radius: 12px;
+  margin: 10px auto;
+  font-weight: 600;
+  width: 80%;
+}
+
+@media screen and (max-width: 600px) {
+  .det-coun {
+    display: block;
+  }
+  .accountContainer {
+    margin: 3vh auto;
+    padding: 0vh 2px;
+  }
+
+  .accountImg {
+    width: 100%;
+    margin: auto;
+    border-bottom: 3px solid black;
+  }
+
+  .accountImg div img{
+    width: 200px;
+    height: 200px;
+  }
+
+  .accountDetails {
+    width: 100%;
+    margin: 2px 0;
+  }
+  .accountDetails-1 {
+    width: 100%;
+  }
+
+  .acc-table {
+    width: 100%;
+  }
+  .acc-table tr th {
+    font-size: 16px;
+    border: 2px solid black;
+  }
+
+  .acc-table tr td {
+    font-size: 16px;
+    border: 2px solid black;
+    padding: 4px 14px;
+    text-align: left;
+  }
+
+  .editBtnDiv {
+    margin: 6px 0;
+  }
+  .editBtn {
+    font-size: 14px;
+    padding: 3px 30px;
+  }
+
+  .editBtnDetails{
+    font-size: 14px;
+    padding: 3px 30px;
+    margin: 0px auto;
+  }
 }

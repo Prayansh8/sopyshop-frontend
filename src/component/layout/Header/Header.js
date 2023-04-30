@@ -59,7 +59,7 @@ export default function Header({ user, isAuthenticated }) {
                 <li className="nav-item nav-li">
                   <Link
                     to="/account"
-                    className="d-flex align-items-center text-white text-decoration-none m-auto"
+                    className="d-flex align-items-center text-white text-decoration-none m-auto accountImg"
                   >
                     <img
                       src={user.avatar}

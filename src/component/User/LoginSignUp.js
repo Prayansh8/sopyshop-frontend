@@ -8,11 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, ragister } from "../../actions/userAction";
 import Loader from "../layout/Loader/Loader";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import profile from "./profile.png";
 
 export default function LoginSignUp() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.products
@@ -35,7 +33,7 @@ export default function LoginSignUp() {
   const loginSubmit = (e) => {
     e.preventDefault();
     dispatch(login(loginEmail, loginpassword));
-    navigate("/");
+    window.location.href = "/";
   };
 
   const handleImageChange = (e) => {
@@ -59,7 +57,7 @@ export default function LoginSignUp() {
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      console.log("login succesfull");
+      alert("login succesfull");
     }
   }, [dispatch, error, isAuthenticated]);
 
