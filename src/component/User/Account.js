@@ -21,7 +21,7 @@ export default function Account({ user, loading, isAuthenticated }) {
         <Fragment>
           {isAuthenticated ? (
             <div className="container accountContainer">
-              <div className="container text-center d-flex">
+              <div className="container text-center det-coun">
                 <div className="accountImg">
                   <div>
                     <img
@@ -44,30 +44,34 @@ export default function Account({ user, loading, isAuthenticated }) {
                       <h1>Details</h1>
                     </div>
                     <table className="acc-table">
-                      <tr>
-                        <th>Name</th>
-                        <td>{user.name}</td>
-                      </tr>
-                      <tr>
-                        <th>Email:</th>
-                        <td>{user.email}</td>
-                      </tr>
-                      <tr>
-                        <th>Role: </th>
-                        <td>{user.role}</td>
-                      </tr>
+                      <tbody>
+                        <tr>
+                          <th>Name</th>
+                          <td>{user.name}</td>
+                        </tr>
+                        <tr>
+                          <th>Email:</th>
+                          <td>{user.email}</td>
+                        </tr>
+                        <tr>
+                          <th>Role: </th>
+                          <td>{user.role}</td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
                   <br />
-                  <div>
-                    <Link to="/orders">
-                      <button className="editBtn">Orders</button>
-                    </Link>
-                  </div>
-                  <div>
-                    <button className="editBtn" onClick={logoutUser}>
-                      Logout
-                    </button>
+                  <div className="d-flex">
+                    <div className="w-50">
+                      <Link to="/orders">
+                        <button className="editBtnDetails">Orders</button>
+                      </Link>
+                    </div>
+                    <div className="w-50">
+                      <button className="editBtnDetails" onClick={logoutUser}>
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

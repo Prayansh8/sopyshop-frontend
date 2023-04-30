@@ -11,6 +11,9 @@ import {
   LOAD_USER_FAILURE,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FAILURE,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILURE,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -35,13 +38,13 @@ export const login = (email, password) => async (dispatch) => {
 
 // Register
 
-export const ragister = (myData) => async (dispatch) => {
+export const ragister = (userData) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_USER_REQUEST });
 
     const config = { header: { "Constant-Type": "multipart/form-data" } };
 
-    const { data } = await axios.post("api/v1/register", myData, config);
+    const { data } = await axios.post("api/v1/register", userData, config);
     dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({
@@ -69,9 +72,27 @@ export const loadUser = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     await axios.get("api/v1/logout");
-    dispatch({ type: LOGOUT_USER_SUCCESS});
+    dispatch({ type: LOGOUT_USER_SUCCESS });
   } catch (error) {
     dispatch({ type: LOGOUT_USER_FAILURE, payload: error.response.data });
+  }
+};
+
+// Update
+
+export const update = (myData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_REQUEST });
+
+    const config = { header: { "Constant-Type": "multipart/form-data" } };
+
+    const { data } = await axios.patch("api/v1/me/update", myData, config);
+    dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_FAILURE,
+      payload: error.response.data,
+    });
   }
 };
 

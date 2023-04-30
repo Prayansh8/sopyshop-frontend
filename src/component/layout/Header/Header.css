@@ -7,3 +7,7 @@
     margin: auto 2px;
     font-size: 18px;
 }
+
+.accountImg img{
+    border: 2px solid white;
+}
