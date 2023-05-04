@@ -26,7 +26,7 @@ export const login = (email, password) => async (dispatch) => {
     const config = { header: { "Constant-Type": "application/json" } };
 
     const { data } = await axios.post(
-      "api/v1/get-token",
+      "/api/v1/get-token",
       { email, password },
       config
     );
@@ -44,7 +44,7 @@ export const ragister = (userData) => async (dispatch) => {
 
     const config = { header: { "Constant-Type": "multipart/form-data" } };
 
-    const { data } = await axios.post("api/v1/register", userData, config);
+    const { data } = await axios.post("/api/v1/register", userData, config);
     dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({
@@ -60,7 +60,7 @@ export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
 
-    const { data } = await axios.get("api/v1/me");
+    const { data } = await axios.get("/api/v1/me");
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({ type: LOAD_USER_FAILURE, payload: error.response.data });
@@ -71,7 +71,7 @@ export const loadUser = () => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get("api/v1/logout");
+    await axios.get(`/api/v1/logout`);
     dispatch({ type: LOGOUT_USER_SUCCESS });
   } catch (error) {
     dispatch({ type: LOGOUT_USER_FAILURE, payload: error.response.data });
