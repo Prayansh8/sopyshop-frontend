@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetails } from "../../actions/productAction";
 import { useParams } from "react-router-dom";
@@ -7,6 +7,7 @@ import ReactStars from "react-rating-stars-component";
 import "./ProductDetails.css";
 import Loader from "../layout/Loader/Loader.js";
 import ReviewsCard from "./ReviewsCard.js";
+import { addItemToCart } from "../../actions/cartAction";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -26,6 +27,25 @@ const ProductDetails = () => {
     size: window.innerWidth < 600 ? 20 : 25,
     value: product.ratings,
     isHalf: true,
+  };
+
+  const [quintity, setQuintity] = useState(0);
+
+  const handlePlusClick = () => {
+    if (product.stock <= quintity) return;
+    const qty = quintity + 1;
+    setQuintity(qty);
+  };
+
+  const handleMinusClick = () => {
+    if (1 >= quintity) return;
+    const qty = quintity - 1;
+    setQuintity(qty);
+  };
+
+  const addToCartHendler = () => {
+    dispatch(addItemToCart(id, quintity));
+    alert("item added to cart");
   };
 
   return (
@@ -73,21 +93,26 @@ const ProductDetails = () => {
                               value="-"
                               className="qtyminus minus"
                               field="quantity"
+                              onClick={handleMinusClick}
                             />
                             <input
                               type="text"
                               name="quantity"
-                              value="0"
+                              value={quintity}
                               className="qty"
+                              readOnly
                             />
                             <input
                               type="button"
                               value="+"
                               className="qtyplus plus"
                               field="quantity"
+                              onClick={handlePlusClick}
                             />
                           </div>
-                          <button>Add to cart</button>
+                          <button onClick={addToCartHendler}>
+                            Add to cart
+                          </button>
                         </div>
                       </div>
                       <div className="detailsBlock-3-2">
@@ -119,8 +144,7 @@ const ProductDetails = () => {
                 <div className="container productReviewsBox">
                   {product.reviews &&
                     product.reviews.map((reviews) => (
-                        <ReviewsCard review={reviews} />
-                    
+                      <ReviewsCard review={reviews} />
                     ))}
                 </div>
               ) : (
