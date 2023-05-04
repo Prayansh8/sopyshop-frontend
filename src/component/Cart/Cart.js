@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import CartItemCard from "./CartItemCard.js";
 import "./cart.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart } from "../../actions/cartAction.js";
+import { addItemToCart, removeItemToCart } from "../../actions/cartAction.js";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -24,6 +24,10 @@ const Cart = () => {
     }
     dispatch(addItemToCart(id, newQty));
   };
+
+  const deleteCartItem = (id) => {
+    dispatch(removeItemToCart(id));
+  };
   return (
     <Fragment>
       <div className="mainContainer">
@@ -35,14 +39,17 @@ const Cart = () => {
 
         {cartItems &&
           cartItems.map((item) => (
-            <div className="itemsCont">
+            <div className="itemsCont" key={item.product}>
               <div className="cartItem">
-                <CartItemCard item={item} />
+                <CartItemCard item={item} deleteCartItems={deleteCartItem} />
               </div>
               <div className="itemQuintity">
-                <button className="qtyminus"  onClick={() =>
-                    minsQuintity(item.product, item.quantity)
-                  }>-</button>
+                <button
+                  className="qtyminus"
+                  onClick={() => minsQuintity(item.product, item.quantity)}
+                >
+                  -
+                </button>
                 <input
                   className="qty"
                   type="text"
@@ -68,7 +75,12 @@ const Cart = () => {
             </div>
             <div className="itemQuintity"></div>
             <div className="itemPrice">
-              <p className="p-price">{"₹600"}</p>
+              <p className="p-price">
+                {`₹${cartItems.reduce(
+                  (acc, item) => acc + item.quantity * item.price,
+                  0
+                )}`}
+              </p>
             </div>
           </div>
           <div className="checkoutCont">
