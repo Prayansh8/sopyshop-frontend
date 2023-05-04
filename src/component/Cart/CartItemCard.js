@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./CartItemCard.css";
 
-const CartItemCard = ({ item }) => {
+const CartItemCard = ({ item, deleteCartItems }) => {
   return (
     <div className="cartItemMain">
       <div className="cartItemCont">
@@ -14,7 +14,12 @@ const CartItemCard = ({ item }) => {
             <Link to={`/product/${item.product}`}>{item.name}</Link>
           </div>
           <span>{`Price: ₹${item.price}`}</span>
-          <p className="removeBtn">Remove</p>
+          <p
+            onClick={() => deleteCartItems(item.product)}
+            className="removeBtn"
+          >
+            Remove
+          </p>
         </div>
       </div>
     </div>
