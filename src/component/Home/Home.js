@@ -21,9 +21,9 @@ export const Home = () => {
         <Loader />
       ) : (
         <div>
-          <MataData title={"ECCOMERCE"} />
+          <MataData title={"Sopyshop"} />
           <div className="banner">
-            <h1>Wellcome to Ecommearce</h1>
+            <h1>Wellcome to Sopyshop</h1>
             <p>Find Amazing product blow</p>
             <a href="#product">
               <button>

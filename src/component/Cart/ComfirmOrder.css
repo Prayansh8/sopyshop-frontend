@@ -1,0 +1,109 @@
+.mainCont {
+  width: 80%;
+  margin: 4vh auto;
+}
+
+.sippDetaild {
+  margin: 4vh 2vh;
+}
+.sippInfoDetails {
+  padding: 20px 20px 0;
+}
+
+.sippHeding p {
+  font-size: 24px;
+}
+
+.addressDetails {
+  display: flex;
+}
+
+.productDetailOrder {
+  margin: 4vh 2vh;
+}
+.productInfoDetails {
+  padding: 10px 20px;
+}
+.productImgOrd {
+  width: 40px;
+  padding: 3px;
+}
+
+.orderSummery {
+  width: 80%;
+  margin: 4vh auto;
+}
+
+.productItem a {
+  color: black;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.productD {
+  display: flex;
+  margin: 2vh auto;
+}
+
+.productItem {
+  width: 40%;
+  margin: auto;
+}
+
+.imgPro {
+  width: 10%;
+  margin: auto;
+  text-align: center;
+}
+
+.totalprice {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+}
+
+.border-e {
+  border-right: 2px solid rgb(160, 160, 160);
+}
+
+.orderHeding p {
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  font-size: 24px;
+  border-bottom: 2px solid rgb(167, 167, 167);
+  padding: 6px 0;
+}
+
+.totalDetails {
+  display: flex;
+  padding: 1vh 0;
+}
+.totalDetails p {
+  margin: 0;
+}
+
+.totalDetailsCont {
+  border-bottom: 2px solid rgb(167, 167, 167);
+  padding: 2vh 0;
+}
+
+.totalP {
+  display: flex;
+  margin: 2vh 0;
+}
+.totalP p {
+  margin: 0;
+}
+.ProccedBtn {
+  border: 1px solid rgb(201, 95, 57);
+  border-radius: 14px;
+  padding: 5px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: tomato;
+  color: white;
+  width: 100%;
+  margin: 1vh auto;
+}

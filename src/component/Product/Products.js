@@ -9,6 +9,7 @@ import "./products.css";
 import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import { Slider } from "@mui/material";
+import MataData from "../layout/MataData";
 
 export default function Products() {
   const categories = ["Laptop", "Daskstop", "Moniter", "Jacket", "Camera"];
@@ -36,6 +37,7 @@ export default function Products() {
   }, [dispatch, keyword, price, currentPage, category]);
   return (
     <Fragment>
+      <MataData title={"Sopyshop-Products"} />
       {loading ? (
         <Loader />
       ) : (

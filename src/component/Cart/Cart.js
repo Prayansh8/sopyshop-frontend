@@ -3,8 +3,12 @@ import CartItemCard from "./CartItemCard.js";
 import "./cart.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemToCart } from "../../actions/cartAction.js";
+import MataData from "../layout/MataData";
+import { useNavigate } from "react-router-dom";
 
-const Cart = () => {
+const Cart = ({ isAuthenticated }) => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const { cartItems } = useSelector((state) => state.cart);
@@ -28,8 +32,17 @@ const Cart = () => {
   const deleteCartItem = (id) => {
     dispatch(removeItemToCart(id));
   };
+
+  const checkOutHendler = () => {
+    if (isAuthenticated) {
+      navigate("/shipping");
+    } else {
+      navigate("/account");
+    }
+  };
   return (
     <Fragment>
+      <MataData title={"Sopyshop-Cart"} />
       <div className="mainContainer">
         <div className="headingCont">
           <p className="p-headingCont">Product</p>
@@ -84,7 +97,9 @@ const Cart = () => {
             </div>
           </div>
           <div className="checkoutCont">
-            <button className="checkoutBtn">Checkout Now</button>
+            <button className="checkoutBtn" onClick={checkOutHendler}>
+              Checkout Now
+            </button>
           </div>
         </div>
       </div>

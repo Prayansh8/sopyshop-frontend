@@ -8,6 +8,7 @@ import "./ProductDetails.css";
 import Loader from "../layout/Loader/Loader.js";
 import ReviewsCard from "./ReviewsCard.js";
 import { addItemToCart } from "../../actions/cartAction";
+import MataData from "../layout/MataData";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -51,6 +52,7 @@ const ProductDetails = () => {
   return (
     <>
       <Fragment>
+        <MataData title={"Sopyshop-ProductDetails"} />
         {loading ? (
           <Loader />
         ) : (

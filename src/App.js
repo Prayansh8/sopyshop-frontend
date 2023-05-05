@@ -15,6 +15,8 @@ import Account from "./component/User/Account";
 import { useSelector } from "react-redux";
 import UpdateUser from "./component/User/UpdateUser";
 import Cart from "./component/Cart/Cart.js";
+import Shipping from "./component/Cart/Shipping.js";
+import ComfirmOrder from "./component/Cart/ComfirmOrder.js";
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
     (state) => state.loadUser
@@ -43,7 +45,13 @@ function App() {
           <Route extact path="/products" element={<Products />} />
           <Route path="/products/:keyword" element={<Products />} />
           <Route extact path="/search" element={<Search />} />
-          <Route extact path="/cart" element={<Cart />} />
+          <Route extact path="/shipping" element={<Shipping />} />
+          <Route extact path="/order/comfirm" element={<ComfirmOrder />} />
+          <Route
+            extact
+            path="/cart"
+            element={<Cart isAuthenticated={isAuthenticated} />}
+          />
           <Route extact path="/login" element={<LoginSignUp />} />
           <Route
             extact

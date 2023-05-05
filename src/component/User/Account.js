@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../actions/userAction";
 import LoginSignUp from "./LoginSignUp";
 import "./Account.css";
+import MataData from "../layout/MataData";
 
 export default function Account({ user, loading, isAuthenticated }) {
   const dispatch = useDispatch();
@@ -13,8 +14,10 @@ export default function Account({ user, loading, isAuthenticated }) {
     dispatch(logout());
     alert("Logout Successfully");
   }
+
   return (
     <Fragment>
+      <MataData title={"Sopyshop-Account"} />
       {loading ? (
         <Loader />
       ) : (
@@ -72,6 +75,17 @@ export default function Account({ user, loading, isAuthenticated }) {
                         Logout
                       </button>
                     </div>
+                  </div>
+                  <div>
+                    {user.role === "admin" ? (
+                      <div>
+                        <Link to="/deshboard">
+                          <button className="editBtnDetails">Deshboard</button>
+                        </Link>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
                 </div>
               </div>
