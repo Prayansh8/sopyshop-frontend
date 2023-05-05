@@ -27,8 +27,8 @@ export default function Footer() {
             </div>
             <div className="midFooter col-sm-4 w-50 m-auto text-center">
               <img src={logo} alt="Company logo" />
-              <h1>Ecommerce</h1>
-              <p>Copyright © 2023 Company Name</p>
+              <h1>Sopyshop</h1>
+              <p>Copyright © 2023 By Prayansh Gupta</p>
             </div>
             <div className="rightFooter col-sm-4 w-25 m-auto text-right">
               <h1>Follow us on social media:</h1>

@@ -11,7 +11,7 @@ export default function Header({ user, isAuthenticated }) {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid mx-3">
           <Link className="navbar-brand logo" to="/">
-            <img src={logo} alt="shopyshop" />
+            <img src={logo} alt="sopyshop" />
           </Link>
           <button
             className="navbar-toggler"
