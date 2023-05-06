@@ -17,6 +17,7 @@ import UpdateUser from "./component/User/UpdateUser";
 import Cart from "./component/Cart/Cart.js";
 import Shipping from "./component/Cart/Shipping.js";
 import ComfirmOrder from "./component/Cart/ComfirmOrder.js";
+import UpdateAvatar from "./component/User/UpdateAvatar";
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
     (state) => state.loadUser
@@ -69,6 +70,13 @@ function App() {
               extact
               path="/update"
               element={<UpdateUser user={user} loading={loading} />}
+            />
+          )}
+          {isAuthenticated && (
+            <Route
+              extact
+              path="/update/avatar"
+              element={<UpdateAvatar user={user} loading={loading} />}
             />
           )}
         </Routes>

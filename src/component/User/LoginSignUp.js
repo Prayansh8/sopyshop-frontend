@@ -49,6 +49,7 @@ export default function LoginSignUp() {
     formData.append("password", password);
     formData.append("avatar", avatar);
     dispatch(ragister(formData));
+    window.location.href = "/account";
   };
 
   useEffect(() => {

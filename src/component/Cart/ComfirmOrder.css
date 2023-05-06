@@ -7,15 +7,29 @@
   margin: 4vh 2vh;
 }
 .sippInfoDetails {
-  padding: 20px 20px 0;
+  padding: 20px 12px 0;
 }
 
 .sippHeding p {
   font-size: 24px;
 }
 
+.addressDetails p {
+  font-size: 18px;
+  color: black;
+  padding: 0 10px 0 0;
+  margin: auto 0;
+}
+
+.addressDetails span {
+  font-size: 18px;
+  color: rgb(28, 28, 28);
+  margin: auto 0;
+}
+
 .addressDetails {
   display: flex;
+  margin: 8px 0;
 }
 
 .productDetailOrder {
@@ -106,4 +120,24 @@
   color: white;
   width: 100%;
   margin: 1vh auto;
+}
+
+.totalDetails p {
+  font-size: 18px;
+  color: black;
+  padding: 0 10px 0 0;
+  margin: auto 0;
+  width: 70%;
+}
+
+.totalDetails div span {
+  font-size: 18px;
+  color: black;
+  padding: 0 10px 0 0;
+  margin: auto 0;
+}
+
+.totalDetails div {
+  text-align: end;
+  width: 30%;
 }

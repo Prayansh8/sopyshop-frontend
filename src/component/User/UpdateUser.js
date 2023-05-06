@@ -7,24 +7,12 @@ import { update } from "../../actions/userAction";
 const UpdateUser = ({ user, loading }) => {
   const dispatch = useDispatch();
 
-  let userAvatar = user.avatar;
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
-  const [avatar, setAvatar] = useState();
-  const [avatarPreview, setAvatarPreview] = useState(userAvatar);
-
-  const handleImageChange = (e) => {
-    setAvatar(e.target.files[0]);
-    setAvatarPreview(URL.createObjectURL(e.target.files[0]));
-  };
 
   const updateSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("avatar", avatar);
-    dispatch(update(formData));
+    dispatch(update(name, email));
     window.location.href = "/";
   };
   return (
@@ -51,15 +39,6 @@ const UpdateUser = ({ user, loading }) => {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="registerImage">
-            <img src={avatarPreview} alt="Avatar Preview" />
-            <input
-              type="file"
-              name="avatar"
-              accept="image/*"
-              onChange={handleImageChange}
             />
           </div>
           <input
