@@ -17,7 +17,7 @@ const ComfirmOrder = () => {
   const tax = subtotal * 0.18;
   const totalPrice = subtotal + shippingCharges + tax;
 
-  const address = `${shippingInfo.address},${shippingInfo.city},${shippingInfo.state},${shippingInfo.pinCode},,${shippingInfo.country}`;
+  const address = `${shippingInfo.address},${shippingInfo.city},${shippingInfo.state},${shippingInfo.pinCode},${shippingInfo.country}`;
   return (
     <Fragment>
       <div className="mainCont">
@@ -82,15 +82,21 @@ const ComfirmOrder = () => {
                 <div className="totalDetailsCont">
                   <div className="totalDetails">
                     <p>Subtotal:</p>
-                    <span>₹{subtotal}</span>
+                    <div>
+                      <span>₹{subtotal}</span>
+                    </div>
                   </div>
                   <div className="totalDetails">
                     <p>Shipping Charges:</p>
-                    <span>₹{shippingCharges}</span>
+                    <div>
+                      <span>₹{shippingCharges}</span>
+                    </div>
                   </div>
                   <div className="totalDetails">
                     <p>GST:</p>
-                    <span>₹{tax}</span>
+                    <div>
+                      <span>₹{tax}</span>
+                    </div>
                   </div>
                 </div>
                 <div className="totalP">

@@ -36,8 +36,13 @@ export default function Account({ user, loading, isAuthenticated }) {
                     />
                   </div>
                   <div className="editBtnDiv">
-                    <Link to="/update">
+                    <Link to="/update/avatar">
                       <button className="editBtn">Edit Profile</button>
+                    </Link>
+                  </div>
+                  <div className="editBtnDiv">
+                    <Link to="/update">
+                      <button className="editBtn">Edit Details</button>
                     </Link>
                   </div>
                 </div>

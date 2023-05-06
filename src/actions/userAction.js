@@ -14,6 +14,9 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
+  UPDATE_USER_AVATAR_REQUEST,
+  UPDATE_USER_AVATAR_SUCCESS,
+  UPDATE_USER_AVATAR_FAILURE,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -78,19 +81,45 @@ export const logout = () => async (dispatch) => {
   }
 };
 
-// Update
+// Update user
 
-export const update = (myData) => async (dispatch) => {
+export const update = (name, email) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
 
-    const config = { header: { "Constant-Type": "multipart/form-data" } };
+    const config = { header: { "Constant-Type": "application/json" } };
 
-    const { data } = await axios.patch("api/v1/me/update", myData, config);
+    const { data } = await axios.patch(
+      "/api/v1/me/update",
+      { name, email },
+      config
+    );
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({
       type: UPDATE_USER_FAILURE,
+      payload: error.response.data,
+    });
+  }
+};
+
+// Update Avatar
+
+export const UpdateAvatarAction = (myAvatar) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_AVATAR_REQUEST });
+
+    const config = { header: { "Constant-Type": "multipart/form-data" } };
+
+    const { data } = await axios.patch(
+      "/api/v1/me/update/avatar",
+      myAvatar,
+      config
+    );
+    dispatch({ type: UPDATE_USER_AVATAR_SUCCESS, payload: data.user });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_AVATAR_FAILURE,
       payload: error.response.data,
     });
   }

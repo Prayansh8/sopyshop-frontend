@@ -15,6 +15,10 @@ import {
   UPDATE_USER_FAILURE,
   UPDATE_USER_RESET,
   CLEAR_ERRORS,
+  UPDATE_USER_AVATAR_REQUEST,
+  UPDATE_USER_AVATAR_SUCCESS,
+  UPDATE_USER_AVATAR_FAILURE,
+  UPDATE_USER_AVATAR_RESET,
 } from "../constants/userConstants";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -96,20 +100,24 @@ export const loadUserReducer = (state = { user: {} }, action) => {
 export const updateReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_USER_REQUEST:
+    case UPDATE_USER_AVATAR_REQUEST:
       return { ...state, loding: true };
     case UPDATE_USER_SUCCESS:
+    case UPDATE_USER_AVATAR_SUCCESS:
       return {
         ...state,
         loding: false,
         isUpdated: action.payload,
       };
     case UPDATE_USER_FAILURE:
+    case UPDATE_USER_AVATAR_FAILURE:
       return {
         ...state,
         loding: false,
         error: action.payload,
       };
     case UPDATE_USER_RESET:
+    case UPDATE_USER_AVATAR_RESET:
       return {
         ...state,
         isUpdated: false,
