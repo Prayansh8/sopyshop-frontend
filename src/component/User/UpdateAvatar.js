@@ -19,7 +19,7 @@ const UpdateAvatar = ({ user, loading }) => {
     const formData = new FormData();
     formData.append("avatar", avatar);
     dispatch(UpdateAvatarAction(formData));
-    window.location.href = "/";
+    window.location.href = "/account";
   };
   return (
     <Fragment>

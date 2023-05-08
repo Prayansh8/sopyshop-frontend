@@ -77,9 +77,9 @@ export const ragister = (userData) => async (dispatch) => {
 
 export const loadUser = () => async (dispatch) => {
   try {
-    const token = localStorage.getItem("token");
-
     dispatch({ type: LOAD_USER_REQUEST });
+
+    const token = localStorage.getItem("token");
     const configData = {
       headers: { authorization: `Bearer ${token}` },
     };
@@ -111,8 +111,13 @@ export const logout = () => async (dispatch) => {
 export const update = (name, email) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
-
-    const configData = { header: { "Constant-Type": "application/json" } };
+    const token = localStorage.getItem("token");
+    const configData = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    };
 
     const { data } = await axios.patch(
       `${config.baseUrl}/api/v1/me/update`,
@@ -134,9 +139,14 @@ export const UpdateAvatarAction = (myAvatar) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_AVATAR_REQUEST });
 
-    const configData = { header: { "Constant-Type": "multipart/form-data" } };
-
-    const { data } = await axios.patch(
+    const token = localStorage.getItem("token");
+    const configData = {
+      headers: {
+        "Constant-Type": "multipart/form-data",
+        authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.put(
       `${config.baseUrl}/api/v1/me/update/avatar`,
       myAvatar,
       configData

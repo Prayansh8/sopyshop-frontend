@@ -8,7 +8,14 @@ import axios from "axios";
 
 // add to cart
 export const addItemToCart = (id, quantity) => async (dispatch, getState) => {
-  const { data } = await axios.get(`${config.baseUrl}/api/v1/product/${id}`);
+  const token = localStorage.getItem("token");
+  const configData = {
+    headers: { authorization: `Bearer ${token}` },
+  };
+  const { data } = await axios.get(
+    `${config.baseUrl}/api/v1/product/${id}`,
+    configData
+  );
   dispatch({
     type: ADD_TO_CART,
     payload: {
