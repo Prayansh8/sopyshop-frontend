@@ -34,7 +34,7 @@ const Cart = ({ isAuthenticated }) => {
   };
 
   const checkOutHendler = () => {
-    if (isAuthenticated) {
+    if (isAuthenticated === true) {
       navigate("/shipping");
     } else {
       navigate("/account");

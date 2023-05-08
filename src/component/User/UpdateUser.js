@@ -13,7 +13,7 @@ const UpdateUser = ({ user, loading }) => {
   const updateSubmit = (e) => {
     e.preventDefault();
     dispatch(update(name, email));
-    window.location.href = "/";
+    window.location.href = "/account";
   };
   return (
     <Fragment>
