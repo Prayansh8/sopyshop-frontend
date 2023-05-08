@@ -26,7 +26,7 @@ export default function LoginSignUp() {
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState(profile);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
     setValue(newValue);
   };
 

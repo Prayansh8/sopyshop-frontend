@@ -19,6 +19,7 @@ import {
   UPDATE_USER_AVATAR_FAILURE,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
+import { config } from "../config";
 
 // Login
 
@@ -26,14 +27,20 @@ export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
 
-    const config = { header: { "Constant-Type": "application/json" } };
+    const configData = {
+      headers: {
+        "Constant-Type": "application/json",
+      },
+    };
 
     const { data } = await axios.post(
-      "/api/v1/get-token",
+      `${config.baseUrl}/api/v1/get-token`,
       { email, password },
-      config
+      configData
     );
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
+    const token = data.token;
+    localStorage.setItem("token", token);
   } catch (error) {
     dispatch({ type: LOGIN_FAILURE, payload: error.response.data.detail });
   }
@@ -45,10 +52,19 @@ export const ragister = (userData) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_USER_REQUEST });
 
-    const config = { header: { "Constant-Type": "multipart/form-data" } };
+    const configData = {
+      headers: { "Constant-Type": "multipart/form-data" },
+    };
+    const { data } = await axios.post(
+      `${config.baseUrl}/api/v1/register`,
+      userData,
+      configData
+    );
 
-    const { data } = await axios.post("/api/v1/register", userData, config);
-    dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
+    dispatch({
+      type: REGISTER_USER_SUCCESS,
+      payload: data,
+    });
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAILURE,
@@ -61,12 +77,17 @@ export const ragister = (userData) => async (dispatch) => {
 
 export const loadUser = () => async (dispatch) => {
   try {
-    dispatch({ type: LOAD_USER_REQUEST });
+    const token = localStorage.getItem("token");
 
-    const { data } = await axios.get("/api/v1/me");
+    dispatch({ type: LOAD_USER_REQUEST });
+    const configData = {
+      headers: { authorization: `Bearer ${token}` },
+    };
+
+    const { data } = await axios.get(`${config.baseUrl}/api/v1/me`, configData);
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: LOAD_USER_FAILURE, payload: error.response.data });
+    dispatch({ type: LOAD_USER_FAILURE, payload: error.response });
   }
 };
 
@@ -74,8 +95,12 @@ export const loadUser = () => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get(`/api/v1/logout`);
+    await axios.post(`${config.baseUrl}/api/v1/logout`, null, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+
     dispatch({ type: LOGOUT_USER_SUCCESS });
+    localStorage.removeItem("token");
   } catch (error) {
     dispatch({ type: LOGOUT_USER_FAILURE, payload: error.response.data });
   }
@@ -87,12 +112,12 @@ export const update = (name, email) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
 
-    const config = { header: { "Constant-Type": "application/json" } };
+    const configData = { header: { "Constant-Type": "application/json" } };
 
     const { data } = await axios.patch(
-      "/api/v1/me/update",
+      `${config.baseUrl}/api/v1/me/update`,
       { name, email },
-      config
+      configData
     );
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
   } catch (error) {
@@ -109,12 +134,12 @@ export const UpdateAvatarAction = (myAvatar) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_AVATAR_REQUEST });
 
-    const config = { header: { "Constant-Type": "multipart/form-data" } };
+    const configData = { header: { "Constant-Type": "multipart/form-data" } };
 
     const { data } = await axios.patch(
-      "/api/v1/me/update/avatar",
+      `${config.baseUrl}/api/v1/me/update/avatar`,
       myAvatar,
-      config
+      configData
     );
     dispatch({ type: UPDATE_USER_AVATAR_SUCCESS, payload: data.user });
   } catch (error) {

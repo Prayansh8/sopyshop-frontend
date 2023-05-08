@@ -1,8 +1,3 @@
-const envVar = {
-  apiBaseUrl:
-    process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api/v1",
-};
-
-module.exports = {
-  envVar,
+export const config = {
+  baseUrl: process.env.BASE_URI || "http://localhost:5000",
 };

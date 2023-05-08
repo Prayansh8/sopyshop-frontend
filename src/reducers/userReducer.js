@@ -21,7 +21,7 @@ import {
   UPDATE_USER_AVATAR_RESET,
 } from "../constants/userConstants";
 
-export const userReducer = (state = { user: {} }, action) => {
+export const userReducer = (state = { user: {}, token: {} }, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
     case REGISTER_USER_REQUEST:
@@ -33,6 +33,14 @@ export const userReducer = (state = { user: {} }, action) => {
         loding: false,
         isAuthenticated: true,
         user: action.payload,
+        token: action.payload,
+      };
+
+    case LOGOUT_USER_SUCCESS:
+      return {
+        loding: false,
+        isAuthenticated: false,
+        user: null,
       };
 
     case LOGIN_FAILURE:
@@ -42,6 +50,13 @@ export const userReducer = (state = { user: {} }, action) => {
         loding: false,
         isAuthenticated: false,
         user: null,
+        token: null,
+        error: action.payload,
+      };
+    case LOGOUT_USER_FAILURE:
+      return {
+        ...state,
+        loding: false,
         error: action.payload,
       };
 
@@ -74,18 +89,7 @@ export const loadUserReducer = (state = { user: {} }, action) => {
         user: null,
         error: action.payload,
       };
-    case LOGOUT_USER_SUCCESS:
-      return {
-        loding: false,
-        isAuthenticated: false,
-        user: null,
-      };
-    case LOGOUT_USER_FAILURE:
-      return {
-        ...state,
-        loding: false,
-        error: action.payload,
-      };
+
     case CLEAR_ERRORS:
       return {
         ...state,

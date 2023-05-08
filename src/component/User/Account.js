@@ -13,6 +13,8 @@ export default function Account({ user, loading, isAuthenticated }) {
   function logoutUser() {
     dispatch(logout());
     alert("Logout Successfully");
+    window.location.href = "/account";
+    localStorage.removeItem("token");
   }
 
   return (
