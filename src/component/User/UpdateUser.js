@@ -1,11 +1,14 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Face, MailOutlineOutlined } from "@mui/icons-material";
 import "./UpdateUser.css";
-import { useDispatch } from "react-redux";
-import { update } from "../../actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, update } from "../../actions/userAction";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UpdateUser = ({ user, loading }) => {
   const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.update);
 
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
@@ -13,8 +16,17 @@ const UpdateUser = ({ user, loading }) => {
   const updateSubmit = (e) => {
     e.preventDefault();
     dispatch(update(name, email));
-    window.location.href = "/account";
+    setTimeout(() => {
+      window.location.href = "/account";
+    }, 500);
+    toast.success("Update Success!");
   };
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error]);
   return (
     <Fragment>
       <div className="userUpdate">
@@ -49,6 +61,7 @@ const UpdateUser = ({ user, loading }) => {
           />
         </form>
       </div>
+      <ToastContainer />
     </Fragment>
   );
 };

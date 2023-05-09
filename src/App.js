@@ -18,6 +18,7 @@ import Cart from "./component/Cart/Cart.js";
 import Shipping from "./component/Cart/Shipping.js";
 import ComfirmOrder from "./component/Cart/ComfirmOrder.js";
 import UpdateAvatar from "./component/User/UpdateAvatar";
+
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
     (state) => state.loadUser

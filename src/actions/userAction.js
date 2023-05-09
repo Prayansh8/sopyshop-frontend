@@ -38,11 +38,12 @@ export const login = (email, password) => async (dispatch) => {
       { email, password },
       configData
     );
-    dispatch({ type: LOGIN_SUCCESS, payload: data.user });
-    const token = data.token;
+    const token = await data.token;
+    console.log(token);
     localStorage.setItem("token", token);
+    dispatch({ type: LOGIN_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: LOGIN_FAILURE, payload: error.response.data.detail });
+    dispatch({ type: LOGIN_FAILURE, payload: error.response.data });
   }
 };
 
@@ -85,9 +86,9 @@ export const loadUser = () => async (dispatch) => {
     };
 
     const { data } = await axios.get(`${config.baseUrl}/api/v1/me`, configData);
-    dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
+    dispatch({ type: LOAD_USER_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: LOAD_USER_FAILURE, payload: error.response });
+    dispatch({ type: LOAD_USER_FAILURE, payload: error.response.data });
   }
 };
 
@@ -102,7 +103,10 @@ export const logout = () => async (dispatch) => {
     dispatch({ type: LOGOUT_USER_SUCCESS });
     localStorage.removeItem("token");
   } catch (error) {
-    dispatch({ type: LOGOUT_USER_FAILURE, payload: error.response.data });
+    dispatch({
+      type: LOGOUT_USER_FAILURE,
+      payload: error.response.data,
+    });
   }
 };
 
@@ -124,7 +128,7 @@ export const update = (name, email) => async (dispatch) => {
       { name, email },
       configData
     );
-    dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
+    dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: UPDATE_USER_FAILURE,
@@ -151,7 +155,7 @@ export const UpdateAvatarAction = (myAvatar) => async (dispatch) => {
       myAvatar,
       configData
     );
-    dispatch({ type: UPDATE_USER_AVATAR_SUCCESS, payload: data.user });
+    dispatch({ type: UPDATE_USER_AVATAR_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: UPDATE_USER_AVATAR_FAILURE,
