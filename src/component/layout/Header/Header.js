@@ -4,8 +4,11 @@ import logo from "../../../images/logo.png";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import profile from "../../../images/avatar.png";
+import { useSelector } from "react-redux";
 
 export default function Header({ user, isAuthenticated }) {
+  const { cartItems } = useSelector((state) => state.cart);
+  
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -52,7 +55,8 @@ export default function Header({ user, isAuthenticated }) {
               </li>
               <li className="nav-item nav-li ">
                 <Link className="nav-link text-white" to="/cart">
-                  <FaShoppingCart className="text-white" />
+                  <FaShoppingCart className="text-white cartIcon" />
+                  <span className="cartLength"> {cartItems.length} </span>
                 </Link>
               </li>
               {isAuthenticated ? (
