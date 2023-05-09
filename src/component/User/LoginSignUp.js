@@ -9,31 +9,40 @@ import { clearErrors, login, ragister } from "../../actions/userAction";
 import Loader from "../layout/Loader/Loader";
 import { useEffect } from "react";
 import profile from "./profile.png";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function LoginSignUp() {
   const dispatch = useDispatch();
-  const { error, loading, isAuthenticated } = useSelector(
-    (state) => state.products
+  const { loading, error, isAuthenticated } = useSelector(
+    (state) => state.user
   );
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginpassword, setLoginPassword] = useState("");
-  const [value, setValue] = React.useState("1");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState(profile);
+  const [passwordError, setPasswordError] = useState("");
 
-  const handleChange = (newValue) => {
+  const [value, setValue] = React.useState("1");
+
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const loginSubmit = (e) => {
     e.preventDefault();
+    if (!isValidPassword(loginpassword)) {
+      setPasswordError(
+        "Minimum 6 and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character:"
+      );
+      return;
+    }
     dispatch(login(loginEmail, loginpassword));
-    window.location.href = "/";
   };
 
   const handleImageChange = (e) => {
@@ -41,24 +50,38 @@ export default function LoginSignUp() {
     setAvatarPreview(URL.createObjectURL(e.target.files[0]));
   };
 
+  const isValidPassword = (password) => {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
+    return passwordRegex.test(password);
+  };
+
   const ragisterSubmit = (e) => {
     e.preventDefault();
+    if (!isValidPassword(password)) {
+      setPasswordError(
+        "Minimum 6 and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character:"
+      );
+      return;
+    }
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
     formData.append("password", password);
     formData.append("avatar", avatar);
     dispatch(ragister(formData));
-    window.location.href = "/account";
+    window.location.reload();
   };
 
   useEffect(() => {
     if (error) {
-      alert(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      alert("login succesfull");
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   }, [dispatch, error, isAuthenticated]);
 
@@ -90,8 +113,10 @@ export default function LoginSignUp() {
                           type="email"
                           placeholder="Email"
                           value={loginEmail}
-                          required
                           onChange={(e) => setLoginEmail(e.target.value)}
+                          minLength="6"
+                          maxLength="32"
+                          required
                         />
                       </div>
                       <div className="loginFormPassword">
@@ -102,7 +127,12 @@ export default function LoginSignUp() {
                           value={loginpassword}
                           required
                           onChange={(e) => setLoginPassword(e.target.value)}
+                          minLength="6"
+                          maxLength="32"
                         />
+                        {passwordError && (
+                          <div className="passwordValid">{passwordError}</div>
+                        )}
                       </div>
                       <Link className="forwardPassword" to="/reset/password">
                         Farget Password?
@@ -130,6 +160,8 @@ export default function LoginSignUp() {
                           name="name"
                           required
                           onChange={(e) => setName(e.target.value)}
+                          minLength="6"
+                          maxLength="32"
                         />
                       </div>
                       <div className="RagisterFormText">
@@ -141,18 +173,26 @@ export default function LoginSignUp() {
                           value={email}
                           required
                           onChange={(e) => setEmail(e.target.value)}
+                          minLength="6"
+                          maxLength="32"
                         />
                       </div>
                       <div className="RagisterFormText">
                         <LockOpen />
                         <input
+                          id="psw"
                           type="password"
                           placeholder="Password"
                           name="password"
                           value={password}
-                          required
                           onChange={(e) => setPassword(e.target.value)}
+                          required
+                          minLength="6"
+                          maxLength="32"
                         />
+                        {passwordError && (
+                          <div className="passwordValid">{passwordError}</div>
+                        )}
                       </div>
                       <div className="registerImage">
                         <img src={avatarPreview} alt="Avatar Preview" />
@@ -175,6 +215,7 @@ export default function LoginSignUp() {
               </Box>
             </div>
           </div>
+          <ToastContainer />
         </Fragment>
       )}
     </Fragment>

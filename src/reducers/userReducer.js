@@ -32,8 +32,8 @@ export const userReducer = (state = { user: {}, token: {} }, action) => {
         ...state,
         loding: false,
         isAuthenticated: true,
-        user: action.payload,
-        token: action.payload,
+        user: action.payload.user,
+        token: action.payload.token,
       };
 
     case LOGOUT_USER_SUCCESS:
@@ -51,13 +51,13 @@ export const userReducer = (state = { user: {}, token: {} }, action) => {
         isAuthenticated: false,
         user: null,
         token: null,
-        error: action.payload,
+        error: action.payload.message,
       };
     case LOGOUT_USER_FAILURE:
       return {
         ...state,
         loding: false,
-        error: action.payload,
+        error: action.payload.message,
       };
 
     case CLEAR_ERRORS:
@@ -80,14 +80,14 @@ export const loadUserReducer = (state = { user: {} }, action) => {
         ...state,
         loding: false,
         isAuthenticated: true,
-        user: action.payload,
+        user: action.payload.user,
       };
     case LOAD_USER_FAILURE:
       return {
         loding: false,
         isAuthenticated: false,
         user: null,
-        error: action.payload,
+        error: action.payload.message,
       };
 
     case CLEAR_ERRORS:
@@ -118,7 +118,7 @@ export const updateReducer = (state = {}, action) => {
       return {
         ...state,
         loding: false,
-        error: action.payload,
+        error: action.payload.message,
       };
     case UPDATE_USER_RESET:
     case UPDATE_USER_AVATAR_RESET:
