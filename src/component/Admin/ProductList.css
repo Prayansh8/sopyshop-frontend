@@ -1,0 +1,40 @@
+.deleteProductBtn {
+  border: none;
+  background: none;
+  margin: 0 2vh;
+}
+
+.DataGIrd {
+  overflow: auto;
+  height: 80%;
+}
+.AdminProductCont {
+  margin: 2vh;
+  display: flex;
+}
+.ProductHed {
+  width: 50%;
+  margin: auto;
+}
+
+.ProductCreteBtn {
+  margin: auto;
+  width: 50%;
+  text-align: end;
+}
+
+.ProductCreteBtn a button{
+  border: 2px solid rgb(52, 52, 52);
+  border-radius: 6px;
+  padding: 5px 20px;
+  text-decoration: none;
+  background-color: tomato;
+  color: white;
+  font-weight: 500;
+}
+  
+.MuiDataGrid-columnHeaders {
+  background-color: tomato;
+  color: white;
+  border: 1px solid black;
+}

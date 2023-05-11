@@ -110,6 +110,7 @@
 }
 .card-img-top {
   width: 100%;
+  height: 300px;
 }
 
 .productCardsContainer {
@@ -117,6 +118,8 @@
   flex-wrap: wrap;
   width: 75%;
 }
+
+
 
 @media screen and (max-width: 600px) {
   .banner a button {

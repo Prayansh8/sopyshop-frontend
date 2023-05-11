@@ -1,4 +1,4 @@
-.mainCont {
+.mainContOrd {
   width: 80%;
   margin: 4vh auto;
 }
@@ -140,4 +140,19 @@
 .totalDetails div {
   text-align: end;
   width: 30%;
+}
+
+.totalTextInOrder {
+  width: 50%;
+  font-size: 20px;
+  text-transform: capitalize;
+}
+.totllPriceInOrd {
+  width: 50%;
+  text-align: end;
+  font-size: 18px;
+  font-weight: 500;
+  color: black;
+  padding: 0 8px 0 0;
+  margin: auto 0;
 }

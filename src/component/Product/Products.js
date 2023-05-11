@@ -12,7 +12,15 @@ import { Slider } from "@mui/material";
 import MataData from "../layout/MataData";
 
 export default function Products() {
-  const categories = ["Laptop", "Daskstop", "Moniter", "Jacket", "Camera"];
+  const categories = [
+    "Clothes",
+    "Shoos",
+    "Laptop",
+    "Daskstop",
+    "Moniter",
+    "Jacket",
+    "Camera",
+  ];
   const { keyword } = useParams();
   const [price, setPrice] = useState([0, 25000]);
   const [category, setCategory] = useState("");
