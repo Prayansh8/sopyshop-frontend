@@ -18,6 +18,9 @@ import Cart from "./component/Cart/Cart.js";
 import Shipping from "./component/Cart/Shipping.js";
 import ComfirmOrder from "./component/Cart/ComfirmOrder.js";
 import UpdateAvatar from "./component/User/UpdateAvatar";
+import Dashboard from "./component/Admin/Dashboard";
+import ProductList from "./component/Admin/ProductList";
+import CreateProduct from "./component/Admin/CreateProduct";
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
@@ -66,19 +69,29 @@ function App() {
               />
             }
           />
+
           {isAuthenticated && (
-            <Route
-              extact
-              path="/update"
-              element={<UpdateUser user={user} loading={loading} />}
-            />
+            <>
+              <Route
+                extact
+                path="/update"
+                element={<UpdateUser user={user} loading={loading} />}
+              />
+              <Route
+                extact
+                path="/update/avatar"
+                element={<UpdateAvatar user={user} loading={loading} />}
+              />
+            </>
           )}
-          {isAuthenticated && (
-            <Route
-              extact
-              path="/update/avatar"
-              element={<UpdateAvatar user={user} loading={loading} />}
-            />
+          {user && user.role === "admin" && (
+            <>
+              <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/admin/product" element={<ProductList />} />
+              <Route path="/admin/create/product" element={<CreateProduct />} />
+              <Route path="/admin/orders" element={<Dashboard />} />
+              <Route path="/admin/users" element={<Dashboard />} />
+            </>
           )}
         </Routes>
         <Footer />

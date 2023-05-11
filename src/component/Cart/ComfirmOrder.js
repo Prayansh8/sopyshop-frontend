@@ -14,13 +14,14 @@ const ComfirmOrder = () => {
   );
 
   const shippingCharges = subtotal > 1000 ? 0 : 60;
-  const tax = subtotal * 0.18;
+  const taxVal = subtotal * 0.18;
+  const tax = Math.round(taxVal);
   const totalPrice = subtotal + shippingCharges + tax;
 
   const address = `${shippingInfo.address},${shippingInfo.city},${shippingInfo.state},${shippingInfo.pinCode},${shippingInfo.country}`;
   return (
     <Fragment>
-      <div className="mainCont">
+      <div className="mainContOrd">
         <CheckOutStep aciveStap={1} />
         <div className="row">
           <div className="col-7 border-e">
@@ -100,10 +101,14 @@ const ComfirmOrder = () => {
                   </div>
                 </div>
                 <div className="totalP">
-                  <p>
-                    <b>total:</b>
-                  </p>
-                  <span>₹{totalPrice}</span>
+                  <div className="totalTextInOrder">
+                    <p>
+                      <b>total:</b>
+                    </p>
+                  </div>
+                  <div className="totllPriceInOrd">
+                    <span>₹{totalPrice}</span>
+                  </div>
                 </div>
                 <button className="ProccedBtn">Procced to Payment</button>
               </div>

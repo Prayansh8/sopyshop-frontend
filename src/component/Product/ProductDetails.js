@@ -9,6 +9,8 @@ import Loader from "../layout/Loader/Loader.js";
 import ReviewsCard from "./ReviewsCard.js";
 import { addItemToCart } from "../../actions/cartAction";
 import MataData from "../layout/MataData";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -30,7 +32,7 @@ const ProductDetails = () => {
     isHalf: true,
   };
 
-  const [quintity, setQuintity] = useState(0);
+  const [quintity, setQuintity] = useState(1);
 
   const handlePlusClick = () => {
     if (product.stock <= quintity) return;
@@ -46,7 +48,7 @@ const ProductDetails = () => {
 
   const addToCartHendler = () => {
     dispatch(addItemToCart(id, quintity));
-    alert("item added to cart");
+    toast.success("item added to cart");
   };
 
   return (
@@ -153,6 +155,7 @@ const ProductDetails = () => {
                 <p>NO Reviews Yet</p>
               )}
             </div>
+            <ToastContainer />
           </Fragment>
         )}
       </Fragment>

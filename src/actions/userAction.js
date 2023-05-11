@@ -39,7 +39,6 @@ export const login = (email, password) => async (dispatch) => {
       configData
     );
     const token = await data.token;
-    console.log(token);
     localStorage.setItem("token", token);
     dispatch({ type: LOGIN_SUCCESS, payload: data });
   } catch (error) {
