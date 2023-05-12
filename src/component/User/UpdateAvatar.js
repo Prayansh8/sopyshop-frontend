@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UpdateAvatarAction, clearErrors } from "../../actions/userAction";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const UpdateAvatar = ({ user, loading }) => {
@@ -56,7 +56,6 @@ const UpdateAvatar = ({ user, loading }) => {
           />
         </form>
       </div>
-      <ToastContainer />
     </Fragment>
   );
 };

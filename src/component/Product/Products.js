@@ -15,22 +15,24 @@ export default function Products() {
   const categories = [
     "Clothes",
     "Shoos",
+    "Phone",
     "Laptop",
     "Daskstop",
-    "Moniter",
     "Jacket",
     "Camera",
   ];
   const { keyword } = useParams();
-  const [price, setPrice] = useState([0, 25000]);
-  const [category, setCategory] = useState("");
+  const [price, setPrice] = useState([0, 150000]);
+  const [category, setCategory] = useState();
 
-  const [currentPage, setCurrentPage] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const dispatch = useDispatch();
-  const { products, loading, productsCount, resultPerPage } = useSelector(
+  const { products, loading, productsCount } = useSelector(
     (state) => state.products
   );
+
+  const resultPerPage = 8
 
   const handlePriceChange = (e, newPrice) => {
     setPrice(newPrice);
@@ -63,7 +65,7 @@ export default function Products() {
                       valueLabelDisplay="off"
                       aria-labelledby="range-slider"
                       min={0}
-                      max={25000}
+                      max={150000}
                     />
                   </div>
                   <div className="catogeryContainer">

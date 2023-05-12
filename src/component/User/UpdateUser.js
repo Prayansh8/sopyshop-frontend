@@ -3,7 +3,7 @@ import { Face, MailOutlineOutlined } from "@mui/icons-material";
 import "./UpdateUser.css";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, update } from "../../actions/userAction";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const UpdateUser = ({ user, loading }) => {
@@ -61,7 +61,6 @@ const UpdateUser = ({ user, loading }) => {
           />
         </form>
       </div>
-      <ToastContainer />
     </Fragment>
   );
 };

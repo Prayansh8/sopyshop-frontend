@@ -20,37 +20,27 @@ import {
 import { config } from "../config";
 
 // get all products
+export const getProducts =
+  (keyword = "", price = [0, 150000], currentPage = 1, category) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: GET_PRODUCTS_REQUEST });
 
-export const getProducts = (
-  keyword = "",
-  price = [0, 25000],
-  currentPage = 1,
-  category
-) => {
-  return async (dispatch) => {
-    dispatch({ type: GET_PRODUCTS_REQUEST });
+      let link = `${config.baseUrl}/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&page=${currentPage}`;
 
-    let link = `${config.baseUrl}/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&page=${currentPage}`;
+      if (category) {
+        link = `${config.baseUrl}/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&page=${currentPage}&category=${category}`;
+      }
 
-    if (category) {
-      link = `${config.baseUrl}/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&page=${currentPage}&category=${category}`;
-    }
-    await axios
-      .get(link)
-      .then((response) => {
-        dispatch({
-          type: GET_PRODUCTS_SUCCESS,
-          payload: response.data,
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: GET_PRODUCTS_FAILURE,
-          payload: error.response.data.message,
-        });
+      const { data } = await axios.get(link);
+      dispatch({ type: GET_PRODUCTS_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: GET_PRODUCTS_FAILURE,
+        payload: error.response.data.message,
       });
+    }
   };
-};
 
 // get all product by admin
 export const getAdminProducts = () => async (dispatch) => {
@@ -73,40 +63,18 @@ export const getAdminProducts = () => async (dispatch) => {
   }
 };
 
-const getProductDetailsRequest = () => {
-  return {
-    type: PRODUCTS_DETAILS_REQUEST,
-  };
-};
+// Get Product Details
 
-const getProductsDetailsSuccess = (product) => {
-  return {
-    type: PRODUCTS_DETAILS_SUCCESS,
-    payload: product,
-  };
-};
+export const getProductDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCTS_DETAILS_REQUEST });
 
-const getProductsDetailsFailure = (error) => {
-  return {
-    type: PRODUCTS_DETAILS_FAILURE,
-    payload: error,
-  };
-};
+    const { data } = await axios.get(`${config.baseUrl}/api/v1/product/${id}`);
 
-export const getProductDetails = (id) => {
-  return async (dispatch) => {
-    dispatch(getProductDetailsRequest(id));
-    await axios
-      .get(`${config.baseUrl}/api/v1/product/${id}`)
-      .then((response) => {
-        const product = response.data.product;
-        dispatch(getProductsDetailsSuccess(product));
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        dispatch(getProductsDetailsFailure(errorMessage));
-      });
-  };
+    dispatch({ type: PRODUCTS_DETAILS_SUCCESS, payload: data.product });
+  } catch (error) {
+    dispatch({ type: PRODUCTS_DETAILS_FAILURE, payload: error.response.data });
+  }
 };
 
 // create new product by admin
