@@ -21,6 +21,7 @@ import UpdateAvatar from "./component/User/UpdateAvatar";
 import Dashboard from "./component/Admin/Dashboard";
 import ProductList from "./component/Admin/ProductList";
 import CreateProduct from "./component/Admin/CreateProduct";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
@@ -96,6 +97,7 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
+      <ToastContainer />
     </>
   );
 }

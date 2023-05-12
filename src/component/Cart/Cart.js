@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemToCart } from "../../actions/cartAction.js";
 import MataData from "../layout/MataData";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Cart = ({ isAuthenticated }) => {
   const navigate = useNavigate();
@@ -34,12 +35,18 @@ const Cart = ({ isAuthenticated }) => {
   };
 
   const checkOutHendler = () => {
-    if (isAuthenticated === true) {
-      navigate("/shipping");
+    if (cartItems.length === 0) {
+      toast.error("Please added the product");
+      navigate("/products");
     } else {
-      navigate("/account");
+      if (isAuthenticated === true) {
+        navigate("/shipping");
+      } else {
+        navigate("/account");
+      }
     }
   };
+
   return (
     <Fragment>
       <MataData title={"Sopyshop-Cart"} />
@@ -97,7 +104,7 @@ const Cart = ({ isAuthenticated }) => {
             </div>
           </div>
           <div className="checkoutCont">
-            <button className="checkoutBtn" onClick={checkOutHendler}>
+            <button className="checkoutBtn" onClick={(e) => checkOutHendler()}>
               Checkout Now
             </button>
           </div>

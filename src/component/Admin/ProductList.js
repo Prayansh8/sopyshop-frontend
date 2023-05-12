@@ -8,7 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { deleteProduct, getAdminProducts } from "../../actions/productAction";
 import "./ProductList.css";
 import { CLEAR_ERRORS } from "../../constants/productConstant";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -108,7 +108,6 @@ const ProductList = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </Fragment>
   );
 };

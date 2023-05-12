@@ -9,7 +9,7 @@ import Loader from "../layout/Loader/Loader.js";
 import ReviewsCard from "./ReviewsCard.js";
 import { addItemToCart } from "../../actions/cartAction";
 import MataData from "../layout/MataData";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetails = () => {
@@ -155,7 +155,6 @@ const ProductDetails = () => {
                 <p>NO Reviews Yet</p>
               )}
             </div>
-            <ToastContainer />
           </Fragment>
         )}
       </Fragment>

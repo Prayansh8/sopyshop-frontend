@@ -9,7 +9,7 @@ import { clearErrors, login, ragister } from "../../actions/userAction";
 import Loader from "../layout/Loader/Loader";
 import { useEffect } from "react";
 import profile from "./profile.png";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function LoginSignUp() {
@@ -215,7 +215,6 @@ export default function LoginSignUp() {
               </Box>
             </div>
           </div>
-          <ToastContainer />
         </Fragment>
       )}
     </Fragment>
