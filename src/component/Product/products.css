@@ -22,7 +22,7 @@
   list-style: none;
   margin: 2px 4px;
 }
-.itemClass a{
+.itemClass a {
   border-radius: 4px;
   padding: 6px 14px;
   border: 1px solid black;
@@ -31,13 +31,13 @@
   color: black;
 }
 
-.itemClass a:hover{
+.itemClass a:hover {
   background-color: rgb(165, 93, 80);
   color: rgb(66, 66, 66);
 }
 
 /* Filter Box */
-.filter-h{
+.filter-h {
   font-size: 30px;
   padding: 4px 0;
   border-bottom: 2px solid;
@@ -48,31 +48,31 @@
   margin: 4vh 0;
   padding: 0 4px;
 }
-.fillterBoxSlider{
+.fillterBoxSlider {
   padding: 0 12px;
   width: 90%;
 }
 .fillterBoxSlider span {
   font-size: 12px;
 }
-.price-h{
+.price-h {
   font-size: 20px;
 }
 
-.cate-h{
+.cate-h {
   font-size: 20px;
 }
 
-.catogeryContainer{
+.catogeryContainer {
   margin: 1vh 0;
 }
 
-.catogeryBox{
+.catogeryBox {
   cursor: pointer;
   padding: 2px 12px;
 }
 
-.catogeryBox li{
+.catogeryBox li {
   list-style: none;
   color: white;
   font-size: 16px;
@@ -81,18 +81,18 @@
   padding: 0;
 }
 
-.catogeryBox li:hover{
+.catogeryBox li:hover {
   color: tomato;
 }
 
-.productbar{
+.productbar {
   width: 84%;
 }
 /* sidewar */
-.sidewar{
+.sidewar {
   width: 16%;
 }
-.sidewarBox{
+.sidewarBox {
   color: white;
   padding: 2vh;
 }
@@ -105,8 +105,56 @@
   user-select: none;
 }
 
-@media (min-width: 768px) {
+@media screen and (max-width: 600px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
+  }
+  .sidewar {
+    width: 30%;
+  }
+
+  /* Filter Box */
+  .filter-h {
+    font-size: 22px;
+  }
+  .sidewarBox {
+    padding: 1vh;
+  }
+  .cate-h {
+    font-size: 18px;
+  }
+
+  .catogeryBox {
+    padding: 2px 6px;
+  }
+  .fillterBoxSlider {
+    padding: 0 6px;
+    width: 100%;
+  }
+  .productbar {
+    width: 70%;
+  }
+  /* pagination */
+  .paginationBoc {
+    width: 100%;
+    margin: 2px auto;
+  }
+  .itemClass a {
+    font-size: 10px;
+    padding: 3px 7px;
+    border: 1px solid black;
+    text-decoration: none;
+    background-color: tomato;
+    color: black;
+  }
+  .itemClass {
+    list-style: none;
+    margin: 2px 2px;
+  }
+  .pagination {
+    justify-content: center;
+  }
+  .heading {
+    width: 50%;
   }
 }

@@ -82,6 +82,7 @@ export default function Account({ user, loading, isAuthenticated }) {
                       </button>
                     </div>
                   </div>
+                  <br />
                   <div>
                     {user.role === "admin" ? (
                       <div>
