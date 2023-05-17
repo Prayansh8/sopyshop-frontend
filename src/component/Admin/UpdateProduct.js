@@ -1,21 +1,28 @@
 import React, { Fragment, useEffect, useState } from "react";
+import {
+  adminUpdateProduct,
+  getProductDetails,
+} from "../../actions/productAction";
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct } from "../../actions/productAction";
-import "./CreateProduct.css";
 import { CLEAR_ERRORS } from "../../constants/productConstant";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
-const CreateProduct = () => {
+const UpdateProduct = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.newProducts);
+  const { id } = useParams();
+
+  const { loading, error } = useSelector((state) => state.updateProduct);
+  const { product } = useSelector((state) => state.productDetails);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
   const [stock, setStock] = useState(0);
-  const [images, setImages] = useState([]);
-  const [imagePreviews, setImagePreviews] = useState([]);
+  // const [images, setImages] = useState([]);
+  // const [oldImages, setOldImages] = useState([]);
+  // const [imagePreviews, setImagePreviews] = useState([]);
 
   let maxLengthCheck = (object) => {
     if (object.target.value.length > object.target.maxLength) {
@@ -36,19 +43,19 @@ const CreateProduct = () => {
     "Camera",
   ];
 
-  const handleImageChange = (event) => {
-    const newImages = [...images, event.target.files[0]];
-    setImages(newImages);
+  // const handleImageChange = (event) => {
+  //   const newImages = [...images, event.target.files[0]];
+  //   setImages(newImages);
 
-    const newImagePreviews = [];
-    for (let i = 0; i < newImages.length; i++) {
-      const url = URL.createObjectURL(newImages[i]);
-      newImagePreviews.push(url);
-    }
-    setImagePreviews(newImagePreviews);
-  };
+  //   const newImagePreviews = [];
+  //   for (let i = 0; i < newImages.length; i++) {
+  //     const url = URL.createObjectURL(newImages[i]);
+  //     newImagePreviews.push(url);
+  //   }
+  //   setImagePreviews(newImagePreviews);
+  // };
 
-  const ProductSubmit = (e) => {
+  const updateProductSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -58,28 +65,40 @@ const CreateProduct = () => {
     formData.append("category", category);
     formData.append("stock", stock);
 
-    for (let i = 0; i < images.length; i++) {
-      formData.append("images", images[i]);
-    }
-    dispatch(createProduct(formData));
+    // for (let i = 0; i < images.length; i++) {
+    //   formData.append("images", images[i]);
+    // }
+    dispatch(adminUpdateProduct(id, formData));
     toast.success("Create Product Successful!");
-    setTimeout(() => {
-      window.location.reload()
-    }, 3000);
   };
 
   useEffect(() => {
+    if (product && product._id !== id) {
+      dispatch(getProductDetails(id));
+    } else {
+      setName(product.name);
+      setDescription(product.description);
+      setPrice(product.price);
+      setCategory(product.category);
+      setStock(product.stock);
+      // setOldImages(product.images);
+    }
+
     if (error) {
       toast.error(error);
       dispatch(CLEAR_ERRORS);
     }
-  }, [error, dispatch]);
+  }, [error, dispatch, product, id]);
 
   return (
     <Fragment>
       <div className="container">
         <div className="createProductContaner">
-          <form id="Product" onSubmit={ProductSubmit} className="loginForm">
+          <form
+            id="Product"
+            onSubmit={updateProductSubmit}
+            className="loginForm"
+          >
             <div className="createProductFormText">
               <input
                 type="text"
@@ -105,7 +124,10 @@ const CreateProduct = () => {
               />
             </div>
             <div className="createProductFormText">
-              <select onChange={(e) => setCategory(e.target.value)}>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
                 <option>Choose Category</option>
                 {categories.map((category) => (
                   <option key={category} value={category}>
@@ -138,7 +160,7 @@ const CreateProduct = () => {
                 required
               />
             </div>
-            <div className="registerImage">
+            {/* <div className="registerImage">
               <input
                 type="file"
                 name="image"
@@ -149,13 +171,19 @@ const CreateProduct = () => {
               />
             </div>
             <div className="imagepriviue">
-              {imagePreviews.map((url) => (
-                <img key={url} src={url} alt="Preview" />
-              ))}
+              {oldImages &&
+                oldImages.map((url) => (
+                  <img key={url} src={url.url} alt="Old images" />
+                ))}
             </div>
+            <div className="imagepriviue">
+              {imagePreviews.map((url) => (
+                <img key={url} src={url} alt="Preview Images" />
+              ))}
+            </div> */}
             <input
               type="submit"
-              value="Create"
+              value="Update"
               className="submitBtn"
               disabled={loading ? true : false}
             />
@@ -166,4 +194,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

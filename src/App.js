@@ -22,6 +22,8 @@ import Dashboard from "./component/Admin/Dashboard";
 import ProductList from "./component/Admin/ProductList";
 import CreateProduct from "./component/Admin/CreateProduct";
 import { ToastContainer } from "react-toastify";
+import Users from "./component/Admin/Users";
+import UpdateProduct from "./component/Admin/UpdateProduct";
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
@@ -90,8 +92,12 @@ function App() {
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/product" element={<ProductList />} />
               <Route path="/admin/create/product" element={<CreateProduct />} />
+              <Route
+                path="/admin/update/product/:id"
+                element={<UpdateProduct />}
+              />
               <Route path="/admin/orders" element={<Dashboard />} />
-              <Route path="/admin/users" element={<Dashboard />} />
+              <Route path="/admin/users" element={<Users />} />
             </>
           )}
         </Routes>

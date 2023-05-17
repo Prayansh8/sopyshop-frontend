@@ -16,6 +16,10 @@ import {
   DELETE_PRODUCTS_SUCCESS,
   DELETE_PRODUCTS_FAILURE,
   DELETE_PRODUCTS_RESET,
+  UPDATE_PRODUCTS_REQUEST,
+  UPDATE_PRODUCTS_SUCCESS,
+  UPDATE_PRODUCTS_FAILURE,
+  UPDATE_PRODUCTS_RESET,
   CLEAR_ERRORS,
 } from "../constants/productConstant";
 
@@ -47,7 +51,7 @@ export const productsReducer = (state = { products: [] }, action) => {
       return state;
   }
 };
-
+// create Product
 export const newProductsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
     case NEW_PRODUCTS_REQUEST:
@@ -69,7 +73,7 @@ export const newProductsReducer = (state = { product: {} }, action) => {
       return state;
   }
 };
-
+// get product details
 export const productDetailsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
     case PRODUCTS_DETAILS_REQUEST:
@@ -96,7 +100,7 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
       return state;
   }
 };
-
+// delete product
 export const deleteProductReducer = (state = {}, action) => {
   switch (action.type) {
     case DELETE_PRODUCTS_REQUEST:
@@ -118,6 +122,38 @@ export const deleteProductReducer = (state = {}, action) => {
       };
     case DELETE_PRODUCTS_RESET:
       return { ...state, isDeleted: false };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+// Product Update By Admin
+export const updateProductReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_PRODUCTS_REQUEST:
+      return { ...state, loding: true };
+    case UPDATE_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        isUpdated: action.payload,
+      };
+    case UPDATE_PRODUCTS_FAILURE:
+      return {
+        ...state,
+        loding: false,
+        error: action.payload.message,
+      };
+    case UPDATE_PRODUCTS_RESET:
+      return {
+        ...state,
+        isUpdated: false,
+      };
     case CLEAR_ERRORS:
       return {
         ...state,
