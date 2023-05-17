@@ -2,8 +2,34 @@ import React from "react";
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
+import Paper from "@mui/material/Paper";
+import {
+  ArgumentAxis,
+  ValueAxis,
+  Chart,
+  LineSeries,
+  PieSeries,
+} from "@devexpress/dx-react-chart-material-ui";
 
 const Dashboard = () => {
+  const data = [
+    { argument: 1, value: 10 },
+    { argument: 2, value: 14 },
+    { argument: 3, value: 28 },
+    { argument: 4, value: 22 },
+    { argument: 5, value: 31 },
+  ];
+
+  const chartData = [
+    { country: 'Russia', area: 12 },
+    { country: 'Canada', area: 7 },
+    { country: 'USA', area: 7 },
+    { country: 'China', area: 7 },
+    { country: 'Brazil', area: 6 },
+    { country: 'Australia', area: 5 },
+    { country: 'India', area: 2 },
+    { country: 'Others', area: 55 },
+  ];
   return (
     <div>
       <div className="mainCont">
@@ -43,7 +69,22 @@ const Dashboard = () => {
               </Link>
             </div>
           </div>
-          <div className="lineChart"></div>
+          <br /> 
+          <div className="lineChart">
+            <Paper>
+              <Chart data={data}>
+                <ArgumentAxis />
+                <ValueAxis />
+
+                <LineSeries valueField="value" argumentField="argument" />
+              </Chart>
+            </Paper><br />
+            <Paper>
+              <Chart data={chartData}>
+                <PieSeries valueField="area" argumentField="country" />
+              </Chart>
+            </Paper>
+          </div>
         </div>
       </div>
     </div>

@@ -19,6 +19,16 @@ import {
   UPDATE_USER_AVATAR_SUCCESS,
   UPDATE_USER_AVATAR_FAILURE,
   UPDATE_USER_AVATAR_RESET,
+  GET_ALL_USERS_REQUEST,
+  GET_ALL_USERS_SUCCESS,
+  GET_ALL_USERS_FAILURE,
+  ADMIN_UPDATE_USER_REQUEST,
+  ADMIN_UPDATE_USER_SUCCESS,
+  ADMIN_UPDATE_USER_FAILURE,
+  ADMIN_UPDATE_USER_RESET,
+  GET_USER_REQUEST,
+  GET_USER_FAILURE,
+  GET_USER_SUCCESS,
 } from "../constants/userConstants";
 
 export const userReducer = (state = { user: {}, token: {} }, action) => {
@@ -101,6 +111,8 @@ export const loadUserReducer = (state = { user: {} }, action) => {
   }
 };
 
+// update user
+
 export const updateReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_USER_REQUEST:
@@ -122,6 +134,94 @@ export const updateReducer = (state = {}, action) => {
       };
     case UPDATE_USER_RESET:
     case UPDATE_USER_AVATAR_RESET:
+      return {
+        ...state,
+        isUpdated: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const getAllUsersReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case GET_ALL_USERS_REQUEST:
+      return { ...state, loding: true };
+    case GET_ALL_USERS_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        users: action.payload.users,
+      };
+    case GET_ALL_USERS_FAILURE:
+      return {
+        loding: false,
+        users: null,
+        error: action.payload.message,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getUserReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case GET_USER_REQUEST:
+      return { ...state, loding: true };
+    case GET_USER_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        user: action.payload.user,
+      };
+    case GET_USER_FAILURE:
+      return {
+        loding: false,
+        user: null,
+        error: action.payload.message,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// Product Update By Admin
+export const updateUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADMIN_UPDATE_USER_REQUEST:
+      return { ...state, loding: true };
+    case ADMIN_UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        isUpdated: action.payload,
+      };
+    case ADMIN_UPDATE_USER_FAILURE:
+      return {
+        ...state,
+        loding: false,
+        error: action.payload.message,
+      };
+    case ADMIN_UPDATE_USER_RESET:
       return {
         ...state,
         isUpdated: false,

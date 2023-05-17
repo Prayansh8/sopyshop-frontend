@@ -13,6 +13,9 @@ import {
   DELETE_PRODUCTS_REQUEST,
   DELETE_PRODUCTS_SUCCESS,
   DELETE_PRODUCTS_FAILURE,
+  UPDATE_PRODUCTS_REQUEST,
+  UPDATE_PRODUCTS_SUCCESS,
+  UPDATE_PRODUCTS_FAILURE,
   NEW_PRODUCTS_REQUEST,
   NEW_PRODUCTS_SUCCESS,
   NEW_PRODUCTS_FAILURE,
@@ -118,5 +121,32 @@ export const deleteProduct = (id) => async (dispatch) => {
     dispatch({ type: DELETE_PRODUCTS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: DELETE_PRODUCTS_FAILURE, payload: error.response.data });
+  }
+};
+
+// Update Product By Admin
+
+export const adminUpdateProduct = (id, productData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_PRODUCTS_REQUEST });
+    const token = localStorage.getItem("token");
+    const configData = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.patch(
+      `${config.baseUrl}/api/v1/product/update/${id}`,
+      productData,
+      configData
+    );
+    dispatch({ type: UPDATE_PRODUCTS_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PRODUCTS_FAILURE,
+      payload: error.response.data,
+    });
   }
 };

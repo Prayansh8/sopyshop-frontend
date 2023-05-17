@@ -1,49 +1,41 @@
 import React, { Fragment, useEffect } from "react";
+import { getAllUsers } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { deleteProduct, getAdminProducts } from "../../actions/productAction";
 import "./ProductList.css";
-import { CLEAR_ERRORS } from "../../constants/productConstant";
 import { toast } from "react-toastify";
 
-const ProductList = () => {
+const Users = () => {
   const dispatch = useDispatch();
-  const { products, error } = useSelector((state) => state.products);
-  const { isDeleteded } = useSelector((state) => state.deleteProduct);
-  const deleteProductHendeler = (id) => {
-    dispatch(deleteProduct(id));
+  const { users, error } = useSelector((state) => state.getAllUsers);
+
+  const deleteUserHendeler = () => {
     window.location.reload();
   };
+
   useEffect(() => {
     if (error) {
       toast.error(error);
-      dispatch(CLEAR_ERRORS);
     }
-
-    if (isDeleteded) {
-      toast.success("Product Deleted");
-    }
-    dispatch(getAdminProducts());
-  }, [error, dispatch, isDeleteded]);
+    dispatch(getAllUsers());
+  }, [error, dispatch]);
 
   const columns = [
-    { field: "id", headerName: "Product Id", minWidth: 300, flex: 0.5 },
-    { field: "name", headerName: "Name", minWidth: 350, flex: 1 },
+    { field: "id", headerName: "user Id", minWidth: 300, flex: 0.5 },
+    { field: "name", headerName: "Name", minWidth: 300, flex: 1 },
     {
-      field: "stock",
-      headerName: "Stock",
-      type: "number",
-      minWidth: 100,
+      field: "email",
+      headerName: "Email",
+      minWidth: 300,
       flex: 0.3,
     },
     {
-      field: "price",
-      headerName: "Price",
-      type: "number",
+      field: "role",
+      role: "Role",
       minWidth: 100,
       flex: 0.5,
     },
@@ -51,18 +43,18 @@ const ProductList = () => {
       field: "action",
       headerName: "Action",
       type: "number",
-      minWidth: 200,
+      minWidth: 180,
       flex: 0.3,
       sortable: false,
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link to={`/admin/update/product/${params.id}`}>
+            <Link to={`/admin/user/${params.id}`}>
               <EditIcon />
             </Link>
             <button
               className="deleteProductBtn"
-              onClick={() => deleteProductHendeler(params.id)}
+              onClick={() => deleteUserHendeler(params.id)}
             >
               <DeleteIcon />
             </button>
@@ -74,13 +66,13 @@ const ProductList = () => {
 
   const rows = [];
   {
-    products &&
-      products.forEach((item) => {
+    users &&
+      users.forEach((user) => {
         rows.push({
-          id: item._id,
-          stock: item.stock,
-          price: item.price,
-          name: item.name,
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
         });
       });
   }
@@ -94,11 +86,11 @@ const ProductList = () => {
           <div className="leftCont">
             <div className="AdminProductCont">
               <div className="ProductHed">
-                <h2>All Products</h2>
+                <h2>All Users</h2>
               </div>
               <div className="ProductCreteBtn">
-                <Link to={`/admin/create/product`}>
-                  <button>Create Product</button>
+                <Link to={`/admin/create/user`}>
+                  <button>Create User</button>
                 </Link>
               </div>
             </div>
@@ -112,4 +104,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default Users;

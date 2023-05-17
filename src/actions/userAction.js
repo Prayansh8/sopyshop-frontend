@@ -17,6 +17,15 @@ import {
   UPDATE_USER_AVATAR_REQUEST,
   UPDATE_USER_AVATAR_SUCCESS,
   UPDATE_USER_AVATAR_FAILURE,
+  GET_ALL_USERS_REQUEST,
+  GET_ALL_USERS_FAILURE,
+  GET_ALL_USERS_SUCCESS,
+  ADMIN_UPDATE_USER_REQUEST,
+  ADMIN_UPDATE_USER_SUCCESS,
+  ADMIN_UPDATE_USER_FAILURE,
+  GET_USER_REQUEST,
+  GET_USER_FAILURE,
+  GET_USER_SUCCESS,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 import { config } from "../config";
@@ -158,6 +167,84 @@ export const UpdateAvatarAction = (myAvatar) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_USER_AVATAR_FAILURE,
+      payload: error.response.data,
+    });
+  }
+};
+
+// get All Users
+
+export const getAllUsers = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_USERS_REQUEST });
+
+    const token = localStorage.getItem("token");
+    const configData = {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${config.baseUrl}/api/v1/users`,
+      configData
+    );
+    dispatch({ type: GET_ALL_USERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_USERS_FAILURE,
+      payload: error.response.data,
+    });
+  }
+};
+
+// get All Users
+
+export const getUserByAdmin = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_USER_REQUEST });
+    console.log(id);
+
+    const token = localStorage.getItem("token");
+    const configData = {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${config.baseUrl}/api/v1/user/${id}`,
+      configData
+    );
+    dispatch({ type: GET_USER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_FAILURE,
+      payload: error.response.data,
+    });
+  }
+};
+
+// Update user By Admin
+
+export const adminUpdateUser = (id, productData) => async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_UPDATE_USER_REQUEST });
+    const token = localStorage.getItem("token");
+    const configData = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.patch(
+      `${config.baseUrl}/api/v1/user/update/${id}`,
+      productData,
+      configData
+    );
+    dispatch({ type: ADMIN_UPDATE_USER_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_UPDATE_USER_FAILURE,
       payload: error.response.data,
     });
   }

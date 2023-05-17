@@ -6,10 +6,18 @@ import {
   newProductsReducer,
   productDetailsReducer,
   productsReducer,
+  updateProductReducer,
 } from "./reducers/productReducer";
-import { loadUserReducer, userReducer } from "./reducers/userReducer";
+import {
+  getAllUsersReducer,
+  getUserReducer,
+  loadUserReducer,
+  updateUserReducer,
+  userReducer,
+} from "./reducers/userReducer";
 import { update } from "./actions/userAction";
 import { cartReducer } from "./reducers/cartReducer";
+
 const reducer = combineReducers({
   products: productsReducer,
   productDetails: productDetailsReducer,
@@ -19,6 +27,10 @@ const reducer = combineReducers({
   cart: cartReducer,
   newProducts: newProductsReducer,
   deleteProduct: deleteProductReducer,
+  getAllUsers: getAllUsersReducer,
+  updateProduct: updateProductReducer,
+  getUser: getUserReducer,
+  updateUser: updateUserReducer,
 });
 
 const initialState = {
