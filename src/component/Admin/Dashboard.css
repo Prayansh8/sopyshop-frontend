@@ -90,4 +90,13 @@
   font-weight: 500;
 }
 
-
+@media screen and (max-width: 600px) {
+  .rightCont {
+    width: 30%;
+    /* padding: 12px 0; */
+  }
+  .leftCont {
+    width: 70%;
+    margin: 0 0vh;
+  }
+}

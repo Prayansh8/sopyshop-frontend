@@ -1,0 +1,20 @@
+.desh-side{
+    margin: 2vh 1vh;
+}
+
+.desh-text{
+    font-size: 24px;
+}
+
+.detx{
+    font-size: 22px;
+}
+@media screen and (max-width: 600px) {
+    .desh-text{
+        font-size: 12px;
+    }
+    .detx{
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+}

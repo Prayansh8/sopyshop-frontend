@@ -9,13 +9,19 @@
 .loading div {
   width: 10%;
   height: 10vmax;
-  border-bottom: 5px solid rgb(110,110,110);
+  border-bottom: 5px solid rgb(110, 110, 110);
   border-radius: 50%;
   animation: lodingRotate 800ms linear infinite;
 }
 
 @keyframes lodingRotate {
-    to{
-        transform: rotate(-360deg);
-    }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .loading {
+    height: 100vh;
+  }
 }

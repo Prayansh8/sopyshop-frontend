@@ -119,8 +119,6 @@
   width: 75%;
 }
 
-
-
 @media screen and (max-width: 600px) {
   .banner a button {
     width: 20vh;
@@ -136,7 +134,7 @@
     padding: 2px;
   }
   .cardTitle {
-    font-size: 12px;
+    font-size: 8px;
   }
   .reviews {
     font-size: 8px;
@@ -155,8 +153,12 @@
     width: 100%;
   }
 
-  .productStars{
+  .productStars {
     /* margin: 1px 0; */
     display: grid;
+  }
+  .card-img-top {
+    width: 80%;
+    height: 90px;
   }
 }
