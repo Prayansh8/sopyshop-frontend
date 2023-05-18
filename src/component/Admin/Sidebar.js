@@ -9,7 +9,8 @@ const Sidebar = () => {
         <div className="desh-side">
           <Link
             to="/admin/dashboard"
-            className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+            className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none justify-content-center
+            "
           >
             <span className="desh-text">Admin Dashboard</span>
           </Link>

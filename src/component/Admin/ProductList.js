@@ -73,17 +73,17 @@ const ProductList = () => {
   ];
 
   const rows = [];
-  {
-    products &&
-      products.forEach((item) => {
-        rows.push({
-          id: item._id,
-          stock: item.stock,
-          price: item.price,
-          name: item.name,
-        });
+
+  products &&
+    products.forEach((item) => {
+      rows.push({
+        id: item._id,
+        stock: item.stock,
+        price: item.price,
+        name: item.name,
       });
-  }
+    });
+
   return (
     <Fragment>
       <div>
