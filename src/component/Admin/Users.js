@@ -65,17 +65,17 @@ const Users = () => {
   ];
 
   const rows = [];
-  {
-    users &&
-      users.forEach((user) => {
-        rows.push({
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        });
+
+  users &&
+    users.forEach((user) => {
+      rows.push({
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
       });
-  }
+    });
+
   return (
     <Fragment>
       <div>
