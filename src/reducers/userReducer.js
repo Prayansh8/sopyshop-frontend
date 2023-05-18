@@ -176,29 +176,29 @@ export const getAllUsersReducer = (state = { users: [] }, action) => {
   }
 };
 
-export const getUserReducer = (state = { user: {} }, action) => {
+// get product details
+export const userDetailsReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case GET_USER_REQUEST:
-      return { ...state, loding: true };
+      return {
+        loading: true,
+        ...state,
+      };
     case GET_USER_SUCCESS:
       return {
-        ...state,
-        loding: false,
-        user: action.payload.user,
+        user: action.payload,
+        loading: false,
       };
     case GET_USER_FAILURE:
       return {
-        loding: false,
-        user: null,
+        loading: false,
         error: action.payload.message,
       };
-
     case CLEAR_ERRORS:
       return {
         ...state,
         error: null,
       };
-
     default:
       return state;
   }

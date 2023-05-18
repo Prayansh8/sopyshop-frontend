@@ -10,9 +10,9 @@ import {
 } from "./reducers/productReducer";
 import {
   getAllUsersReducer,
-  getUserReducer,
   loadUserReducer,
   updateUserReducer,
+  userDetailsReducer,
   userReducer,
 } from "./reducers/userReducer";
 import { update } from "./actions/userAction";
@@ -29,8 +29,8 @@ const reducer = combineReducers({
   deleteProduct: deleteProductReducer,
   getAllUsers: getAllUsersReducer,
   updateProduct: updateProductReducer,
-  getUser: getUserReducer,
   updateUser: updateUserReducer,
+  userDetails: userDetailsReducer,
 });
 
 const initialState = {

@@ -24,6 +24,7 @@ import CreateProduct from "./component/Admin/CreateProduct";
 import { ToastContainer } from "react-toastify";
 import Users from "./component/Admin/Users";
 import UpdateProduct from "./component/Admin/UpdateProduct";
+import AdminUpdateUser from "./component/Admin/AdminUpdateUser";
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
@@ -98,6 +99,7 @@ function App() {
               />
               <Route path="/admin/orders" element={<Dashboard />} />
               <Route path="/admin/users" element={<Users />} />
+              <Route path="/admin/user/:id" element={<AdminUpdateUser />} />
             </>
           )}
         </Routes>

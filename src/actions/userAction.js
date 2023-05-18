@@ -197,29 +197,26 @@ export const getAllUsers = () => async (dispatch) => {
   }
 };
 
-// get All Users
+// Get user Details
 
-export const getUserByAdmin = (id) => async (dispatch) => {
+export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_USER_REQUEST });
-    console.log(id);
-
     const token = localStorage.getItem("token");
     const configData = {
       headers: {
         authorization: `Bearer ${token}`,
       },
     };
+
     const { data } = await axios.get(
-      `${config.baseUrl}/api/v1/user/${id}`,
+      `${config.baseUrl}/api/v1//user/${id}`,
       configData
     );
-    dispatch({ type: GET_USER_SUCCESS, payload: data });
+
+    dispatch({ type: GET_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({
-      type: GET_USER_FAILURE,
-      payload: error.response.data,
-    });
+    dispatch({ type: GET_USER_FAILURE, payload: error.response.data });
   }
 };
 
