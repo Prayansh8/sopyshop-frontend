@@ -25,8 +25,8 @@ const Users = () => {
   }, [error, dispatch]);
 
   const columns = [
-    { field: "id", headerName: "user Id", minWidth: 300, flex: 0.5 },
-    { field: "name", headerName: "Name", minWidth: 300, flex: 1 },
+    { field: "id", headerName: "user Id", minWidth: 250, flex: 0.5 },
+    { field: "name", headerName: "Name", minWidth: 250, flex: 1 },
     {
       field: "email",
       headerName: "Email",
@@ -85,13 +85,8 @@ const Users = () => {
           </div>
           <div className="leftCont">
             <div className="AdminProductCont">
-              <div className="ProductHed">
+              <div>
                 <h2>All Users</h2>
-              </div>
-              <div className="ProductCreteBtn">
-                <Link to={`/admin/create/user`}>
-                  <button>Create User</button>
-                </Link>
               </div>
             </div>
             <div className="DataGIrd">
