@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { getAllUsers } from "../../actions/userAction";
+import { deleteUserByAdmin, getAllUsers } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
@@ -13,8 +13,10 @@ const Users = () => {
   const dispatch = useDispatch();
   const { users, error } = useSelector((state) => state.getAllUsers);
 
-  const deleteUserHendeler = () => {
-    window.location.reload();
+  const deleteUserHendeler = (id) => {
+    console.log("delete user" + id);
+    dispatch(deleteUserByAdmin(id));
+    // window.location.reload();
   };
 
   useEffect(() => {

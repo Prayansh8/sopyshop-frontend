@@ -26,6 +26,9 @@ import {
   GET_USER_REQUEST,
   GET_USER_FAILURE,
   GET_USER_SUCCESS,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAILURE,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 import { config } from "../config";
@@ -244,6 +247,28 @@ export const adminUpdateUser = (id, productData) => async (dispatch) => {
       type: ADMIN_UPDATE_USER_FAILURE,
       payload: error.response.data,
     });
+  }
+};
+
+// Delete user by admin
+export const deleteUserByAdmin = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_USER_REQUEST });
+
+    console.log(id);
+    const token = localStorage.getItem("token");
+    const configData = {
+      headers: { authorization: `Bearer ${token}` },
+    };
+
+    const { data } = await axios.delete(
+      `${config.baseUrl}/api/v1/admin/delete/${id}`,
+      configData
+    );
+
+    dispatch({ type: DELETE_USER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: DELETE_USER_FAILURE, payload: error.response.data });
   }
 };
 
