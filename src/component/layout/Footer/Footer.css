@@ -1,56 +1,28 @@
-.footer {
-  margin-top: 10vmax;
-  padding: 2vmax;
-  background-color: rgb(34, 33, 33);
-  color: white;
-  align-items: center;
+footer{
+  height: 8vh;
 }
 
-.leftFooter h1 {
-  font-size: 24px;
+.logoimg{
+  height: 30px;
+  width: 30px;
+  padding: 2px;
 }
 
-.leftFooter a img {
-  height: 4vmax;
-  width: 10vmax;
+.color-white{
+  color: rgb(202, 202, 202);
 }
 
-.midFooter img{
-width: 130px;
-height: 130px;
+.footer-text{
+  font-size: 18px;
 }
 
-@media only screen and (max-width: 600px) {
-  .leftFooter h1 {
-    font-size: 7px;
-  }
+@media screen and (max-width: 600px) {
 
-  .leftFooter p {
-    font-size: 5px;
-    margin-bottom: 0;
+  .footer-text{
+    font-size: 12px;
   }
-
-  .leftFooter a img {
-    height: 2vmax;
-    width: 5vmax;
-    font-size: 5px;
-  }
-  .midFooter h1 {
-    font-size: 7px;
-  }
-  .midFooter p {
-    font-size: 5px;
-  }
-  .midFooter img {
-    font-size: 8px;
-    height: 2vmax;
-    width: 6vmax;
-  }
-  .rightFooter h1 {
-    margin-bottom: 0;
-    font-size: 5px;
-  }
-  .rightFooter div a {
-    font-size: 6px;
+  .logoimg{
+    height: 25px;
+    width: 25px;
   }
 }
