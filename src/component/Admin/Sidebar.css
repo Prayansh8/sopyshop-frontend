@@ -10,7 +10,7 @@
     font-size: 18px;
     padding: 8px 28px;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
     .desh-text{
         font-size: 12px;
     }

@@ -5,7 +5,7 @@ import "./Sidebar.css";
 const Sidebar = () => {
   return (
     <div className="h-100">
-      <div className="d-flex flex-column flex-shrink-0 text-bg-dark h-100">
+      <div className="d-flex flex-column text-bg-dark h-100">
         <div className="desh-side">
           <Link
             to="/admin/dashboard"

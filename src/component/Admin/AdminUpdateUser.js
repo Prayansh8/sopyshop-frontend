@@ -4,6 +4,10 @@ import { CLEAR_ERRORS } from "../../constants/productConstant";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { adminUpdateUser, getUserDetails } from "../../actions/userAction";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import EmailIcon from "@mui/icons-material/Email";
+import BadgeIcon from "@mui/icons-material/Badge";
+import "./AdminUpdateUser.css"
 
 const AdminUpdateUser = () => {
   const dispatch = useDispatch();
@@ -34,7 +38,7 @@ const AdminUpdateUser = () => {
     formData.append("email", email);
 
     dispatch(adminUpdateUser(id));
-    toast.success("Create Product Successful!");
+    toast.success("update Product Successful!");
   };
 
   useEffect(() => {
@@ -55,13 +59,14 @@ const AdminUpdateUser = () => {
   return (
     <Fragment>
       <div className="container">
-        <div className="createProductContaner">
+        <div className="updateUserContaner">
           <form
             id="Product"
             onSubmit={updateProductSubmit}
             className="loginForm"
           >
-            <div className="createProductFormText">
+            <div className="updateUserFormText">
+              <AccountCircleIcon />
               <input
                 type="text"
                 placeholder="Name"
@@ -73,7 +78,8 @@ const AdminUpdateUser = () => {
                 maxLength="32"
               />
             </div>
-            <div className="createProductFormText">
+            <div className="updateUserFormText">
+              <EmailIcon />
               <input
                 type="text"
                 placeholder="Email"
@@ -85,7 +91,8 @@ const AdminUpdateUser = () => {
                 required
               />
             </div>
-            <div className="createProductFormText">
+            <div className="updateUserFormText">
+              <BadgeIcon />
               <input
                 type="text"
                 placeholder="Role"

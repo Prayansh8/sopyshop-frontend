@@ -7,6 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { CLEAR_ERRORS } from "../../constants/productConstant";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import "./CreateProduct.css";
+import EditIcon from "@mui/icons-material/Edit";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+import InventoryIcon from "@mui/icons-material/Inventory";
+import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 
 const UpdateProduct = () => {
   const dispatch = useDispatch();
@@ -93,13 +99,14 @@ const UpdateProduct = () => {
   return (
     <Fragment>
       <div className="container">
-        <div className="createProductContaner">
+        <div className="productUserContaner">
           <form
             id="Product"
             onSubmit={updateProductSubmit}
             className="loginForm"
           >
             <div className="createProductFormText">
+              <EditIcon />
               <input
                 type="text"
                 placeholder="Name"
@@ -112,6 +119,7 @@ const UpdateProduct = () => {
               />
             </div>
             <div className="createProductFormText">
+              <CurrencyRupeeIcon />
               <input
                 type="number"
                 placeholder="Price"
@@ -124,6 +132,7 @@ const UpdateProduct = () => {
               />
             </div>
             <div className="createProductFormText">
+              <DragIndicatorIcon />
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -137,6 +146,7 @@ const UpdateProduct = () => {
               </select>
             </div>
             <div className="createProductFormText">
+              <InventoryIcon />
               <input
                 type="number"
                 placeholder="Stock"
@@ -149,6 +159,7 @@ const UpdateProduct = () => {
               />
             </div>
             <div className="createProductFormText">
+              <TextSnippetIcon />
               <input
                 type="text"
                 placeholder="Description"

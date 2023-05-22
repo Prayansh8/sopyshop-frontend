@@ -4,6 +4,11 @@ import { createProduct } from "../../actions/productAction";
 import "./CreateProduct.css";
 import { CLEAR_ERRORS } from "../../constants/productConstant";
 import { toast } from "react-toastify";
+import EditIcon from '@mui/icons-material/Edit';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
@@ -81,6 +86,7 @@ const CreateProduct = () => {
         <div className="createProductContaner">
           <form id="Product" onSubmit={ProductSubmit} className="loginForm">
             <div className="createProductFormText">
+            <EditIcon />
               <input
                 type="text"
                 placeholder="Name"
@@ -93,6 +99,7 @@ const CreateProduct = () => {
               />
             </div>
             <div className="createProductFormText">
+            <CurrencyRupeeIcon />
               <input
                 type="number"
                 placeholder="Price"
@@ -105,6 +112,7 @@ const CreateProduct = () => {
               />
             </div>
             <div className="createProductFormText">
+                    <DragIndicatorIcon/>
               <select onChange={(e) => setCategory(e.target.value)}>
                 <option>Choose Category</option>
                 {categories.map((category) => (
@@ -115,6 +123,7 @@ const CreateProduct = () => {
               </select>
             </div>
             <div className="createProductFormText">
+            <InventoryIcon />
               <input
                 type="number"
                 placeholder="Stock"
@@ -127,6 +136,7 @@ const CreateProduct = () => {
               />
             </div>
             <div className="createProductFormText">
+            <TextSnippetIcon />
               <input
                 type="text"
                 placeholder="Description"
