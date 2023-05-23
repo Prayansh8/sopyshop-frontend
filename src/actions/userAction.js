@@ -254,8 +254,6 @@ export const adminUpdateUser = (id, productData) => async (dispatch) => {
 export const deleteUserByAdmin = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_USER_REQUEST });
-
-    console.log(id);
     const token = localStorage.getItem("token");
     const configData = {
       headers: { authorization: `Bearer ${token}` },

@@ -14,9 +14,10 @@ const Users = () => {
   const { users, error } = useSelector((state) => state.getAllUsers);
 
   const deleteUserHendeler = (id) => {
-    console.log("delete user" + id);
     dispatch(deleteUserByAdmin(id));
-    // window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   useEffect(() => {
