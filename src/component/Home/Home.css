@@ -6,7 +6,7 @@
     rgb(194, 113, 219),
     rgb(117, 57, 201)
   );
-  height: 95vh;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;

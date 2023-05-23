@@ -1,6 +1,7 @@
 .mainContOrd {
   width: 80%;
   margin: 4vh auto;
+  height: auto;
 }
 
 .sippDetaild {
@@ -8,6 +9,13 @@
 }
 .sippInfoDetails {
   padding: 20px 12px 0;
+}
+
+.row{
+  padding: 5vh 0;
+}
+.col{
+  padding: 10vh 0;
 }
 
 .sippHeding p {
