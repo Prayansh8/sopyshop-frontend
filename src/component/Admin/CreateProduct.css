@@ -1,7 +1,7 @@
 .createProductContaner {
   width: 35%;
   margin: 15vh auto;
-  height: 60vh;
+  height: auto;
 }
 
 .createProductFormText select {
