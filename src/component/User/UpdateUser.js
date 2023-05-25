@@ -16,9 +16,9 @@ const UpdateUser = ({ user, loading }) => {
   const updateSubmit = (e) => {
     e.preventDefault();
     dispatch(update(name, email));
-    // setTimeout(() => {
-    //   window.location.href = "/account";
-    // }, 500);
+    setTimeout(() => {
+      window.location.href = "/account";
+    }, 500);
     toast.success("Update Success!");
   };
   useEffect(() => {
