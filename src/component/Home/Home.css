@@ -111,7 +111,7 @@
 @media screen and (max-width: 600px) {
   .banner {
     background-position: right;
-    height: 100vh;
+    height: 93vh;
   }
   .banner a button {
     width: 20vh;
