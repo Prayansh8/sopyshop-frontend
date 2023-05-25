@@ -16,9 +16,9 @@ const ProductList = () => {
   const { isDeleteded } = useSelector((state) => state.deleteProduct);
   const deleteProductHendeler = (id) => {
     dispatch(deleteProduct(id));
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 500);
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
   useEffect(() => {
     if (error) {

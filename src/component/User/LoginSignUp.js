@@ -79,7 +79,7 @@ export default function LoginSignUp() {
     }
     if (isAuthenticated) {
       setTimeout(() => {
-        // window.location.reload();
+        window.location.reload();
       }, 500);
     }
   }, [dispatch, error, isAuthenticated]);

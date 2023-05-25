@@ -68,9 +68,9 @@ const CreateProduct = () => {
     }
     dispatch(createProduct(formData));
     toast.success("Create Product Successful!");
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 6000);
+    setTimeout(() => {
+      window.location.reload();
+    }, 6000);
   };
 
   useEffect(() => {
