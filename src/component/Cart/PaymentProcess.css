@@ -1,0 +1,54 @@
+.paymentContainer {
+  display: grid;
+  place-items: center;
+  height: 56vh;
+  margin: 12vh auto;
+}
+
+.paymentForm {
+  width: 22%;
+  height: 100%;
+}
+
+.paymentForm p {
+  font-size: 18px;
+  color: black;
+  border-bottom: 1px solid black;
+  padding: 1vh 0;
+  text-align: center;
+  width: 50%;
+  margin: auto;
+}
+
+.paymentForm div {
+  align-items: center;
+  margin: 2vh 0;
+}
+
+.paymentInput {
+  border: 1px solid black;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 24px;
+  border-radius: 4px;
+  padding: 1.5vh 35px;
+  outline: none;
+}
+
+.paymentForm div svg {
+  position: absolute;
+  padding: 2px;
+  font-size: 24px;
+  margin: 1vh 1vh;
+}
+.paymentBtn {
+  font-size: 16px;
+  background-color: tomato;
+  padding: 4px 30px;
+  border-radius: 2px;
+  width: 100%;
+  margin: 10px auto;
+  color: rgb(237, 237, 237);
+  border: none;
+  font-weight: 500;
+}
