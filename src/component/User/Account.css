@@ -5,6 +5,7 @@
 .accountContainer {
   margin: 8vh auto;
   padding: 8vh 20px;
+  height: 80vh;
 }
 
 .detailsHed {
@@ -80,6 +81,7 @@
   .accountContainer {
     margin: 3vh auto;
     padding: 0vh 2px;
+    height: 80vh;
   }
 
   .accountImg {

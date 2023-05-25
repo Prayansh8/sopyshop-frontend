@@ -15,9 +15,9 @@ const Users = () => {
 
   const deleteUserHendeler = (id) => {
     dispatch(deleteUserByAdmin(id));
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 500);
   };
 
   useEffect(() => {

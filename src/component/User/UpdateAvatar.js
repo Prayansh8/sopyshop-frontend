@@ -23,9 +23,9 @@ const UpdateAvatar = ({ user, loading }) => {
     const formData = new FormData();
     formData.append("avatar", avatar);
     dispatch(UpdateAvatarAction(formData));
-    setTimeout(() => {
-      window.location.href = "/account";
-    }, 500);
+    // setTimeout(() => {
+    //   window.location.href = "/account";
+    // }, 500);
     toast.success("Update Success!");
   };
 
