@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from "react";
 import CheckOutStep from "./CheckOutStep";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   CardNumberElement,
   CardCvcElement,
@@ -19,12 +19,11 @@ const PaymentProcess = () => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const stripe = useStripe();
   const elements = useElements();
   const payBtn = useRef(null);
 
-  const { shippingInfo, cartItems } = useSelector((state) => state.cart);
+  const { shippingInfo } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.loadUser);
 
   const paymentData = {
