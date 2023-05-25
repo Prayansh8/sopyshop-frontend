@@ -4,8 +4,10 @@ import CheckOutStep from "./CheckOutStep";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./ComfirmOrder.css";
+import { useNavigate } from "react-router-dom";
 
 const ComfirmOrder = () => {
+  const navigate = useNavigate();
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
 
   const subtotal = cartItems.reduce(
@@ -19,6 +21,18 @@ const ComfirmOrder = () => {
   const totalPrice = subtotal + shippingCharges + tax;
 
   const address = `${shippingInfo.address},${shippingInfo.city},${shippingInfo.state},${shippingInfo.pinCode},${shippingInfo.country}`;
+
+  const procecedToPayment = () => {
+    const data = {
+      subtotal,
+      shippingCharges,
+      tax,
+      totalPrice,
+    };
+    sessionStorage.setItem("orderInfo", JSON.stringify(data));
+    navigate("/proccess/payment");
+  };
+
   return (
     <Fragment>
       <div className="mainContOrd">
@@ -110,7 +124,9 @@ const ComfirmOrder = () => {
                     <span>₹{totalPrice}</span>
                   </div>
                 </div>
-                <button className="ProccedBtn">Procced to Payment</button>
+                <button className="ProccedBtn" onClick={procecedToPayment}>
+                  Procced to Payment
+                </button>
               </div>
             </div>
             <div></div>

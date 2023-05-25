@@ -2,7 +2,7 @@ import WebFont from "webfontloader";
 import "./App.css";
 import Header from "./component/layout/Header/Header.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "./component/layout/Footer/Footer.js";
 import { Home } from "./component/Home/Home.js";
 import ProductDetails from "./component/Product/ProductDetails";
@@ -16,7 +16,6 @@ import { useSelector } from "react-redux";
 import UpdateUser from "./component/User/UpdateUser";
 import Cart from "./component/Cart/Cart.js";
 import Shipping from "./component/Cart/Shipping.js";
-import ComfirmOrder from "./component/Cart/ComfirmOrder.js";
 import UpdateAvatar from "./component/User/UpdateAvatar";
 import Dashboard from "./component/Admin/Dashboard";
 import ProductList from "./component/Admin/ProductList";
@@ -25,13 +24,21 @@ import { ToastContainer } from "react-toastify";
 import Users from "./component/Admin/Users";
 import UpdateProduct from "./component/Admin/UpdateProduct";
 import AdminUpdateUser from "./component/Admin/AdminUpdateUser";
+import axios from "axios";
+import { config } from "./config";
+import ComfirmOrder from "./component/Cart/ComfirmOrder";
+import PaymentProcess from "./component/Cart/PaymentProcess.js";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
     (state) => state.loadUser
   );
 
-  React.useEffect(() => {
+  const stripeApiKey = config.stripe.stripeApi;
+  const stripePromise = loadStripe(stripeApiKey);
+  useEffect(() => {
     WebFont.load({
       google: {
         families: ["Roboto", "Chilanka"],
@@ -56,6 +63,17 @@ function App() {
           <Route extact path="/search" element={<Search />} />
           <Route extact path="/shipping" element={<Shipping />} />
           <Route extact path="/order/comfirm" element={<ComfirmOrder />} />
+
+          <Route
+            extact
+            path="/proccess/payment"
+            element={
+              <Elements stripe={stripePromise}>
+                <PaymentProcess />
+              </Elements>
+            }
+          />
+
           <Route
             extact
             path="/cart"
