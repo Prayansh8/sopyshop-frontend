@@ -13,7 +13,7 @@ export default function Account({ user, loading, isAuthenticated }) {
   function logoutUser() {
     dispatch(logout());
     localStorage.removeItem("token");
-    window.location.reload();
+    // window.location.reload();
   }
 
   return (
