@@ -133,7 +133,7 @@ export default function LoginSignUp() {
                           <div className="passwordValid">{passwordError}</div>
                         )}
                       </div>
-                      <Link className="forwardPassword" to="/reset/password">
+                      <Link className="forwardPassword" to="/account">
                         Farget Password?
                       </Link>
                       <br />
