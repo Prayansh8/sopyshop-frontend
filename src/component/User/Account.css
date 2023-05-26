@@ -87,7 +87,7 @@
   .accountImg {
     width: 100%;
     margin: auto;
-    border-bottom: 3px solid black;
+    border-bottom:none;
   }
 
   .accountImg div img{
