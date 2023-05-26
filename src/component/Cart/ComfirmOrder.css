@@ -243,19 +243,19 @@
   }
 
   .imgPro {
-    width: 15%;
+    width: 10%;
     margin: auto;
     text-align: center;
   }
 
   .totalprice {
-    width: 40%;
+    width: 45%;
     margin: auto;
     text-align: end;
   }
 
   .totalprice span {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .border-e {
