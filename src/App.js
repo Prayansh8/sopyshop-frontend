@@ -30,6 +30,7 @@ import PaymentProcess from "./component/Cart/PaymentProcess.js";
 import OrderSuccess from "./component/Cart/OrderSuccess.js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import LabelBottomNavigation from "./component/layout/BottomBar/BottomBar";
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
@@ -122,6 +123,9 @@ function App() {
             </>
           )}
         </Routes>
+        <div className="mobileBottomBar">
+        <LabelBottomNavigation />
+        </div>
         <Footer />
       </BrowserRouter>
       <ToastContainer />

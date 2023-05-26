@@ -1,0 +1,22 @@
+.mobileBottomBar div {
+  background-color: #212529;
+  height: 60px;
+}
+
+.homeIcon {
+  color: white;
+  font-size: 20px;
+}
+.btnLinks{
+  width: 22%;
+  margin: auto 0;
+}
+.btnLinks button {
+  margin: 1vh auto;
+  padding: 0;
+}
+
+.btnLinks button span {
+  opacity: 1;
+  color: white;
+}
