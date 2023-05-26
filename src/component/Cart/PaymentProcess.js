@@ -81,8 +81,8 @@ const PaymentProcess = () => {
                 state: shippingInfo.state,
                 postal_code: shippingInfo.pinCode,
                 country: shippingInfo.country,
-                phone: shippingInfo.phoneNo,
               },
+              phone: shippingInfo.phoneNo,
             },
           },
         }
@@ -99,7 +99,7 @@ const PaymentProcess = () => {
           navigate("/success");
           dispatch(createOrder(order));
         } else {
-          toast.error("there's some issue while proccessing payment");
+          toast.error("There's an issue while processing the payment");
         }
       }
     } catch (error) {

@@ -27,10 +27,10 @@ const Shipping = () => {
   const [state, setState] = useState(shippingInfo.state);
   const [country, setCountry] = useState(shippingInfo.country);
   const [pinCode, setPinCode] = useState(shippingInfo.pinCode);
-  const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
+  const [phone, setPhone] = useState(shippingInfo.phone);
 
   const shippingSubmit = () => {
-    if (phoneNo.length < 10 || phoneNo.length > 10) {
+    if (phone.length < 10 || phone.length > 10) {
       alert("Phone Number should be 10 digit");
       return;
     }
@@ -42,7 +42,7 @@ const Shipping = () => {
         state,
         country,
         pinCode,
-        phoneNo,
+        phone,
       })
     );
     navigate("/order/comfirm");
@@ -105,8 +105,8 @@ const Shipping = () => {
                 type="number"
                 placeholder="Mobile Number"
                 required
-                value={phoneNo}
-                onChange={(e) => setPhoneNo(e.target.value)}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               />
             </div>
             <div className="inputText">
