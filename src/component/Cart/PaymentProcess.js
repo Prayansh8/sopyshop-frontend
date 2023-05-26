@@ -1,6 +1,6 @@
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import CheckOutStep from "./CheckOutStep";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   CardNumberElement,
   CardCvcElement,
@@ -14,8 +14,11 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CreditCard, Event, VpnKey } from "@mui/icons-material";
 import "./PaymentProcess.css";
+import { clearErrors, createOrder } from "../../actions/orderAction";
 
 const PaymentProcess = () => {
+  const dispatch = useDispatch();
+
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
 
   const navigate = useNavigate();
@@ -23,11 +26,21 @@ const PaymentProcess = () => {
   const elements = useElements();
   const payBtn = useRef(null);
 
-  const { shippingInfo } = useSelector((state) => state.cart);
+  const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.loadUser);
+  const { error } = useSelector((state) => state.newOrder);
 
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100),
+  };
+
+  const order = {
+    shippingInfo,
+    orderItems: cartItems,
+    itemPrice: orderInfo.subtotal,
+    taxPrice: orderInfo.tax,
+    shippingPrice: orderInfo.shippingCharges,
+    totalPrice: orderInfo.totalPrice,
   };
 
   const submitHandler = async (e) => {
@@ -58,6 +71,7 @@ const PaymentProcess = () => {
         {
           payment_method: {
             card: elements.getElement(CardNumberElement),
+
             billing_details: {
               name: user.name,
               email: user.email,
@@ -67,6 +81,7 @@ const PaymentProcess = () => {
                 state: shippingInfo.state,
                 postal_code: shippingInfo.pinCode,
                 country: shippingInfo.country,
+                phone: shippingInfo.phoneNo,
               },
             },
           },
@@ -77,7 +92,12 @@ const PaymentProcess = () => {
         toast.error(error.message);
       } else {
         if (paymentIntent.status === "succeeded") {
+          order.paymentInfo = {
+            id: paymentIntent.id,
+            status: paymentIntent.status,
+          };
           navigate("/success");
+          dispatch(createOrder(order));
         } else {
           toast.error("there's some issue while proccessing payment");
         }
@@ -87,6 +107,11 @@ const PaymentProcess = () => {
       toast.error(error.response.data.message);
     }
   };
+
+  useEffect(() => {
+    toast.error(error);
+    dispatch(clearErrors());
+  }, [dispatch, error]);
 
   return (
     <Fragment>

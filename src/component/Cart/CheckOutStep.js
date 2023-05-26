@@ -4,21 +4,22 @@ import {
   LibraryAddCheck,
   LocalShipping,
 } from "@mui/icons-material";
-import { Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Step, StepLabel, Stepper } from "@mui/material";
+import "./CheckOutStep.css";
 
 const CheckOutStep = ({ aciveStap }) => {
   const staps = [
     {
-      lable: <Typography>Sipping Details</Typography>,
-      icon: <LocalShipping />,
+      lable: <p className="sippingText">Sipping Details</p>,
+      icon: <LocalShipping className="sippingIcon" />,
     },
     {
-      lable: <Typography>Confirm Order</Typography>,
-      icon: <LibraryAddCheck />,
+      lable: <p className="sippingText">Confirm Order</p>,
+      icon: <LibraryAddCheck className="sippingIcon" />,
     },
     {
-      lable: <Typography>Payment</Typography>,
-      icon: <AccountBalance />,
+      lable: <p className="sippingText">Payment</p>,
+      icon: <AccountBalance className="sippingIcon" />,
     },
   ];
   const stepStyle = {
@@ -32,6 +33,7 @@ const CheckOutStep = ({ aciveStap }) => {
             <StepLabel
               style={{
                 color: aciveStap >= index ? "tomato" : "gray",
+             
               }}
               icon={item.icon}
             >

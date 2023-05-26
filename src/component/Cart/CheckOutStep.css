@@ -1,0 +1,18 @@
+.sippingText {
+  font-size: 1rem;
+  margin: auto;
+}
+
+.sippingIcon{
+
+}
+
+@media screen and (max-width: 700px) {
+    .sippingText {
+        font-size: 8px;
+        margin: auto;
+      }
+    .sippingIcon{
+        height: 2px;
+    }
+}
