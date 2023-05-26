@@ -27,6 +27,7 @@ import AdminUpdateUser from "./component/Admin/AdminUpdateUser";
 import { config } from "./config";
 import ComfirmOrder from "./component/Cart/ComfirmOrder";
 import PaymentProcess from "./component/Cart/PaymentProcess.js";
+import OrderSuccess from "./component/Cart/OrderSuccess.js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -62,6 +63,7 @@ function App() {
           <Route extact path="/search" element={<Search />} />
           <Route extact path="/shipping" element={<Shipping />} />
           <Route extact path="/order/comfirm" element={<ComfirmOrder />} />
+          <Route extact path="/success" element={<OrderSuccess />} />
 
           <Route
             extact

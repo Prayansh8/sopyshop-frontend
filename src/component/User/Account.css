@@ -81,7 +81,7 @@
   .accountContainer {
     margin: 3vh auto;
     padding: 0vh 2px;
-    height: 80vh;
+    height: auto;
   }
 
   .accountImg {

@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   margin: 2vh auto;
+  width: 90%;
 }
 
 .heading {
@@ -105,24 +106,28 @@
   user-select: none;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
   }
   .sidewar {
-    width: 30%;
+    width: 35%;
   }
 
   /* Filter Box */
   .filter-h {
-    font-size: 22px;
+    font-size: 18px;
   }
   .sidewarBox {
     padding: 1vh;
   }
   .cate-h {
-    font-size: 18px;
+    font-size: 14px;
   }
+  .price-h {
+    font-size: 14px;
+  }
+  
 
   .catogeryBox {
     padding: 2px 6px;
@@ -132,7 +137,8 @@
     width: 100%;
   }
   .productbar {
-    width: 70%;
+    width: 65%;
+    height: 85vh;
   }
   /* pagination */
   .paginationBoc {
@@ -156,5 +162,10 @@
   }
   .heading {
     width: 50%;
+  }
+
+  .catogeryBox li {
+    font-size: 12px;
+    margin: 4px 0px;
   }
 }

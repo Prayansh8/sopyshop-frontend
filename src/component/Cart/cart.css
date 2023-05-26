@@ -118,3 +118,118 @@
   color: white;
   margin: 4px 0;
 }
+
+@media screen and (max-width: 700px) {
+  .mainContainer {
+    width: 95%;
+    margin: 2vh auto;
+  }
+  .headingCont {
+    width: 100%;
+    display: flex;
+    padding: 6px 2%;
+    background-color: tomato;
+    border: 2px solid rgb(152, 152, 152);
+  }
+  .p-headingCont {
+    width: 50%;
+    margin: 0;
+    padding: 0 4px;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+  }
+  
+  .q-headingCont {
+    width: 30%;
+    margin: 0;
+    text-align: center;
+    padding: 0 4px;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+  }
+  
+  .s-headingCont {
+    width: 20%;
+    margin: 0;
+    padding: 0 4px;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    text-align: end;
+  }
+  
+  .itemsCont {
+    display: flex;
+    padding: 1vh;
+    margin: 1vh auto;
+  }
+  
+  .cartItem {
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  .itemQuintity {
+    width: 30%;
+    margin: auto 1%;
+    text-align: center;
+  }
+  .itemPrice {
+    width: 20%;
+    font-size: 16px;
+    padding: 0 1vh;
+  }
+  
+  .qty {
+    width: 30px;
+    text-align: center;
+    margin: 0 4px;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  .qtyplus {
+    width: 22px;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  .qtyminus {
+    width: 22px;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  
+  .totlaCont{
+    border-top: 2px solid rgb(139, 139, 139);
+  }
+  
+  .grossTotal{
+    display: flex;
+    width: 100%;
+    padding: 1vh;
+  }
+  
+  .total-H{
+    font-size: 16px;
+    padding: 0 1vh;
+  }
+  
+  .p-price{
+    margin: 0;
+  }
+  .checkoutCont{
+    width: 100%;
+    text-align: center;
+    border-top: 2px solid gray;
+    padding: 2px 0;
+  }
+  .checkoutBtn{
+    width: 30%;
+    border: 1px solid rgb(201, 95, 57);
+    border-radius: 12px;
+    padding: 3px 4px;
+    font-size: 10px;
+    margin: 4px 0;
+  }
+}

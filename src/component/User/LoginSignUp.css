@@ -133,8 +133,8 @@
 
   .loginFormEmail input,
   .loginFormPassword input {
-    font-size: 20px;
-    padding: 4px 35px;
+    font-size: 16px;
+    padding: 4px 0 4px 35px;
     border-radius: 10px;
     width: 100%;
   }
@@ -142,7 +142,7 @@
   .loginFormEmail svg,
   .loginFormPassword svg {
     position: absolute;
-    margin: 7px 6px 0;
+    margin: 6px 6px 0;
     padding: 2px;
     font-size: 24px;
   }
@@ -166,15 +166,15 @@
     margin: 10px 0;
   }
   .RagisterFormText input {
-    font-size: 20px;
-    padding: 2px 35px;
+    font-size: 16px;
+    padding: 4px 0 4px 35px;
     border-radius: 10px;
     width: 100%;
   }
 
   .RagisterFormText svg {
     position: absolute;
-    margin: 7px 6px 0;
+    margin: 6px 6px 0;
     padding: 2px;
     font-size: 24px;
   }

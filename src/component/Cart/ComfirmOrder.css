@@ -11,13 +11,6 @@
   padding: 20px 12px 0;
 }
 
-.row{
-  padding: 5vh 0;
-}
-.col{
-  padding: 10vh 0;
-}
-
 .sippHeding p {
   font-size: 24px;
 }
@@ -85,6 +78,11 @@
   text-align: center;
 }
 
+
+.totalprice span {
+  font-size: 18px;
+}
+
 .border-e {
   border-right: 2px solid rgb(160, 160, 160);
 }
@@ -113,7 +111,9 @@
 
 .totalP {
   display: flex;
-  margin: 2vh 0;
+  margin: 1vh 0;
+  border-bottom: 2px solid rgb(167, 167, 167);
+  padding: 0 0 10px 0;
 }
 .totalP p {
   margin: 0;
@@ -163,4 +163,195 @@
   color: black;
   padding: 0 8px 0 0;
   margin: auto 0;
+}
+
+@media screen and (max-width: 700px) {
+  .mainContOrd {
+    width: 90%;
+    margin: 2vh auto;
+    height: auto;
+  }
+
+  .sippDetaild {
+    margin: 2vh 0vh;
+    padding: 2vh;
+    border-bottom: 2px solid rgb(160, 160, 160);
+    border-top: 2px solid rgb(160, 160, 160);
+  }
+  .sippInfoDetails {
+    padding: 16px 8px 0;
+  }
+
+  .sippHeding p {
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .addressDetails p {
+    width: 35%;
+    font-size: 18px;
+    color: black;
+    margin: auto 0;
+  }
+  .addressDetails div {
+    width: 65%;
+    text-align: end;
+  }
+  .addressDetails div span {
+    font-size: 18px;
+    color: rgb(28, 28, 28);
+    margin: auto 0;
+  }
+
+  .addressDetails {
+    display: flex;
+    margin: 8px 0;
+  }
+
+  .productDetailOrder {
+    margin: 4vh 2vh;
+  }
+  .productInfoDetails {
+    padding: 10px 2px;
+  }
+  .productImgOrd {
+    width: 40px;
+    padding: 3px;
+    margin: auto;
+  }
+
+  .orderSummery {
+    width: 80%;
+    margin: 4vh auto;
+  }
+
+  .productItem a {
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    margin: auto 2vh;
+  }
+
+  .productD {
+    margin: 1vh auto;
+  }
+
+  .productItem {
+    width: 55%;
+    margin: auto;
+  }
+
+  .imgPro {
+    width: 15%;
+    margin: auto;
+    text-align: center;
+  }
+
+  .totalprice {
+    width: 40%;
+    margin: auto;
+    text-align: end;
+  }
+
+  .totalprice span {
+    font-size: 12px;
+  }
+
+  .border-e {
+    border-right: none;
+    border-bottom: 2px solid rgb(160, 160, 160);
+  }
+
+  .orderHeding p {
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    font-size: 22px;
+    font-weight: 600;
+    border-bottom: 2px solid rgb(167, 167, 167);
+    padding: 6px 0;
+  }
+
+  .totalDetails {
+    display: flex;
+    padding: 1vh 0;
+  }
+  .totalDetails p {
+    margin: 0;
+  }
+
+  .totalDetailsCont {
+    border-bottom: 2px solid rgb(167, 167, 167);
+    padding: 2vh 0;
+  }
+
+  .totalP {
+    display: flex;
+    margin: 1vh 0;
+    border-bottom: 2px solid rgb(167, 167, 167);
+    padding: 0 0 8px 0;
+
+  }
+  .totalP p {
+    margin: 0;
+  }
+  .ProccedBtn {
+    border: 1px solid rgb(201, 95, 57);
+    border-radius: 14px;
+    padding: 5px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: tomato;
+    color: white;
+    width: 100%;
+    margin: 1vh auto;
+  }
+
+  .totalDetails p {
+    font-size: 18px;
+    color: black;
+    padding: 0 10px 0 0;
+    margin: auto 0;
+    width: 70%;
+  }
+
+  .totalDetails div span {
+    font-size: 18px;
+    color: black;
+    padding: 0 10px 0 0;
+    margin: auto 0;
+  }
+
+  .totalDetails div {
+    text-align: end;
+    width: 30%;
+  }
+
+  .totalTextInOrder {
+    width: 50%;
+    font-size: 20px;
+    text-transform: capitalize;
+  }
+  .totllPriceInOrd {
+    width: 50%;
+    text-align: end;
+    font-size: 18px;
+    font-weight: 500;
+    color: black;
+    padding: 0 8px 0 0;
+    margin: auto 0;
+  }
+  .sippingInfo {
+    display: block;
+  }
+
+  .sippingInfo-left {
+    width: 100%;
+  }
+
+  .sippingInfo-right {
+    width: 100%;
+    padding: 0;
+  }
 }

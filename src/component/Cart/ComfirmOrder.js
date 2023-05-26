@@ -20,7 +20,7 @@ const ComfirmOrder = () => {
   const tax = Math.round(taxVal);
   const totalPrice = subtotal + shippingCharges + tax;
 
-  const address = `${shippingInfo.address},${shippingInfo.city},${shippingInfo.state},${shippingInfo.pinCode},${shippingInfo.country}`;
+  const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
 
   const procecedToPayment = () => {
     const data = {
@@ -37,8 +37,8 @@ const ComfirmOrder = () => {
     <Fragment>
       <div className="mainContOrd">
         <CheckOutStep aciveStap={1} />
-        <div className="row">
-          <div className="col-7 border-e">
+        <div className="row sippingInfo">
+          <div className="col-7 sippingInfo-right border-e">
             <div className="sippDetaild">
               <div className="sippHeding">
                 <Typography>Shipping Info</Typography>
@@ -46,15 +46,21 @@ const ComfirmOrder = () => {
               <div className="sippInfoDetails">
                 <div className="sippInfoName addressDetails">
                   <p> Name: </p>
-                  <span> {shippingInfo.name} </span>
+                  <div>
+                    <span> {shippingInfo.name} </span>
+                  </div>
                 </div>
                 <div className="sippInfoPhone addressDetails">
                   <p> Phone: </p>
-                  <span> {shippingInfo.phoneNo} </span>
+                  <div>
+                    <span> {shippingInfo.phoneNo} </span>
+                  </div>
                 </div>
                 <div className="sippInfoAddress addressDetails">
                   <p> Address: </p>
-                  <span> {address} </span>
+                  <div>
+                    <span> {address} </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -88,7 +94,7 @@ const ComfirmOrder = () => {
               </div>
             </div>
           </div>
-          <div className="col-5">
+          <div className="col-5 sippingInfo-left">
             <div className="orderSummery">
               <div className="orderHeding">
                 <Typography>Order Summery</Typography>
