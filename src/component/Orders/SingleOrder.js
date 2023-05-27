@@ -11,7 +11,7 @@ const SingleOrder = () => {
   const { id } = useParams();
 
   const { order, error } = useSelector((state) => state.singleOrder);
-  const { cartItems, shippingInfo } = useSelector((state) => state.cart);
+  const { shippingInfo } = useSelector((state) => state.cart);
 
   useEffect(() => {
     if (error) {
