@@ -10,17 +10,19 @@
 
 .accountImg img {
   border: 2px solid white;
+  height: 35px;
+  width: 35px;
 }
 
 .cartIcon {
   font-size: 22px;
 }
 
-.mobile-Nav{
+.mobile-Nav {
   display: none;
 }
 
-.deckstop-Nav{
+.deckstop-Nav {
   display: block;
 }
 
@@ -47,11 +49,16 @@
     color: black;
   }
 
-  .deckstop-Nav{
+  .deckstop-Nav {
     display: none;
   }
 
-  .mobile-Nav{
+  .mobile-Nav {
     display: block;
+  }
+  .accountImg img {
+    border: 2px solid white;
+    height: 40px;
+    width: 40px;
   }
 }
