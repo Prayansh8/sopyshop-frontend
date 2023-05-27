@@ -82,7 +82,7 @@ const PaymentProcess = () => {
                 postal_code: shippingInfo.pinCode,
                 country: shippingInfo.country,
               },
-              phone: shippingInfo.phoneNo,
+              phone: shippingInfo.phone,
             },
           },
         }
