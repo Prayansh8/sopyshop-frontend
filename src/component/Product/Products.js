@@ -32,7 +32,7 @@ export default function Products() {
     (state) => state.products
   );
 
-  const resultPerPage = 8
+  const resultPerPage = 8;
 
   const handlePriceChange = (e, newPrice) => {
     setPrice(newPrice);
@@ -85,7 +85,7 @@ export default function Products() {
               </div>
             </div>
             <div className="productbar">
-              <div className="container my-3">
+              <div className="container my-2">
                 <h2 className="heading">Products</h2>
                 <div className="cardProducts">
                   {products &&
