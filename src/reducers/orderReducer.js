@@ -11,6 +11,14 @@ import {
   MY_ORDER_REQUEST,
   MY_ORDER_SUCCESS,
   MY_ORDER_FAILURE,
+  UPDATE_ORDER_REQUEST,
+  UPDATE_ORDER_SUCCESS,
+  UPDATE_ORDER_FAILURE,
+  UPDATE_ORDER_RESET,
+  DELETE_ORDER_REQUEST,
+  DELETE_ORDER_SUCCESS,
+  DELETE_ORDER_FAILURE,
+  DELETE_ORDER_RESET,
   CLEAR_ERRORS,
 } from "../constants/orderConstant";
 
@@ -112,6 +120,72 @@ export const myOrdersReducer = (state = { orders: [] }, action) => {
         loading: false,
         error: action.payload.message,
       };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+//  Update Order
+
+export const updateOrderReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_ORDER_REQUEST:
+      return { ...state, loding: true };
+    case UPDATE_ORDER_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        isUpdated: action.payload,
+      };
+    case UPDATE_ORDER_FAILURE:
+      return {
+        ...state,
+        loding: false,
+        error: action.payload.message,
+      };
+    case UPDATE_ORDER_RESET:
+      return {
+        ...state,
+        isUpdated: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+// Delete Order
+
+export const deleteOrderReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_ORDER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_ORDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleteded: true,
+      };
+    case DELETE_ORDER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.message,
+      };
+    case DELETE_ORDER_RESET:
+      return { ...state, isDeleted: false };
     case CLEAR_ERRORS:
       return {
         ...state,
