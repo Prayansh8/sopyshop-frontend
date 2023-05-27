@@ -98,7 +98,7 @@ export default function Header({ user, isAuthenticated }) {
       {/* mobile nav */}
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark mobile-Nav">
-        <div className="container-fluid mx-3">
+        <div className="container-fluid">
           <Link className="navbar-brand logo" to="/">
             <img src={logo} alt="sopyshop" />
           </Link>
