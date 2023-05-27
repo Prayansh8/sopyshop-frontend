@@ -12,7 +12,7 @@ export default function Header({ user, isAuthenticated }) {
   return (
     <Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark deckstop-Nav">
-        <div className="container-fluid">
+        <div className="container-fluid px-4">
           <Link className="navbar-brand logo" to="/">
             <img src={logo} alt="sopyshop" />
           </Link>
@@ -98,12 +98,12 @@ export default function Header({ user, isAuthenticated }) {
       {/* mobile nav */}
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark mobile-Nav">
-        <div className="container-fluid">
+        <div className="container-fluid px-3">
           <Link className="navbar-brand logo" to="/">
             <img src={logo} alt="sopyshop" />
           </Link>
 
-          <ul className="nav justify-content-end mx-3">
+          <ul className="nav justify-content-end ">
             {isAuthenticated ? (
               <li className="nav-item nav-li">
                 <Link
