@@ -48,10 +48,6 @@
   padding: 1vh 2vh;
 }
 
-p {
-  margin: auto;
-}
-
 .shippingInfoText {
   font-size: 24px;
   font-weight: 500;
@@ -62,6 +58,11 @@ p {
   font-size: 24px;
   font-weight: 500;
   margin: 2vh 0;
+}
+
+.disRight p,
+.disLeft p {
+  margin: 0;
 }
 
 @media screen and (max-width: 700px) {
@@ -81,18 +82,17 @@ p {
     padding: 1vh 1vh;
   }
 
-  
-.disRight {
+  .disRight {
     width: 35%;
     font-size: 16px;
   }
-  
+
   .disMid {
     width: 5%;
     text-align: center;
     font-size: 16px;
   }
-  
+
   .disLeft {
     width: 60%;
     text-align: end;
