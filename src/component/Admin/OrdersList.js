@@ -5,20 +5,17 @@ import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import {
-  deleteProduct,
-  getAdminProducts,
-  clearErrors,
-} from "../../actions/productAction";
 import "./ProductList.css";
 import { toast } from "react-toastify";
+import { clearErrors, getAllOrdersByAdmin } from "../../actions/orderAction";
 
-const ProductList = () => {
+const OrdersList = () => {
   const dispatch = useDispatch();
-  const { products, error } = useSelector((state) => state.products);
-  const { isDeleteded } = useSelector((state) => state.deleteProduct);
-  const deleteProductHendeler = (id) => {
-    dispatch(deleteProduct(id));
+  const { orders, error } = useSelector((state) => state.orders);
+  //   const { isDeleteded } = useSelector((state) => state.deleteOrder);
+
+  const deleteOrderHendeler = (id) => {
+    // dispatch(deleteOrder(id));
     setTimeout(() => {
       window.location.reload();
     }, 500);
@@ -29,25 +26,24 @@ const ProductList = () => {
       dispatch(clearErrors());
     }
 
-    if (isDeleteded) {
-      toast.success("Product Deleted");
-    }
-    dispatch(getAdminProducts());
-  }, [error, dispatch, isDeleteded]);
+    // if (isDeleteded) {
+    //   toast.success("Product Deleted");
+    // }
+    dispatch(getAllOrdersByAdmin());
+  }, [error, dispatch]);
 
   const columns = [
-    { field: "id", headerName: "Product Id", minWidth: 300, flex: 0.5 },
-    { field: "name", headerName: "Name", minWidth: 300, flex: 1 },
+    { field: "id", headerName: "Order Id", minWidth: 300, flex: 0.5 },
+    { field: "user", headerName: "User Id", minWidth: 300, flex: 1 },
     {
-      field: "stock",
-      headerName: "Stock",
-      type: "number",
+      field: "orderStatus",
+      headerName: "Srder Status",
       minWidth: 100,
       flex: 0.3,
     },
     {
-      field: "price",
-      headerName: "Price",
+      field: "totalPrice",
+      headerName: "Total Price",
       type: "number",
       minWidth: 100,
       flex: 0.5,
@@ -62,12 +58,12 @@ const ProductList = () => {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link to={`/admin/update/product/${params.id}`}>
+            <Link to={`/admin/order/${params.id}`}>
               <EditIcon />
             </Link>
             <button
               className="deleteProductBtn"
-              onClick={() => deleteProductHendeler(params.id)}
+              onClick={() => deleteOrderHendeler(params.id)}
             >
               <DeleteIcon />
             </button>
@@ -79,13 +75,13 @@ const ProductList = () => {
 
   const rows = [];
 
-  products &&
-    products.forEach((item) => {
+  orders &&
+    orders.forEach((item) => {
       rows.push({
         id: item._id,
-        stock: item.stock,
-        price: item.price,
-        name: item.name,
+        user: item.user,
+        orderStatus: item.orderStatus,
+        totalPrice: item.totalPrice,
       });
     });
 
@@ -117,4 +113,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default OrdersList;

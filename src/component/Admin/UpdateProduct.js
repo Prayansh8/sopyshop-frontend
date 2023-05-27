@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import {
   adminUpdateProduct,
+  clearErrors,
   getProductDetails,
 } from "../../actions/productAction";
 import { useDispatch, useSelector } from "react-redux";
-import { CLEAR_ERRORS } from "../../constants/productConstant";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import "./CreateProduct.css";
@@ -92,7 +92,7 @@ const UpdateProduct = () => {
 
     if (error) {
       toast.error(error);
-      dispatch(CLEAR_ERRORS);
+      dispatch(clearErrors());
     }
   }, [error, dispatch, product, id]);
 

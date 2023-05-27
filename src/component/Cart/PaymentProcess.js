@@ -115,31 +115,33 @@ const PaymentProcess = () => {
 
   return (
     <Fragment>
-      <CheckOutStep aciveStap={2} />
-      <div className="paymentContainer">
-        <form className="paymentForm" onSubmit={(e) => submitHandler(e)}>
-          <div>
-            <h2 className="border-bottom text-center p-2">Card Info</h2>
+      <div className="mainContPaymt">
+        <CheckOutStep aciveStap={2} />
+        <div className="paymentContainer">
+          <form className="paymentForm" onSubmit={(e) => submitHandler(e)}>
             <div>
-              <CreditCard />
-              <CardNumberElement className="paymentInput" />
+              <h2 className="border-bottom text-center p-2">Card Info</h2>
+              <div>
+                <CreditCard />
+                <CardNumberElement className="paymentInput" />
+              </div>
+              <div>
+                <Event />
+                <CardExpiryElement className="paymentInput" />
+              </div>
+              <div>
+                <VpnKey />
+                <CardCvcElement className="paymentInput" />
+              </div>
+              <input
+                type="submit"
+                value={`Pay - ₹${orderInfo && orderInfo.totalPrice}`}
+                ref={payBtn}
+                className="paymentBtn"
+              />
             </div>
-            <div>
-              <Event />
-              <CardExpiryElement className="paymentInput" />
-            </div>
-            <div>
-              <VpnKey />
-              <CardCvcElement className="paymentInput" />
-            </div>
-            <input
-              type="submit"
-              value={`Pay - ₹${orderInfo && orderInfo.totalPrice}`}
-              ref={payBtn}
-              className="paymentBtn"
-            />
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </Fragment>
   );

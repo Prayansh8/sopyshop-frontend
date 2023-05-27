@@ -12,7 +12,7 @@ export default function Header({ user, isAuthenticated }) {
   return (
     <Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark deckstop-Nav">
-        <div className="container-fluid mx-3">
+        <div className="container-fluid">
           <Link className="navbar-brand logo" to="/">
             <img src={logo} alt="sopyshop" />
           </Link>
@@ -103,7 +103,7 @@ export default function Header({ user, isAuthenticated }) {
             <img src={logo} alt="sopyshop" />
           </Link>
 
-          <ul class="nav justify-content-end mx-3">
+          <ul className="nav justify-content-end mx-3">
             {isAuthenticated ? (
               <li className="nav-item nav-li">
                 <Link

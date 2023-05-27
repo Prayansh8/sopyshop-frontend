@@ -19,6 +19,7 @@ import {
   NEW_PRODUCTS_REQUEST,
   NEW_PRODUCTS_SUCCESS,
   NEW_PRODUCTS_FAILURE,
+  CLEAR_ERRORS,
 } from "../constants/productConstant";
 import { config } from "../config";
 
@@ -149,4 +150,10 @@ export const adminUpdateProduct = (id, productData) => async (dispatch) => {
       payload: error.response.data,
     });
   }
+};
+
+
+// clear error
+export const clearErrors = () => (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
 };

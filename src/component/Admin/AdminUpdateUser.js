@@ -1,9 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CLEAR_ERRORS } from "../../constants/productConstant";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { adminUpdateUser, getUserDetails } from "../../actions/userAction";
+import { adminUpdateUser, clearErrors, getUserDetails } from "../../actions/userAction";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EmailIcon from "@mui/icons-material/Email";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -52,7 +51,7 @@ const AdminUpdateUser = () => {
 
     if (error) {
       toast.error(error);
-      dispatch(CLEAR_ERRORS);
+      dispatch(clearErrors());
     }
   }, [error, dispatch, user, id]);
 
