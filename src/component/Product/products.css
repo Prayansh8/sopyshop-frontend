@@ -111,7 +111,7 @@
     font-size: 3.5rem;
   }
   .sidewar {
-    width: 35%;
+    width: 25%;
   }
 
   /* Filter Box */
@@ -137,8 +137,8 @@
     width: 100%;
   }
   .productbar {
-    width: 65%;
-    height: 85vh;
+    width: 75%;
+    height: auto;
   }
   /* pagination */
   .paginationBoc {
