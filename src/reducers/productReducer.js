@@ -20,6 +20,10 @@ import {
   UPDATE_PRODUCTS_SUCCESS,
   UPDATE_PRODUCTS_FAILURE,
   UPDATE_PRODUCTS_RESET,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  NEW_REVIEW_FAILURE,
+  NEW_REVIEW_RESET,
   CLEAR_ERRORS,
 } from "../constants/productConstant";
 
@@ -154,6 +158,40 @@ export const updateProductReducer = (state = {}, action) => {
       return {
         ...state,
         isUpdated: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+// New Review
+export const newReviewReducer = (state = {}, action) => {
+  switch (action.type) {
+    case NEW_REVIEW_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case NEW_REVIEW_SUCCESS:
+      return {
+        success: action.payload,
+        loading: false,
+      };
+    case NEW_REVIEW_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.message,
+      };
+    case NEW_REVIEW_RESET:
+      return {
+        ...state,
+        success: false,
       };
     case CLEAR_ERRORS:
       return {
