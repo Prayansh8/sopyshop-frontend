@@ -6,7 +6,7 @@ import { FaShoppingCart, FaSearch, FaHome, FaShopify } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import "./bottomBar.css";
 export default function LabelBottomNavigation() {
-  const [value, setValue] = React.useState("recents");
+  const [value, setValue] = React.useState(0);
   const { cartItems } = useSelector((state) => state.cart);
 
   const handleChange = (event, newValue) => {
@@ -19,7 +19,7 @@ export default function LabelBottomNavigation() {
         <BottomNavigationAction
           label="Home"
           value="home"
-          icon={<FaHome className="text-white homeIcon" />}
+          icon={<FaHome className="iconColor homeIcon" />}
         />
       </Link>
 
@@ -27,23 +27,23 @@ export default function LabelBottomNavigation() {
         <BottomNavigationAction
           label="Products"
           value="products"
-          icon={<FaShopify className="text-white homeIcon" />}
+          icon={<FaShopify className="iconColor homeIcon" />}
         />
       </Link>
       <Link className="btnLinks" to="/search">
         <BottomNavigationAction
           label="Search"
           value="search"
-          icon={<FaSearch className="text-white homeIcon" />}
+          icon={<FaSearch className="iconColor homeIcon" />}
         />
       </Link>
       <Link className="btnLinks" to="/cart">
+        <span className="cartLength"> {cartItems.length} </span>
         <BottomNavigationAction
           label="Cart"
           value="cart"
-          icon={<FaShoppingCart className="text-white homeIcon" />}
+          icon={<FaShoppingCart className="iconColor homeIcon" />}
         />
-        <span className="cartLength"> {cartItems.length} </span>
       </Link>
     </BottomNavigation>
   );

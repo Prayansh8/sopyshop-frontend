@@ -41,6 +41,7 @@
 }
 .productImgOrd {
   width: 40px;
+  height: 40px;
   padding: 3px;
 }
 
@@ -216,6 +217,7 @@
   }
   .productImgOrd {
     width: 40px;
+    height: 40px;
     padding: 3px;
     margin: auto;
   }

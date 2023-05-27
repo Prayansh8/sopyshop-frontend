@@ -7,3 +7,6 @@
 .css-204u17-MuiDataGrid-main {
   height: 70vh;
 }
+
+@media screen and (max-width: 700px) {
+}

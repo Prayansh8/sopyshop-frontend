@@ -115,7 +115,7 @@ export default function Header({ user, isAuthenticated }) {
                     alt="Profile"
                     width={32}
                     height={32}
-                    className="rounded-circle me-2"
+                    className="rounded-circle"
                   />
                 </Link>
               </li>

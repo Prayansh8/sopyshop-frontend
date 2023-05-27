@@ -34,6 +34,7 @@ import LabelBottomNavigation from "./component/layout/BottomBar/BottomBar";
 import OrdersList from "./component/Admin/OrdersList";
 import OrderUpdate from "./component/Admin/OrderUpdate";
 import MyOrders from "./component/Orders/MyOrders";
+import SingleOrder from "./component/Orders/SingleOrder";
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
@@ -100,6 +101,7 @@ function App() {
               <Route extact path="/order/comfirm" element={<ComfirmOrder />} />
               <Route extact path="/success" element={<OrderSuccess />} />
               <Route extact path="/orders" element={<MyOrders />} />
+              <Route extact path="/order/:id" element={<SingleOrder />} />
               <Route
                 extact
                 path="/update"

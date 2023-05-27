@@ -1,0 +1,101 @@
+.OrderMainContainer {
+  width: 70%;
+  margin: 4vh auto;
+  border: 3px solid rgb(138 138 138);
+  padding: 4vh;
+}
+.orderId p {
+  font-size: 14px;
+  border-bottom: 2px solid rgba(138, 138, 138, 0.675);
+}
+.dis-flex {
+  display: flex;
+  padding: 1vh 2vh;
+  margin: auto;
+  border-bottom: 2px solid rgb(138 138 138);
+}
+
+.disRight {
+  width: 30%;
+  font-size: 18px;
+}
+
+.disMid {
+  width: 10%;
+  text-align: center;
+  font-size: 18px;
+}
+
+.disLeft {
+  width: 60%;
+  text-align: end;
+  font-size: 18px;
+}
+
+.detailsTable {
+  border: 2px solid rgb(138 138 138);
+  padding-bottom: 1vh;
+}
+
+.proOrder {
+  border: 2px solid rgb(138 138 138);
+  padding-bottom: 1vh;
+}
+
+.proOrderDet {
+  border-bottom: 2px solid rgb(138 138 138);
+  margin: auto;
+  padding: 1vh 2vh;
+}
+
+p {
+  margin: auto;
+}
+
+.shippingInfoText {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 2vh 0;
+}
+
+.orderItemsText {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 2vh 0;
+}
+
+@media screen and (max-width: 700px) {
+  .OrderMainContainer {
+    width: 90%;
+    margin: 6vh auto;
+    padding: 4vh 2vh;
+  }
+  .orderId p {
+    font-size: 10px;
+  }
+  .proOrderDet {
+    margin: auto;
+    padding: 1vh 1.5vh;
+  }
+  .dis-flex {
+    padding: 1vh 1vh;
+  }
+
+  
+.disRight {
+    width: 35%;
+    font-size: 16px;
+  }
+  
+  .disMid {
+    width: 5%;
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  .disLeft {
+    width: 60%;
+    text-align: end;
+    font-size: 16px;
+  }
+}
