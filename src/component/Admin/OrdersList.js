@@ -7,15 +7,19 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import "./ProductList.css";
 import { toast } from "react-toastify";
-import { clearErrors, getAllOrdersByAdmin } from "../../actions/orderAction";
+import {
+  clearErrors,
+  deleteOrderByAdmin,
+  getAllOrdersByAdmin,
+} from "../../actions/orderAction";
 
 const OrdersList = () => {
   const dispatch = useDispatch();
   const { orders, error } = useSelector((state) => state.orders);
-  //   const { isDeleteded } = useSelector((state) => state.deleteOrder);
+  const { isDeleteded } = useSelector((state) => state.deleteOrder);
 
   const deleteOrderHendeler = (id) => {
-    // dispatch(deleteOrder(id));
+    dispatch(deleteOrderByAdmin(id));
     setTimeout(() => {
       window.location.reload();
     }, 500);
@@ -26,11 +30,11 @@ const OrdersList = () => {
       dispatch(clearErrors());
     }
 
-    // if (isDeleteded) {
-    //   toast.success("Product Deleted");
-    // }
+    if (isDeleteded) {
+      toast.success("Product Deleted");
+    }
     dispatch(getAllOrdersByAdmin());
-  }, [error, dispatch]);
+  }, [error, dispatch, isDeleteded]);
 
   const columns = [
     { field: "id", headerName: "Order Id", minWidth: 300, flex: 0.5 },
@@ -93,14 +97,9 @@ const OrdersList = () => {
             <Sidebar />
           </div>
           <div className="leftCont">
-            <div className="AdminProductCont">
-              <div className="ProductHed">
-                <h2>All Products</h2>
-              </div>
-              <div className="ProductCreteBtn">
-                <Link to={`/admin/create/product`}>
-                  <button>Create Product</button>
-                </Link>
+          <div className="AdminProductCont">
+              <div>
+                <h2>All Orders</h2>
               </div>
             </div>
             <div className="DataGIrd">

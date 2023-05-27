@@ -68,7 +68,7 @@
 @media screen and (max-width: 700px) {
   .OrderMainContainer {
     width: 90%;
-    margin: 6vh auto;
+    margin: 4vh auto;
     padding: 4vh 2vh;
   }
   .orderId p {

@@ -1,0 +1,65 @@
+.updateOrder {
+  margin: 1vh auto;
+}
+
+.updateOrderCont {
+  width: 80%;
+  margin: auto;
+  height: 100%;
+}
+
+.disFlexUpdateOrder {
+  display: flex;
+}
+
+.LeftOrderCont {
+  width: 70%;
+  margin: auto;
+  height: 100%;
+  border-right: 4px solid gray;
+}
+
+.rightOrderCont {
+  width: 30%;
+  margin: auto;
+  height: 100%;
+}
+
+.updateOrderForm{
+  border: 2px solid gray;
+  padding: 4px 18px;
+}
+
+@media screen and (max-width: 700px) {
+  .updateOrder {
+    margin: 1vh auto;
+  }
+
+  .updateOrderCont {
+    width: 80%;
+    margin: auto;
+    height: 100%;
+  }
+
+  .disFlexUpdateOrder {
+    display: block;
+  }
+
+  .LeftOrderCont {
+    width: 100%;
+    margin: auto;
+    height: 100%;
+    border-right: 4px solid gray;
+  }
+
+  .rightOrderCont {
+    width: 100%;
+    margin: auto;
+    height: 100%;
+  }
+
+  .updateOrderForm{
+    border: 2px solid gray;
+    padding: 2px 18px;
+  }
+}
