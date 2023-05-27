@@ -20,7 +20,7 @@
 
 .productImg {
   width: 100%;
-  height: 420px
+  height: 420px;
 }
 
 .productDetailsBlock {
@@ -147,6 +147,19 @@
   background-color: tomato;
   color: white;
   margin: 4px 0;
+}
+
+.submitDialog {
+  display: flex;
+  flex-direction: column;
+}
+
+.submitDialogTextArea {
+  border: 1px solid black;
+  margin: 1vmax 0;
+  outline: 1rem;
+  padding: 1rem;
+  font: 300 1rem "Roboto";
 }
 
 /* Review Heading */

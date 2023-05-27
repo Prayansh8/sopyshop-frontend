@@ -19,6 +19,9 @@ import {
   NEW_PRODUCTS_REQUEST,
   NEW_PRODUCTS_SUCCESS,
   NEW_PRODUCTS_FAILURE,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  NEW_REVIEW_FAILURE,
   CLEAR_ERRORS,
 } from "../constants/productConstant";
 import { config } from "../config";
@@ -152,6 +155,31 @@ export const adminUpdateProduct = (id, productData) => async (dispatch) => {
   }
 };
 
+// New Review
+
+export const newReview = (reviewData) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_REVIEW_REQUEST });
+
+    const token = localStorage.getItem("token");
+    const configData = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `${config.baseUrl}/api/v1/review`,
+      reviewData,
+      configData
+    );
+
+    dispatch({ type: NEW_REVIEW_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({ type: NEW_REVIEW_FAILURE, payload: error.response.data });
+  }
+};
 
 // clear error
 export const clearErrors = () => (dispatch) => {
