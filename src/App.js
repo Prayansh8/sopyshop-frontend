@@ -31,6 +31,9 @@ import OrderSuccess from "./component/Cart/OrderSuccess.js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import LabelBottomNavigation from "./component/layout/BottomBar/BottomBar";
+import OrdersList from "./component/Admin/OrdersList";
+import OrderUpdate from "./component/Admin/OrderUpdate";
+import MyOrders from "./component/Orders/MyOrders";
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(
@@ -62,9 +65,6 @@ function App() {
           <Route extact path="/products" element={<Products />} />
           <Route path="/products/:keyword" element={<Products />} />
           <Route extact path="/search" element={<Search />} />
-          <Route extact path="/shipping" element={<Shipping />} />
-          <Route extact path="/order/comfirm" element={<ComfirmOrder />} />
-          <Route extact path="/success" element={<OrderSuccess />} />
 
           <Route
             extact
@@ -96,6 +96,10 @@ function App() {
 
           {isAuthenticated && (
             <>
+              <Route extact path="/shipping" element={<Shipping />} />
+              <Route extact path="/order/comfirm" element={<ComfirmOrder />} />
+              <Route extact path="/success" element={<OrderSuccess />} />
+              <Route extact path="/orders" element={<MyOrders />} />
               <Route
                 extact
                 path="/update"
@@ -117,14 +121,16 @@ function App() {
                 path="/admin/update/product/:id"
                 element={<UpdateProduct />}
               />
-              <Route path="/admin/orders" element={<Dashboard />} />
               <Route path="/admin/users" element={<Users />} />
               <Route path="/admin/user/:id" element={<AdminUpdateUser />} />
+
+              <Route path="/admin/orders" element={<OrdersList />} />
+              <Route path="/admin/order/:id" element={<OrderUpdate />} />
             </>
           )}
         </Routes>
         <div className="mobileBottomBar">
-        <LabelBottomNavigation />
+          <LabelBottomNavigation />
         </div>
         <Footer />
       </BrowserRouter>

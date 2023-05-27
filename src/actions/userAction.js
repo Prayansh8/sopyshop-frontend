@@ -213,7 +213,7 @@ export const getUserDetails = (id) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      `${config.baseUrl}/api/v1//user/${id}`,
+      `${config.baseUrl}/api/v1/user/${id}`,
       configData
     );
 

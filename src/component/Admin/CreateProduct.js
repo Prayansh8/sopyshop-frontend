@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct } from "../../actions/productAction";
+import { clearErrors, createProduct } from "../../actions/productAction";
 import "./CreateProduct.css";
-import { CLEAR_ERRORS } from "../../constants/productConstant";
 import { toast } from "react-toastify";
 import EditIcon from "@mui/icons-material/Edit";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
@@ -76,7 +75,7 @@ const CreateProduct = () => {
   useEffect(() => {
     if (error) {
       toast.error(error);
-      dispatch(CLEAR_ERRORS);
+      dispatch(clearErrors());
     }
   }, [error, dispatch]);
 

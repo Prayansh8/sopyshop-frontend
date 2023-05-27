@@ -1,12 +1,17 @@
+.mainContPaymt {
+  width: 80%;
+  margin: 4vh auto;
+}
 .paymentContainer {
   display: grid;
   place-items: center;
   height: 56vh;
   margin: 12vh auto;
+  width: 80%;
 }
 
 .paymentForm {
-  width: 22%;
+  width: 30%;
   height: 100%;
 }
 
@@ -54,10 +59,8 @@
 }
 
 @media screen and (max-width: 700px) {
-
-  
-.paymentForm {
-  width: 90%;
-  height: 100%;
-}
+  .paymentForm {
+    width: 90%;
+    height: 100%;
+  }
 }
