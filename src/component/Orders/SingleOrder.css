@@ -67,16 +67,16 @@
 
 @media screen and (max-width: 700px) {
   .OrderMainContainer {
-    width: 90%;
+    width: 95%;
     margin: 4vh auto;
-    padding: 4vh 2vh;
+    padding: 4vh 1vh;
   }
   .orderId p {
     font-size: 10px;
   }
   .proOrderDet {
     margin: auto;
-    padding: 1vh 1.5vh;
+    padding: 1vh 1vh;
   }
   .dis-flex {
     padding: 1vh 1vh;
