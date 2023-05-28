@@ -52,21 +52,24 @@ export default function Products() {
         <Loader />
       ) : (
         <Fragment>
-          <div className="d-flex">
+          <div className="allProductsContainer">
+            {/* Filter Bar */}
             <div className="sidewar">
               <div className="sidewarBox bg-dark w-100 h-100">
                 <h1 className="filter-h">Filter</h1>
                 <div className="fillterBox">
-                  <h2 className="price-h">Price</h2>
-                  <div className="fillterBoxSlider">
-                    <Slider
-                      value={price}
-                      onChange={handlePriceChange}
-                      valueLabelDisplay="off"
-                      aria-labelledby="range-slider"
-                      min={0}
-                      max={150000}
-                    />
+                  <div className="priceFilter">
+                    <h2 className="price-h">Price</h2>
+                    <div className="fillterBoxSlider">
+                      <Slider
+                        value={price}
+                        onChange={handlePriceChange}
+                        valueLabelDisplay="off"
+                        aria-labelledby="range-slider"
+                        min={0}
+                        max={150000}
+                      />
+                    </div>
                   </div>
                   <div className="catogeryContainer">
                     <h2 className="cate-h">Categories</h2>
@@ -81,9 +84,24 @@ export default function Products() {
                       ))}
                     </ul>
                   </div>
+                  <div className="mobileCatogeryContainer">
+                    <h2 className="cate-h">Categories</h2>
+                    <div className="selectCatogeries">
+                      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                        <option>Choose Category</option>
+                        {categories.map((category) => (
+                          <option key={category} value={category}>
+                            {category}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* All products */}
             <div className="productbar">
               <div className="container my-2">
                 <h2 className="heading">Products</h2>
