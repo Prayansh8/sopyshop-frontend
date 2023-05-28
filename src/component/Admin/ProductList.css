@@ -9,12 +9,7 @@
   margin: 0 2vh;
 }
 
-.rightCont{
-  width: 19%;
-}
-.leftCont{
-  width: 75%;
-}
+
 .DataGIrd {
   overflow: auto;
   height: 80%;
