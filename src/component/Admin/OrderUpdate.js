@@ -10,6 +10,7 @@ import SingleOrder from "../Orders/SingleOrder";
 const OrderUpdate = () => {
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.updateOrder);
+  const { order } = useSelector((state) => state.singleOrder);
 
   const { id } = useParams();
 
@@ -46,7 +47,7 @@ const OrderUpdate = () => {
                 <div className="createProductFormText">
                   <AccountTree />
                   <select onChange={(e) => setStatus(e.target.value)}>
-                    <option>Processing</option>
+                    <option>{order.orderStatus}</option>
                     <option>Shipped</option>
                     <option>Delivered</option>
                   </select>
@@ -56,7 +57,7 @@ const OrderUpdate = () => {
                   type="submit"
                   value="Update"
                   className="submitBtn"
-                  disabled={loading ? true : false}
+                  disabled={order.orderStatus === "Delivered" ? true : false}
                 />
               </form>
             </div>
