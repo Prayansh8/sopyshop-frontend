@@ -9,7 +9,7 @@ import SingleOrder from "../Orders/SingleOrder";
 
 const OrderUpdate = () => {
   const dispatch = useDispatch();
-  const { error, loading } = useSelector((state) => state.updateOrder);
+  const { error } = useSelector((state) => state.updateOrder);
   const { order } = useSelector((state) => state.singleOrder);
 
   const { id } = useParams();
