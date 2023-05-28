@@ -114,7 +114,7 @@ const SingleOrder = () => {
               {/* Order Status */}
               <div className="dis-flex">
                 <div className="disRight">
-                  <p>Order Status:</p>
+                  <p>Order Status</p>
                 </div>
                 <div className="disMid">
                   <span>-</span>
