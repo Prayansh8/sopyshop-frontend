@@ -10,6 +10,7 @@ import {
   LineSeries,
   PieSeries,
 } from "@devexpress/dx-react-chart-material-ui";
+import MobileAdminBar from "./MobileAdminBar";
 
 const Dashboard = () => {
   const data = [
@@ -21,22 +22,25 @@ const Dashboard = () => {
   ];
 
   const chartData = [
-    { country: 'Russia', area: 12 },
-    { country: 'Canada', area: 7 },
-    { country: 'USA', area: 7 },
-    { country: 'China', area: 7 },
-    { country: 'Brazil', area: 6 },
-    { country: 'Australia', area: 5 },
-    { country: 'India', area: 2 },
-    { country: 'Others', area: 55 },
+    { country: "Russia", area: 12 },
+    { country: "Canada", area: 7 },
+    { country: "USA", area: 7 },
+    { country: "China", area: 7 },
+    { country: "Brazil", area: 6 },
+    { country: "Australia", area: 5 },
+    { country: "India", area: 2 },
+    { country: "Others", area: 55 },
   ];
   return (
     <div>
+      <div className="mobileTopBarContainer">
+        <MobileAdminBar />
+      </div>
       <div className="mainCont">
-        <div className="rightCont">
+        <div className="rightContAdmin">
           <Sidebar />
         </div>
-        <div className="leftCont">
+        <div className="leftContAdmin">
           <h2 className="text-center my-2">Dashboard</h2>
           <div className="totalAmount">
             <p>
@@ -69,7 +73,7 @@ const Dashboard = () => {
               </Link>
             </div>
           </div>
-          <br /> 
+          <br />
           <div className="lineChart">
             <Paper>
               <Chart data={data}>
@@ -78,7 +82,8 @@ const Dashboard = () => {
 
                 <LineSeries valueField="value" argumentField="argument" />
               </Chart>
-            </Paper><br />
+            </Paper>
+            <br />
             <Paper>
               <Chart data={chartData}>
                 <PieSeries valueField="area" argumentField="country" />

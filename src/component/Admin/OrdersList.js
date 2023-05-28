@@ -12,6 +12,7 @@ import {
   deleteOrderByAdmin,
   getAllOrdersByAdmin,
 } from "../../actions/orderAction";
+import MobileAdminBar from "./MobileAdminBar";
 
 const OrdersList = () => {
   const dispatch = useDispatch();
@@ -92,12 +93,15 @@ const OrdersList = () => {
   return (
     <Fragment>
       <div>
+        <div className="mobileTopBarContainer">
+          <MobileAdminBar />
+        </div>
         <div className="mainCont">
-          <div className="rightCont">
+          <div className="rightContAdmin">
             <Sidebar />
           </div>
-          <div className="leftCont">
-          <div className="AdminProductCont">
+          <div className="leftContAdmin">
+            <div className="AdminProductCont">
               <div>
                 <h2>All Orders</h2>
               </div>

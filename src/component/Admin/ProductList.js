@@ -12,6 +12,7 @@ import {
 } from "../../actions/productAction";
 import "./ProductList.css";
 import { toast } from "react-toastify";
+import MobileAdminBar from "./MobileAdminBar";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -92,11 +93,14 @@ const ProductList = () => {
   return (
     <Fragment>
       <div>
+        <div className="mobileTopBarContainer">
+          <MobileAdminBar />
+        </div>
         <div className="mainCont">
-          <div className="rightCont">
+          <div className="rightContAdmin">
             <Sidebar />
           </div>
-          <div className="leftCont">
+          <div className="leftContAdmin">
             <div className="AdminProductCont">
               <div className="ProductHed">
                 <h2>All Products</h2>

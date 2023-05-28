@@ -8,6 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import "./ProductList.css";
 import { toast } from "react-toastify";
+import MobileAdminBar from "./MobileAdminBar";
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -82,11 +83,14 @@ const Users = () => {
   return (
     <Fragment>
       <div>
+        <div className="mobileTopBarContainer">
+          <MobileAdminBar />
+        </div>
         <div className="mainCont">
-          <div className="rightCont">
+          <div className="rightContAdmin">
             <Sidebar />
           </div>
-          <div className="leftCont">
+          <div className="leftContAdmin">
             <div className="AdminProductCont">
               <div>
                 <h2>All Users</h2>

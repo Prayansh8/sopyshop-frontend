@@ -5,11 +5,11 @@
   padding: 0;
 }
 
-.rightCont {
+.rightContAdmin {
   width: 20%;
 }
 
-.leftCont {
+.leftContAdmin {
   width: 80%;
   margin: 0 auto 8vh auto
 }
@@ -91,12 +91,11 @@
 }
 
 @media screen and (max-width: 600px) {
-  .rightCont {
-    width: 30%;
-    /* padding: 12px 0; */
+  .rightContAdmin {
+    display: none;
   }
-  .leftCont {
-    width: 70%;
-    margin: 0 0vh;
+  .leftContAdmin {
+    width: 100%;
+    margin: auto;
   }
 }
