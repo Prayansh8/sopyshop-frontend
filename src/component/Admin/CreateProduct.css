@@ -54,4 +54,11 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 15vh auto;
     height: 70vh;
   }
+  .productUserContaner {
+    margin: 22vh auto;
+    width: 95%;
+    border: 3px solid gray;
+    padding: 1px;
+    border-radius: 10px;
+  }
 }
