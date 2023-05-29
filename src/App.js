@@ -112,6 +112,7 @@ function App() {
                 path="/update/avatar"
                 element={<UpdateAvatar user={user} loading={loading} />}
               />
+              <Route path="/admin/order/:id" element={<OrderUpdate />} />
             </>
           )}
           {user && user.role === "admin" && (
@@ -127,7 +128,6 @@ function App() {
               <Route path="/admin/user/:id" element={<AdminUpdateUser />} />
 
               <Route path="/admin/orders" element={<OrdersList />} />
-              <Route path="/admin/order/:id" element={<OrderUpdate />} />
             </>
           )}
         </Routes>
