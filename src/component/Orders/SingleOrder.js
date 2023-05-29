@@ -82,6 +82,39 @@ const SingleOrder = () => {
                   <span>-</span>
                 </div>
                 <div className="disLeft">
+                  <span>₹{order.itemPrice && order.itemPrice}</span>
+                </div>
+              </div>
+              <div className="dis-flex">
+                <div className="disRight">
+                  <p>Tax (GST)</p>
+                </div>
+                <div className="disMid">
+                  <span>-</span>
+                </div>
+                <div className="disLeft">
+                  <span>₹{order.taxPrice && order.taxPrice}</span>
+                </div>
+              </div>
+              <div className="dis-flex">
+                <div className="disRight">
+                  <p>Shipping Charges</p>
+                </div>
+                <div className="disMid">
+                  <span>-</span>
+                </div>
+                <div className="disLeft">
+                  <span>₹{order.shippingPrice && order.shippingPrice}</span>
+                </div>
+              </div>
+              <div className="dis-flex">
+                <div className="disRight">
+                  <p>Total Amount</p>
+                </div>
+                <div className="disMid">
+                  <span>-</span>
+                </div>
+                <div className="disLeft">
                   <span>₹{order.totalPrice && order.totalPrice}</span>
                 </div>
               </div>
