@@ -225,7 +225,7 @@ export const getUserDetails = (id) => async (dispatch) => {
 
 // Update user By Admin
 
-export const adminUpdateUser = (id, productData) => async (dispatch) => {
+export const adminUpdateUserRole = (userData) => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_UPDATE_USER_REQUEST });
     const token = localStorage.getItem("token");
@@ -237,8 +237,8 @@ export const adminUpdateUser = (id, productData) => async (dispatch) => {
     };
 
     const { data } = await axios.patch(
-      `${config.baseUrl}/api/v1/user/update/${id}`,
-      productData,
+      `${config.baseUrl}/api/v1/admin/update`,
+      userData,
       configData
     );
     dispatch({ type: ADMIN_UPDATE_USER_SUCCESS, payload: data.success });
