@@ -22,3 +22,44 @@
   padding: 2px;
   font-size: 24px;
 }
+
+.updateUserFormText select {
+  width: 100%;
+  padding: 4px 12px;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 2px 35px;
+}
+
+@media screen and (max-width: 700px) {
+  .updateUserContaner {
+    margin: 30vh auto;
+    width: 90%;
+    padding: 1px;
+}
+
+.updateUserFormText {
+  margin: 5px 1px;
+}
+.updateUserFormText input {
+  font-size: 16px;
+  padding: 2px 35px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.updateUserFormText svg {
+  position: absolute;
+  margin: 5px 6px 0;
+  padding: 2px;
+  font-size: 22px;
+}
+
+.updateUserFormText select {
+  width: 100%;
+  padding: 4px 12px;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 2px 35px;
+}
+}

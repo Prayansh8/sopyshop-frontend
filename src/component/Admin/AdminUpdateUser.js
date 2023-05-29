@@ -2,11 +2,15 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { adminUpdateUser, clearErrors, getUserDetails } from "../../actions/userAction";
+import {
+  adminUpdateUser,
+  clearErrors,
+  getUserDetails,
+} from "../../actions/userAction";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EmailIcon from "@mui/icons-material/Email";
-import BadgeIcon from "@mui/icons-material/Badge";
-import "./AdminUpdateUser.css"
+import "./AdminUpdateUser.css";
+import { VerifiedUser } from "@mui/icons-material";
 
 const AdminUpdateUser = () => {
   const dispatch = useDispatch();
@@ -91,17 +95,12 @@ const AdminUpdateUser = () => {
               />
             </div>
             <div className="updateUserFormText">
-              <BadgeIcon />
-              <input
-                type="text"
-                placeholder="Role"
-                name="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                minLength="4"
-                maxLength="100"
-                required
-              />
+            <VerifiedUser />
+              <select onChange={(e) => setRole(e.target.value)}>
+                <option>{user.role}</option>
+                <option className={user.role === "user"?"d-none":"d-block"}>user</option>
+                <option className={user.role === "admin"?"d-none":"d-block"}>admin</option>
+              </select>
             </div>
 
             <input
