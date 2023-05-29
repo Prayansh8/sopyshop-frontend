@@ -51,7 +51,7 @@
 .shippingInfoText {
   font-size: 24px;
   font-weight: 500;
-  margin: 2vh 0;
+  margin: 1vh 0;
 }
 
 .orderItemsText {
@@ -83,19 +83,19 @@
   }
 
   .disRight {
-    width: 35%;
-    font-size: 16px;
+    width: 40%;
+    font-size: 14px;
   }
 
   .disMid {
     width: 5%;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .disLeft {
-    width: 60%;
+    width: 55%;
     text-align: end;
-    font-size: 16px;
+    font-size: 14px;
   }
 }
