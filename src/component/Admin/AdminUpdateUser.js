@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import {
-  adminUpdateUser,
+  adminUpdateUserRole,
   clearErrors,
   getUserDetails,
 } from "../../actions/userAction";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EmailIcon from "@mui/icons-material/Email";
 import "./AdminUpdateUser.css";
 import { VerifiedUser } from "@mui/icons-material";
@@ -19,7 +18,6 @@ const AdminUpdateUser = () => {
   const { loading, error } = useSelector((state) => state.updateUser);
   const { user } = useSelector((state) => state.userDetails);
 
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
 
@@ -32,15 +30,12 @@ const AdminUpdateUser = () => {
     }
   };
 
-  const updateProductSubmit = (e) => {
-    e.preventDefault();
-
+  const updateProductSubmit = () => {
     const formData = new FormData();
-    formData.append("name", name);
     formData.append("role", role);
     formData.append("email", email);
 
-    dispatch(adminUpdateUser(id));
+    dispatch(adminUpdateUserRole(formData));
     toast.success("update Product Successful!");
   };
 
@@ -48,7 +43,6 @@ const AdminUpdateUser = () => {
     if (user && user._id !== id) {
       dispatch(getUserDetails(id));
     } else {
-      setName(user.name);
       setRole(user.role);
       setEmail(user.email);
     }
@@ -69,19 +63,6 @@ const AdminUpdateUser = () => {
             className="loginForm"
           >
             <div className="updateUserFormText">
-              <AccountCircleIcon />
-              <input
-                type="text"
-                placeholder="Name"
-                value={name}
-                name="name"
-                required
-                onChange={(e) => setName(e.target.value)}
-                minLength="1"
-                maxLength="32"
-              />
-            </div>
-            <div className="updateUserFormText">
               <EmailIcon />
               <input
                 type="text"
@@ -95,11 +76,17 @@ const AdminUpdateUser = () => {
               />
             </div>
             <div className="updateUserFormText">
-            <VerifiedUser />
+              <VerifiedUser />
               <select onChange={(e) => setRole(e.target.value)}>
                 <option>{user.role}</option>
-                <option className={user.role === "user"?"d-none":"d-block"}>user</option>
-                <option className={user.role === "admin"?"d-none":"d-block"}>admin</option>
+                <option className={user.role === "user" ? "d-none" : "d-block"}>
+                  user
+                </option>
+                <option
+                  className={user.role === "admin" ? "d-none" : "d-block"}
+                >
+                  admin
+                </option>
               </select>
             </div>
 
