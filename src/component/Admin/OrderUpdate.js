@@ -48,8 +48,20 @@ const OrderUpdate = () => {
                   <AccountTree />
                   <select onChange={(e) => setStatus(e.target.value)}>
                     <option>{order.orderStatus}</option>
-                    <option>Shipped</option>
-                    <option>Delivered</option>
+                    <option
+                      className={
+                        order.orderStatus === "Shipped" ? "d-none" : "d-block"
+                      }
+                    >
+                      Shipped
+                    </option>
+                    <option
+                      className={
+                        order.orderStatus === "Delivered" ? "d-none" : "d-block"
+                      }
+                    >
+                      Delivered
+                    </option>
                   </select>
                 </div>
 
