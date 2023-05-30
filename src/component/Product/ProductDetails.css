@@ -252,12 +252,13 @@
     margin: 0;
   }
   .productReviewsBox {
+    display: block;
     margin: 0vh auto;
-    padding: 1vh;
+    padding: 2vh;
   }
   .productReviews {
     border: 2px solid rgba(179, 179, 179, 0.64);
-    margin: 0px 4px;
+    margin: 1vh 4px;
     width: 70%;
     font-size: 18px;
     padding: 0 0 20px;
