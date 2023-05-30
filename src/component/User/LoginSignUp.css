@@ -71,17 +71,17 @@
   margin: 10px auto;
 }
 
-.RagisterFormText {
+.registerFormText {
   margin: 10px 0;
 }
-.RagisterFormText input {
+.registerFormText input {
   font-size: 20px;
   padding: 2px 35px;
   border-radius: 10px;
   width: 100%;
 }
 
-.RagisterFormText svg {
+.registerFormText svg {
   position: absolute;
   margin: 7px 6px 0;
   padding: 2px;
@@ -89,7 +89,7 @@
 }
 
 .loginBtn,
-.ragisterBtn {
+.registerBtn {
   width: 50%;
 }
 
@@ -162,17 +162,17 @@
     margin: 10px auto;
   }
 
-  .RagisterFormText {
+  .registerFormText {
     margin: 10px 0;
   }
-  .RagisterFormText input {
+  .registerFormText input {
     font-size: 16px;
     padding: 4px 0 4px 35px;
     border-radius: 10px;
     width: 100%;
   }
 
-  .RagisterFormText svg {
+  .registerFormText svg {
     position: absolute;
     margin: 6px 6px 0;
     padding: 2px;
@@ -180,7 +180,7 @@
   }
 
   .loginBtn,
-  .ragisterBtn {
+  .registerBtn {
     width: 50%;
     font-size: 24px;
     font-weight: 900;

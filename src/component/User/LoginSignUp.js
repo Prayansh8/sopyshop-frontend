@@ -56,7 +56,9 @@ export default function LoginSignUp() {
     return passwordRegex.test(password);
   };
 
-  const ragisterSubmit = () => {
+  const registerSubmit = (e) => {
+    e.preventDefault();
+
     if (!isValidPassword(password)) {
       setPasswordError(
         "Minimum 6 and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character:"
@@ -71,7 +73,7 @@ export default function LoginSignUp() {
     dispatch(ragister(formData));
     setTimeout(() => {
       window.location.reload();
-    }, 500);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -102,7 +104,7 @@ export default function LoginSignUp() {
                       aria-label="lab API tabs example"
                     >
                       <Tab className="loginBtn" label="Login" value="1" />
-                      <Tab className="ragisterBtn" label="Ragister" value="2" />
+                      <Tab className="registerBtn" label="register" value="2" />
                     </TabList>
                   </Box>
                   <TabPanel value="1">
@@ -148,11 +150,11 @@ export default function LoginSignUp() {
                   </TabPanel>
                   <TabPanel value="2">
                     <form
-                      id="ragister"
-                      onSubmit={ragisterSubmit}
+                      id="register"
+                      onSubmit={registerSubmit}
                       className="loginForm"
                     >
-                      <div className="RagisterFormText">
+                      <div className="registerFormText">
                         <Face />
                         <input
                           type="text"
@@ -161,11 +163,11 @@ export default function LoginSignUp() {
                           name="name"
                           required
                           onChange={(e) => setName(e.target.value)}
-                          minLength="6"
+                          minLength="2"
                           maxLength="32"
                         />
                       </div>
-                      <div className="RagisterFormText">
+                      <div className="registerFormText">
                         <MailOutlineOutlined />
                         <input
                           type="email"
@@ -178,7 +180,7 @@ export default function LoginSignUp() {
                           maxLength="32"
                         />
                       </div>
-                      <div className="RagisterFormText">
+                      <div className="registerFormText">
                         <LockOpen />
                         <input
                           id="psw"
@@ -206,7 +208,7 @@ export default function LoginSignUp() {
                       </div>
                       <input
                         type="submit"
-                        value="Ragister"
+                        value="register"
                         className="submitBtn"
                         disabled={loading ? true : false}
                       />
