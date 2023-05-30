@@ -27,6 +27,7 @@ export default function LoginSignUp() {
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState(profile);
   const [passwordError, setPasswordError] = useState("");
+  const [fileError, setFileError] = useState("");
 
   const [value, setValue] = React.useState("1");
 
@@ -46,8 +47,18 @@ export default function LoginSignUp() {
   };
 
   const handleImageChange = (e) => {
-    setAvatar(e.target.files[0]);
-    setAvatarPreview(URL.createObjectURL(e.target.files[0]));
+    const file = e.target.files[0];
+    const fileSizeInBytes = file.size;
+    const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+
+    if (fileSizeInBytes > maxSizeInBytes) {
+      setFileError("File size exceeds the limit of 5MB.");
+      setAvatar(null);
+    } else {
+      setFileError("");
+      setAvatar(file);
+      setAvatarPreview(URL.createObjectURL(file));
+    }
   };
 
   const isValidPassword = (password) => {
@@ -205,12 +216,18 @@ export default function LoginSignUp() {
                           accept="image/*"
                           onChange={handleImageChange}
                         />
+                        <div className="m-1">
+                          <span className="text-danger">
+                            {fileError && <div>({fileError})</div>}
+                          </span>
+                          {avatar && <div>(Selected file: {avatar.name})</div>}
+                        </div>
                       </div>
                       <input
                         type="submit"
                         value="register"
                         className="submitBtn"
-                        disabled={loading ? true : false}
+                        disabled={fileError ? true : false}
                       />
                     </form>
                   </TabPanel>
