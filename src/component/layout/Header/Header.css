@@ -1,5 +1,5 @@
 .logo img {
-  width: 100%;
+  width: 40px;
   height: 40px;
 }
 
@@ -54,10 +54,22 @@
   .mobile-Nav {
     display: block;
   }
-  .accountImg img {
+  .disMobileFlex{
+    display: flex;
+  }
+  .accountMobileImg {
     border: 2px solid white;
     height: 40px;
     width: 40px;
     margin: 0;
+  }
+
+  .navLogoCont {
+    width: 12%;
+    height: auto;
+  }
+  .navAccountCont {
+    width: 88%;
+    height: auto;
   }
 }

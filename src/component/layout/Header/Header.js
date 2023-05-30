@@ -98,44 +98,37 @@ export default function Header({ user, isAuthenticated }) {
       {/* mobile nav */}
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark mobile-Nav">
-        <div className="container-fluid px-3">
-          <Link className="navbar-brand logo" to="/">
-            <img src={logo} alt="sopyshop" />
-          </Link>
-
-          <ul className="nav justify-content-end ">
+        <div className="container-fluid px-3 disMobileFlex">
+          <div className="navLogoCont">
+            <Link className="navbar-brand logo" to="/">
+              <img src={logo} alt="sopyshop" />
+            </Link>
+          </div>
+          <div className="navAccountCont">
             {isAuthenticated ? (
-              <li className="nav-item nav-li">
-                <Link
-                  to="/account"
-                  className="d-flex align-items-center text-white text-decoration-none m-auto accountImg"
-                >
-                  <img
-                    src={user.avatar}
-                    alt="Profile"
-                    width={32}
-                    height={32}
-                    className="rounded-circle"
-                  />
-                </Link>
-              </li>
+              <Link
+                to="/account"
+                className="d-flex justify-content-end align-items-end text-white text-decoration-none m-auto"
+              >
+                <img
+                  src={user.avatar}
+                  alt="Profile"
+                  className="rounded-circle accountMobileImg"
+                />
+              </Link>
             ) : (
-              <li className="nav-item nav-li">
-                <Link
-                  to="/account"
-                  className="d-flex align-items-center text-white text-decoration-none m-auto"
-                >
-                  <img
-                    src={profile}
-                    alt="Profile"
-                    width={32}
-                    height={32}
-                    className="rounded-circle me-2"
-                  />
-                </Link>
-              </li>
+              <Link
+                to="/account"
+                className="d-flex justify-content-end align-items-center text-white text-decoration-none m-auto"
+              >
+                <img
+                  src={profile}
+                  alt="Profile"
+                  className="rounded-circle accountMobileImg"
+                />
+              </Link>
             )}
-          </ul>
+          </div>
         </div>
       </nav>
     </Fragment>
