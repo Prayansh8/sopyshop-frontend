@@ -36,7 +36,7 @@ const AdminUpdateUser = () => {
     formData.append("email", email);
 
     dispatch(adminUpdateUserRole(formData));
-    toast.success("update Product Successful!");
+    toast.success("update User Successful!");
   };
 
   useEffect(() => {
@@ -69,7 +69,8 @@ const AdminUpdateUser = () => {
                 placeholder="Email"
                 name="Email"
                 onInput={maxLengthCheck}
-                maxLength={6}
+                maxLength={32}
+                readOnly
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
