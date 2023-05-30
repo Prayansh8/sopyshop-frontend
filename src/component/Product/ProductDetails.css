@@ -206,7 +206,7 @@
   transform: translateY(-1px);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   .productDetailsContainer {
     padding: 2vh 0;
   }
@@ -253,14 +253,15 @@
   }
   .productReviewsBox {
     margin: 0vh auto;
+    padding: 1vh;
   }
   .productReviews {
     border: 2px solid rgba(179, 179, 179, 0.64);
-    margin: 0px 1vh;
-    width: 30%;
+    margin: 0px 4px;
+    width: 70%;
     font-size: 18px;
-    padding: 2px;
-    height: 35vh;
+    padding: 0 0 20px;
+    height: 100%;
     overflow: auto;
   }
   .productReviews:hover {
@@ -272,7 +273,7 @@
     width: 100%;
   }
   .productReviews h5 {
-    font-size: 18px;
+    font-size: 16px;
   }
   .productReviews p {
     margin: 0;
