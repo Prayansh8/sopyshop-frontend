@@ -127,14 +127,14 @@
     padding: 2px;
   }
   .cardTitle {
-    font-size: 20px;
+    font-size: 18px;
   }
   .reviews {
-    font-size: 18px;
+    font-size: 14px;
   }
   .cardPrice {
     margin: 5px 0 0;
-    font-size: 20px;
+    font-size: 16px;
   }
   .f-product h1 {
     font-size: 2vmax;
