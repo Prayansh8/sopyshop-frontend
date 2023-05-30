@@ -56,8 +56,7 @@ export default function LoginSignUp() {
     return passwordRegex.test(password);
   };
 
-  const ragisterSubmit = (e) => {
-    e.preventDefault();
+  const ragisterSubmit = () => {
     if (!isValidPassword(password)) {
       setPasswordError(
         "Minimum 6 and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character:"
@@ -70,6 +69,9 @@ export default function LoginSignUp() {
     formData.append("password", password);
     formData.append("avatar", avatar);
     dispatch(ragister(formData));
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   useEffect(() => {
