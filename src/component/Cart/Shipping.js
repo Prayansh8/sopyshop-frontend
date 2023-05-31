@@ -6,6 +6,7 @@ import { Country, State } from "country-state-city";
 import {
   Home,
   LocationCity,
+  Person,
   Phone,
   Place,
   Public,
@@ -14,6 +15,7 @@ import {
 import CheckOutStep from "./CheckOutStep.js";
 import "./Shipping.css";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Shipping = () => {
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ const Shipping = () => {
 
   const shippingSubmit = () => {
     if (phone.length < 10 || phone.length > 10) {
-      alert("Phone Number should be 10 digit");
+      toast.error("Phone Number should be 10 digit");
       return;
     }
     dispatch(
@@ -60,7 +62,7 @@ const Shipping = () => {
             className="shippingform"
           >
             <div className="inputText">
-              <Home />
+              <Person />
               <input
                 type="text"
                 placeholder="Name"

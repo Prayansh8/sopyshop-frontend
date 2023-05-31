@@ -95,7 +95,7 @@
 
 .registerImage {
   width: 100%;
-  display: flex;
+  display: block;
 }
 .registerImage img {
   width: 40px;
@@ -184,5 +184,9 @@
     width: 50%;
     font-size: 24px;
     font-weight: 900;
+  }
+
+  .registerImage {
+    display: block;
   }
 }

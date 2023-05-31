@@ -27,10 +27,6 @@
   width: 50%;
 }
 
-.registerImage {
-  width: 100%;
-  display: flex;
-}
 .registerImage img {
   width: 40px;
   height: 40px;
