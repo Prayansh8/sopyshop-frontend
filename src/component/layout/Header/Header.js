@@ -70,12 +70,12 @@ export default function Header({ user, isAuthenticated }) {
                       alt="Profile"
                       width={32}
                       height={32}
-                      className="rounded-circle me-2"
+                      className="rounded-circle"
                     />
                   </Link>
                 </li>
               ) : (
-                <li className="nav-item nav-li">
+                <li className="nav-item nav-li mx-2">
                   <Link
                     to="/account"
                     className="d-flex align-items-center text-white text-decoration-none m-auto"
@@ -85,7 +85,7 @@ export default function Header({ user, isAuthenticated }) {
                       alt="Profile"
                       width={32}
                       height={32}
-                      className="rounded-circle me-2"
+                      className="rounded-circle"
                     />
                   </Link>
                 </li>
