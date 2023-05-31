@@ -181,6 +181,7 @@
   overflow: auto;
   margin: 4vh auto;
   padding: 2vh;
+  flex-wrap: inherit;
 }
 .productReviews {
   border: 2px solid rgba(179, 179, 179, 0.64);
@@ -255,13 +256,14 @@
     display: block;
     margin: 0vh auto;
     padding: 2vh;
+    display: flex;
+    flex-wrap: wrap;
   }
   .productReviews {
     border: 2px solid rgba(179, 179, 179, 0.64);
-    margin: 1vh 4px;
-    width: 70%;
+    margin: 1% 1%;
+    width: 48%;
     font-size: 18px;
-    padding: 0 0 20px;
     height: 100%;
     overflow: auto;
   }
@@ -274,7 +276,7 @@
     width: 100%;
   }
   .productReviews h5 {
-    font-size: 16px;
+    font-size: 14px;
   }
   .productReviews p {
     margin: 0;
