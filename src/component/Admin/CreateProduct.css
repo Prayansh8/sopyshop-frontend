@@ -9,7 +9,7 @@
   padding: 4px 12px;
   font-size: 20px;
   font-weight: 400;
-  padding: 2px 35px;
+  padding: 2px 5px 0 35px;
 }
 
 .imagepriviue img {
@@ -28,7 +28,14 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .createProductFormText input {
   font-size: 20px;
-  padding: 2px 35px;
+  padding: 2px 5px 0 35px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.createProductFormText textarea {
+  font-size: 20px;
+  padding: 2px 5px 0 35px;
   border-radius: 10px;
   width: 100%;
 }
@@ -61,4 +68,12 @@ input[type="number"]::-webkit-inner-spin-button {
     padding: 1px;
     border-radius: 10px;
   }
+
+  
+.createProductFormText textarea {
+  font-size: 16px;
+  padding: 2px 8px 0 35px;
+  border-radius: 10px;
+  width: 100%;
+}
 }
