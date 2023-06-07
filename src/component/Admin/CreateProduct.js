@@ -136,16 +136,15 @@ const CreateProduct = () => {
             </div>
             <div className="createProductFormText">
               <TextSnippetIcon />
-              <input
-                type="text"
+              <textarea
                 placeholder="Description"
                 name="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                minLength="4"
-                maxLength="100"
+                minLength="2"
+                maxLength="1000"
                 required
-              />
+              ></textarea>
             </div>
             <div className="registerImage">
               <input
