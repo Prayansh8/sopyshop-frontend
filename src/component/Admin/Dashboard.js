@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
@@ -11,26 +11,40 @@ import {
   PieSeries,
 } from "@devexpress/dx-react-chart-material-ui";
 import MobileAdminBar from "./MobileAdminBar";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, getAllOrdersByAdmin } from "../../actions/orderAction";
+import { toast } from "react-toastify";
+import { getAllUsers } from "../../actions/userAction";
+import { getAdminProducts } from "../../actions/productAction";
 
 const Dashboard = () => {
-  const data = [
-    { argument: 1, value: 10 },
-    { argument: 2, value: 14 },
-    { argument: 3, value: 28 },
-    { argument: 4, value: 22 },
-    { argument: 5, value: 31 },
-  ];
+  const dispatch = useDispatch();
 
-  const chartData = [
-    { country: "Russia", area: 12 },
-    { country: "Canada", area: 7 },
-    { country: "USA", area: 7 },
-    { country: "China", area: 7 },
-    { country: "Brazil", area: 6 },
-    { country: "Australia", area: 5 },
-    { country: "India", area: 2 },
-    { country: "Others", area: 55 },
-  ];
+  const { orders, totalAmount, error } = useSelector((state) => state.orders);
+  const { users } = useSelector((state) => state.getAllUsers);
+  const { products } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+
+    dispatch(getAllOrdersByAdmin());
+    dispatch(getAllUsers());
+    dispatch(getAdminProducts());
+  }, [error, dispatch]);
+
+  const data = orders.map((order, index) => ({
+    argument: index + 1,
+    value: order.totalPrice,
+  }));
+
+  const chartData = orders.map((order) => ({
+    country: order.shippingInfo.state,
+    area: order.itemPrice,
+  }));
+
   return (
     <div>
       <div className="mobileTopBarContainer">
@@ -44,7 +58,7 @@ const Dashboard = () => {
           <h2 className="text-center my-2">Dashboard</h2>
           <div className="totalAmount">
             <p>
-              Total Amount <br /> ₹2000
+              Total Amount <br /> ₹{totalAmount}
             </p>
           </div>
           <div className="deshCount">
@@ -52,7 +66,7 @@ const Dashboard = () => {
               <Link to={"/admin/product"}>
                 <div className="productCont1">
                   <p>Product</p>
-                  <p>40</p>
+                  <p>{products.length}</p>
                 </div>
               </Link>
             </div>
@@ -60,7 +74,7 @@ const Dashboard = () => {
               <Link to={"/admin/orders"}>
                 <div className="productCont1">
                   <p>Orders</p>
-                  <p>4</p>
+                  <p>{orders.length}</p>
                 </div>
               </Link>
             </div>
@@ -68,7 +82,7 @@ const Dashboard = () => {
               <Link to={"/admin/users"}>
                 <div className="productCont1">
                   <p>Users</p>
-                  <p>7</p>
+                  <p>{users.length}</p>
                 </div>
               </Link>
             </div>
