@@ -27,6 +27,12 @@
 @media only screen and (max-width: 767px) {
   .footer {
     font-size: 10px;
-    padding: 10px 5px;
+    padding: 5px 2px;
+    margin: 0 auto 60px;
+  }
+
+  .logoimg {
+    height: 20px;
+    width: 20px;
   }
 }
