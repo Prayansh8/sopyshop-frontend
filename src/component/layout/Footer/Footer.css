@@ -1,29 +1,32 @@
-footer{
-  height: 8vh;
-  width: 100%;
-}
-
-.logoimg{
+.logoimg {
   height: 30px;
   width: 30px;
   padding: 2px;
 }
 
-.color-white{
-  color: rgb(202, 202, 202);
+.footer {
+  text-align: center;
+  background-color: #333;
+  color: white;
+  padding: 15px 10px;
+  position: unset;
+  bottom: 0;
+  font-size: 16px;
+  margin: 0 auto 0;
+  top: 90vh;
 }
 
-.footer-text{
-  font-size: 18px;
+/* CSS for the red text */
+.red-text {
+  color: red;
+}
+.red-text:hover {
+  color: rgb(0, 160, 168);
 }
 
-@media screen and (max-width: 600px) {
-
-  .footer-text{
-    font-size: 12px;
-  }
-  .logoimg{
-    height: 25px;
-    width: 25px;
+@media only screen and (max-width: 767px) {
+  .footer {
+    font-size: 10px;
+    padding: 10px 5px;
   }
 }

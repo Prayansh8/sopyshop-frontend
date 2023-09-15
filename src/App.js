@@ -60,77 +60,86 @@ function App() {
           isAuthenticated={isAuthenticated}
           loading={loading}
         />
-        <Routes>
-          <Route extact path="/" element={<Home />} />
-          <Route extact path="/product/:id" element={<ProductDetails />} />
-          <Route extact path="/products" element={<Products />} />
-          <Route path="/products/:keyword" element={<Products />} />
-          <Route extact path="/search" element={<Search />} />
+        <div className="mainContainerDiv">
+          <Routes>
+            <Route extact path="/" element={<Home />} />
+            <Route extact path="/product/:id" element={<ProductDetails />} />
+            <Route extact path="/products" element={<Products />} />
+            <Route path="/products/:keyword" element={<Products />} />
+            <Route extact path="/search" element={<Search />} />
 
-          <Route
-            extact
-            path="/proccess/payment"
-            element={
-              <Elements stripe={stripePromise}>
-                <PaymentProcess />
-              </Elements>
-            }
-          />
+            <Route
+              extact
+              path="/proccess/payment"
+              element={
+                <Elements stripe={stripePromise}>
+                  <PaymentProcess />
+                </Elements>
+              }
+            />
 
-          <Route
-            extact
-            path="/cart"
-            element={<Cart isAuthenticated={isAuthenticated} />}
-          />
-          <Route extact path="/login" element={<LoginSignUp />} />
-          <Route
-            extact
-            path="/account"
-            element={
-              <Account
-                user={user}
-                isAuthenticated={isAuthenticated}
-                loading={loading}
-              />
-            }
-          />
+            <Route
+              extact
+              path="/cart"
+              element={<Cart isAuthenticated={isAuthenticated} />}
+            />
+            <Route extact path="/login" element={<LoginSignUp />} />
+            <Route
+              extact
+              path="/account"
+              element={
+                <Account
+                  user={user}
+                  isAuthenticated={isAuthenticated}
+                  loading={loading}
+                />
+              }
+            />
 
-          {isAuthenticated && (
-            <>
-              <Route extact path="/shipping" element={<Shipping />} />
-              <Route extact path="/order/comfirm" element={<ComfirmOrder />} />
-              <Route extact path="/success" element={<OrderSuccess />} />
-              <Route extact path="/orders" element={<MyOrders />} />
-              <Route extact path="/order/:id" element={<SingleOrder />} />
-              <Route
-                extact
-                path="/update"
-                element={<UpdateUser user={user} loading={loading} />}
-              />
-              <Route
-                extact
-                path="/update/avatar"
-                element={<UpdateAvatar user={user} loading={loading} />}
-              />
-              <Route path="/admin/order/:id" element={<OrderUpdate />} />
-            </>
-          )}
-          {user && user.role === "admin" && (
-            <>
-              <Route path="/admin/dashboard" element={<Dashboard />} />
-              <Route path="/admin/product" element={<ProductList />} />
-              <Route path="/admin/create/product" element={<CreateProduct />} />
-              <Route
-                path="/admin/update/product/:id"
-                element={<UpdateProduct />}
-              />
-              <Route path="/admin/users" element={<Users />} />
-              <Route path="/admin/user/:id" element={<AdminUpdateUser />} />
+            {isAuthenticated && (
+              <>
+                <Route extact path="/shipping" element={<Shipping />} />
+                <Route
+                  extact
+                  path="/order/comfirm"
+                  element={<ComfirmOrder />}
+                />
+                <Route extact path="/success" element={<OrderSuccess />} />
+                <Route extact path="/orders" element={<MyOrders />} />
+                <Route extact path="/order/:id" element={<SingleOrder />} />
+                <Route
+                  extact
+                  path="/update"
+                  element={<UpdateUser user={user} loading={loading} />}
+                />
+                <Route
+                  extact
+                  path="/update/avatar"
+                  element={<UpdateAvatar user={user} loading={loading} />}
+                />
+                <Route path="/admin/order/:id" element={<OrderUpdate />} />
+              </>
+            )}
+            {user && user.role === "admin" && (
+              <>
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/admin/product" element={<ProductList />} />
+                <Route
+                  path="/admin/create/product"
+                  element={<CreateProduct />}
+                />
+                <Route
+                  path="/admin/update/product/:id"
+                  element={<UpdateProduct />}
+                />
+                <Route path="/admin/users" element={<Users />} />
+                <Route path="/admin/user/:id" element={<AdminUpdateUser />} />
 
-              <Route path="/admin/orders" element={<OrdersList />} />
-            </>
-          )}
-        </Routes>
+                <Route path="/admin/orders" element={<OrdersList />} />
+              </>
+            )}
+          </Routes>
+        </div>
         <div className="mobileBottomBar">
           <LabelBottomNavigation />
         </div>
