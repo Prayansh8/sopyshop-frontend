@@ -140,10 +140,10 @@ function App() {
             )}
           </Routes>
         </div>
+        <Footer />
         <div className="mobileBottomBar">
           <LabelBottomNavigation />
         </div>
-        <Footer />
       </BrowserRouter>
       <ToastContainer />
     </>
