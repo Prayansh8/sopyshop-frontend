@@ -11,7 +11,7 @@ export default function Footer() {
         </a>
         &copy; 2023 sopyshop - Developed by&nbsp;
         <span>
-          <a href="https://prayansh.apnichanderi.in/" class="red-text">
+          <a href="https://prayanshgupta.com/" class="red-text">
             Prayansh Gupta.
           </a>
         </span>
