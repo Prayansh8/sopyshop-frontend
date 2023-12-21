@@ -6,6 +6,7 @@ import { logout } from "../../actions/userAction";
 import LoginSignUp from "./LoginSignUp";
 import "./Account.css";
 import MataData from "../layout/MataData";
+import profile from "./profile.png";
 
 export default function Account({ user, loading, isAuthenticated }) {
   const dispatch = useDispatch();
@@ -28,13 +29,23 @@ export default function Account({ user, loading, isAuthenticated }) {
               <div className="container text-center det-coun">
                 <div className="accountImg">
                   <div>
-                    <img
-                      src={user.avatar}
-                      alt="Profile"
-                      width={300}
-                      height={300}
-                      className="rounded-circle me-2"
-                    />
+                    {user.avatar ? (
+                      <img
+                        src={user.avatar}
+                        alt="Profile"
+                        width={300}
+                        height={300}
+                        className="rounded-circle me-2"
+                      />
+                    ) : (
+                      <img
+                        src={profile}
+                        alt="Profile"
+                        width={300}
+                        height={300}
+                        className="rounded-circle me-2"
+                      />
+                    )}
                   </div>
                   <div className="editBtnDiv">
                     <Link to="/update/avatar">

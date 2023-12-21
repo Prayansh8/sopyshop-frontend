@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, ragister } from "../../actions/userAction";
 import Loader from "../layout/Loader/Loader";
 import { useEffect } from "react";
-import profile from "./profile.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -24,12 +23,10 @@ export default function LoginSignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState();
-  const [avatarPreview, setAvatarPreview] = useState(profile);
   const [passwordError, setPasswordError] = useState("");
-  const [fileError, setFileError] = useState("");
-
+  const [emailError, setEmailError] = useState("");
   const [value, setValue] = React.useState("1");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -46,30 +43,26 @@ export default function LoginSignUp() {
     dispatch(login(loginEmail, loginpassword));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    const fileSizeInBytes = file.size;
-    const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
-
-    if (fileSizeInBytes > maxSizeInBytes) {
-      setFileError("File size exceeds the limit of 5MB.");
-      setAvatar(null);
-    } else {
-      setFileError("");
-      setAvatar(file);
-      setAvatarPreview(URL.createObjectURL(file));
-    }
-  };
-
   const isValidPassword = (password) => {
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
     return passwordRegex.test(password);
   };
 
+  const isValidemail = (email) => {
+    const emailRegex = /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+
+    return emailRegex.test(email);
+  };
+
   const registerSubmit = (e) => {
     e.preventDefault();
-
+    if (!isValidemail) {
+      setEmailError(
+        "Minimum 6 and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character:"
+      );
+      return;
+    }
     if (!isValidPassword(password)) {
       setPasswordError(
         "Minimum 6 and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character:"
@@ -80,11 +73,17 @@ export default function LoginSignUp() {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("avatar", avatar);
-    dispatch(ragister(formData));
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
+    dispatch(ragister(formData))
+      .then(() => {
+        setSubmitSuccess(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+        setSubmitSuccess(false);
+      });
   };
 
   useEffect(() => {
@@ -132,6 +131,9 @@ export default function LoginSignUp() {
                           maxLength="32"
                           required
                         />
+                        {emailError && (
+                          <div className="passwordValid">{emailError}</div>
+                        )}
                       </div>
                       <div className="loginFormPassword">
                         <LockOpen />
@@ -208,28 +210,17 @@ export default function LoginSignUp() {
                           <div className="passwordValid">{passwordError}</div>
                         )}
                       </div>
-                      <div className="registerImage">
-                        <img src={avatarPreview} alt="Avatar Preview" />
-                        <input
-                          type="file"
-                          name="avatar"
-                          accept="image/*"
-                          onChange={handleImageChange}
-                        />
-                        <div className="m-1">
-                          <span className="text-danger">
-                            {fileError && <div>({fileError})</div>}
-                          </span>
-                          {avatar && <div>(Selected file: {avatar.name})</div>}
-                        </div>
-                      </div>
                       <input
                         type="submit"
                         value="register"
                         className="submitBtn"
-                        disabled={fileError ? true : false}
                       />
                     </form>
+                    {submitSuccess && (
+                      <p>
+                        Form submitted successfully! Reloading in 3 seconds...
+                      </p>
+                    )}
                   </TabPanel>
                 </TabContext>
               </Box>
