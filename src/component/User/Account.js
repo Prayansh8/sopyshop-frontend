@@ -6,7 +6,7 @@ import { logout } from "../../actions/userAction";
 import LoginSignUp from "./LoginSignUp";
 import "./Account.css";
 import MataData from "../layout/MataData";
-import profile from "./profile.png";
+import profile from "./admin.jpeg";
 
 export default function Account({ user, loading, isAuthenticated }) {
   const dispatch = useDispatch();
