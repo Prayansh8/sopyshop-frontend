@@ -98,7 +98,7 @@ export default function Account({ user, loading, isAuthenticated }) {
                     {user.role === "admin" ? (
                       <div>
                         <Link to="/admin/dashboard">
-                          <button className="editBtnDetails">Deshboard</button>
+                          <button className="editBtnDetails">Dashboard</button>
                         </Link>
                       </div>
                     ) : (
