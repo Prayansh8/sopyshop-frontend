@@ -14,7 +14,7 @@ import MataData from "../layout/MataData";
 export default function Products() {
   const categories = [
     "Clothes",
-    "Shoos",
+    "Shoes",
     "Phone",
     "Laptop",
     "Daskstop",

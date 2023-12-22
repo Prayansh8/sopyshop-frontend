@@ -41,7 +41,7 @@ const UpdateProduct = () => {
 
   const categories = [
     "Clothes",
-    "Shoos",
+    "Shoes",
     "Phone",
     "Laptop",
     "Daskstop",

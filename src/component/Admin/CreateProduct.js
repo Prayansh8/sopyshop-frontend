@@ -32,7 +32,7 @@ const CreateProduct = () => {
 
   const categories = [
     "Clothes",
-    "Shoos",
+    "Shoes",
     "Phone",
     "Laptop",
     "Daskstop",
