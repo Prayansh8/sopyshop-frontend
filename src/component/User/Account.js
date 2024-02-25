@@ -7,16 +7,13 @@ import LoginSignUp from "./LoginSignUp";
 import "./Account.css";
 import MataData from "../layout/MataData";
 import profile from "./admin.jpeg";
-
 export default function Account({ user, loading, isAuthenticated }) {
   const dispatch = useDispatch();
-
   function logoutUser() {
     dispatch(logout());
     localStorage.removeItem("token");
     window.location.reload();
   }
-
   return (
     <Fragment>
       <MataData title={"Sopyshop-Account"} />
@@ -71,7 +68,7 @@ export default function Account({ user, loading, isAuthenticated }) {
                         </tr>
                         <tr>
                           <th>Email:</th>
-                          <td>{user.email}</td>
+                          <td>{user.username}</td>
                         </tr>
                         <tr>
                           <th>Role: </th>

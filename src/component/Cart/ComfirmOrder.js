@@ -5,6 +5,7 @@ import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./ComfirmOrder.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const ComfirmOrder = () => {
   const navigate = useNavigate();
@@ -33,113 +34,124 @@ const ComfirmOrder = () => {
     navigate("/proccess/payment");
   };
 
-  return (
-    <Fragment>
-      <div className="mainContOrd">
-        <CheckOutStep aciveStap={1} />
-        <div className="row sippingInfo">
-          <div className="col-7 sippingInfo-right border-e">
-            <div className="sippDetaild">
-              <div className="sippHeding">
-                <Typography>Shipping Info</Typography>
-              </div>
-              <div className="sippInfoDetails">
-                <div className="sippInfoName addressDetails">
-                  <p> Name: </p>
-                  <div>
-                    <span> {shippingInfo.name} </span>
-                  </div>
-                </div>
-                <div className="sippInfoPhone addressDetails">
-                  <p> Phone: </p>
-                  <div>
-                    <span> {shippingInfo.phone} </span>
-                  </div>
-                </div>
-                <div className="sippInfoAddress addressDetails">
-                  <p> Address: </p>
-                  <div>
-                    <span> {address} </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+  useEffect(() => {
+    window.safestPayVendorToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWNmMWRmZGY3ODYxYzhmOTRiYWUxMTQiLCJ1c2VybmFtZSI6IlByYXlhbnNoIiwiaWF0IjoxNzA4NzA5MzY3LCJleHAiOjE3MDkwNTQ5Njd9.i1rR6OdxLgfUfENPeWoKS8DKwgYr-bQPtYesPfyCZxc';
+    const script = document.createElement("script");
+    // script.src = "https://cdn-safestpay.prayanshgupta.com/safest-payment-button.js";
+    script.src = "http://localhost:5500/dist/safest-payment-button.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
-            <div className="productDetailOrder">
-              <div className="sippHeding">
-                <Typography>Your Cart Item</Typography>
-              </div>
-              <div className="productInfoDetails">
-                {cartItems &&
-                  cartItems.map((item) => (
-                    <div className="productD" key={item.product}>
-                      <div className="imgPro">
-                        <img
-                          className="productImgOrd"
-                          src={item.image}
-                          alt="Product"
-                        />
-                      </div>
-                      <div className="productItem">
-                        <Link to={`/product/${item.product}`}>{item.name}</Link>
-                      </div>
-                      <div className="totalprice">
-                        <span>
-                          {item.quantity} x ₹{item.price} ={" "}
-                          <b>₹{item.price * item.quantity}</b>
-                        </span>
-                      </div>
+  return (
+    <>
+      <Fragment>
+        <div className="mainContOrd">
+          <CheckOutStep aciveStap={1} />
+          <div className="row sippingInfo">
+            <div className="col-7 sippingInfo-right border-e">
+              <div className="sippDetaild">
+                <div className="sippHeding">
+                  <Typography>Shipping Info</Typography>
+                </div>
+                <div className="sippInfoDetails">
+                  <div className="sippInfoName addressDetails">
+                    <p> Name: </p>
+                    <div>
+                      <span id="custoner-name"> {shippingInfo.name} </span>
                     </div>
-                  ))}
+                  </div>
+                  <div className="sippInfoPhone addressDetails">
+                    <p> Phone: </p>
+                    <div>
+                      <span> {shippingInfo.phone} </span>
+                    </div>
+                  </div>
+                  <div className="sippInfoAddress addressDetails">
+                    <p> Address: </p>
+                    <div>
+                      <span> {address} </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="productDetailOrder">
+                <div className="sippHeding">
+                  <Typography>Your Cart Item</Typography>
+                </div>
+                <div className="productInfoDetails">
+                  {cartItems &&
+                    cartItems.map((item) => (
+                      <div className="productD" key={item.product}>
+                        <div className="imgPro">
+                          <img
+                            className="productImgOrd"
+                            src={item.image}
+                            alt="Product"
+                          />
+                        </div>
+                        <div className="productItem">
+                          <Link to={`/product/${item.product}`}>{item.name}</Link>
+                        </div>
+                        <div className="totalprice">
+                          <span>
+                            {item.quantity} x ₹{item.price} ={" "}
+                            <b>₹{item.price * item.quantity}</b>
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-5 sippingInfo-left">
-            <div className="orderSummery">
-              <div className="orderHeding">
-                <Typography>Order Summery</Typography>
-              </div>
-              <div>
-                <div className="totalDetailsCont">
-                  <div className="totalDetails">
-                    <p>Subtotal:</p>
-                    <div>
-                      <span>₹{subtotal}</span>
-                    </div>
-                  </div>
-                  <div className="totalDetails">
-                    <p>Shipping Charges:</p>
-                    <div>
-                      <span>₹{shippingCharges}</span>
-                    </div>
-                  </div>
-                  <div className="totalDetails">
-                    <p>GST:</p>
-                    <div>
-                      <span>₹{tax}</span>
-                    </div>
-                  </div>
+            <div className="col-5 sippingInfo-left">
+              <div className="orderSummery">
+                <div className="orderHeding">
+                  <Typography>Order Summery</Typography>
                 </div>
-                <div className="totalP">
-                  <div className="totalTextInOrder">
-                    <p>
-                      <b>total:</b>
-                    </p>
+                <div>
+                  <div className="totalDetailsCont">
+                    <div className="totalDetails">
+                      <p>Subtotal:</p>
+                      <div>
+                        <span>₹{subtotal}</span>
+                      </div>
+                    </div>
+                    <div className="totalDetails">
+                      <p>Shipping Charges:</p>
+                      <div>
+                        <span>₹{shippingCharges}</span>
+                      </div>
+                    </div>
+                    <div className="totalDetails">
+                      <p>GST:</p>
+                      <div>
+                        <span>₹{tax}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="totllPriceInOrd">
-                    <span>₹{totalPrice}</span>
+                  <div className="totalP">
+                    <div className="totalTextInOrder">
+                      <p>
+                        <b>total:</b>
+                      </p>
+                    </div>
+                    <div className="totllPriceInOrd">
+                      <span>₹<span id="product-amount">{totalPrice}</span></span>
+                    </div>
                   </div>
-                </div>
-                <button className="ProccedBtn" onClick={procecedToPayment}>
+                  {/* <button className="ProccedBtn" onClick={procecedToPayment}>
                   Procced to Payment
-                </button>
+                </button> */}
+                  <div id="safest-pay-button-position"></div>
+                </div>
               </div>
             </div>
-            <div></div>
           </div>
         </div>
-      </div>
-    </Fragment>
+      </Fragment>
+    </>
   );
 };
 
