@@ -10,94 +10,53 @@ import Loader from "../layout/Loader/Loader";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import axios from "axios";
+import { config } from "../../config";
 export default function LoginSignUp() {
   const dispatch = useDispatch();
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.user
-  );
-
-  const [loginEmail, setLoginEmail] = useState("");
+  )
+  const [loginUserName, setLoginUserName] = useState("");
   const [loginpassword, setLoginPassword] = useState("");
-
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [emailError, setEmailError] = useState("");
+  const [userNameError, setUserNameError] = useState("");
   const [value, setValue] = React.useState("1");
   const [submitSuccess, setSubmitSuccess] = useState(false);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   const loginSubmit = (e) => {
     e.preventDefault();
-    if (!isValidPassword(loginpassword)) {
-      setPasswordError(
-        "Minimum 6 and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character:"
-      );
-      return;
-    }
-    dispatch(login(loginEmail, loginpassword));
+    dispatch(login(loginUserName, loginpassword));
+    toast.success("Success")
+    window.location.reload();
   };
-
-  const isValidPassword = (password) => {
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,32}$/;
-    return passwordRegex.test(password);
-  };
-
-  const isValidemail = (email) => {
-    const emailRegex = /^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-
-    return emailRegex.test(email);
-  };
-
-  const registerSubmit = (e) => {
+  const registerSubmit = async (e) => {
     e.preventDefault();
-    if (!isValidemail) {
-      setEmailError(
-        "Minimum 6 and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character:"
-      );
-      return;
+    const userData = {
+      name, userName, password
     }
-    if (!isValidPassword(password)) {
-      setPasswordError(
-        "Minimum 6 and maximum 32 characters, at least one uppercase letter, one lowercase letter, one number and one special character:"
-      );
-      return;
+    const configData = {
+      headers: { "Constant-Type": "multipart/form-data" },
+    };
+    const data = axios.post(
+      `${config.baseUrl}/api/v1/register`,
+      userData,
+    );
+    if (data) {
+      toast.success("Success")
     }
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-    dispatch(ragister(formData))
-      .then(() => {
-        setSubmitSuccess(true);
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-        setSubmitSuccess(false);
-      });
   };
-
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-    if (isAuthenticated) {
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    }
   }, [dispatch, error, isAuthenticated]);
-
   return (
     <Fragment>
       {loading ? (
@@ -123,16 +82,16 @@ export default function LoginSignUp() {
                         <MailOutlineOutlined />
                         <input
                           id="login"
-                          type="email"
-                          placeholder="Email"
-                          value={loginEmail}
-                          onChange={(e) => setLoginEmail(e.target.value)}
+                          type="username"
+                          placeholder="username"
+                          value={loginUserName}
+                          onChange={(e) => setLoginUserName(e.target.value)}
                           minLength="6"
                           maxLength="32"
                           required
                         />
-                        {emailError && (
-                          <div className="passwordValid">{emailError}</div>
+                        {userNameError && (
+                          <div className="passwordValid">{userNameError}</div>
                         )}
                       </div>
                       <div className="loginFormPassword">
@@ -183,12 +142,12 @@ export default function LoginSignUp() {
                       <div className="registerFormText">
                         <MailOutlineOutlined />
                         <input
-                          type="email"
-                          placeholder="Email"
-                          name="email"
-                          value={email}
+                          type="text"
+                          placeholder="username"
+                          name="username"
+                          value={userName}
                           required
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={(e) => setUserName(e.target.value)}
                           minLength="6"
                           maxLength="32"
                         />

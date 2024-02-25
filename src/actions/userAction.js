@@ -72,6 +72,7 @@ export const ragister = (userData) => async (dispatch) => {
       userData,
       configData
     );
+    console.log("userData" + userData + " ", "data = ", data)
 
     dispatch({
       type: REGISTER_USER_SUCCESS,
@@ -120,8 +121,6 @@ export const logout = () => async (dispatch) => {
     });
   }
 };
-
-// Update user
 
 export const update = (name, email) => async (dispatch) => {
   try {

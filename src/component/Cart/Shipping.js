@@ -31,7 +31,8 @@ const Shipping = () => {
   const [pinCode, setPinCode] = useState(shippingInfo.pinCode);
   const [phone, setPhone] = useState(shippingInfo.phone);
 
-  const shippingSubmit = () => {
+  const shippingSubmit = (e) => {
+    e.preventDefault()
     if (phone.length < 10 || phone.length > 10) {
       toast.error("Phone Number should be 10 digit");
       return;
