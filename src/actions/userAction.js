@@ -35,7 +35,7 @@ import { config } from "../config";
 
 // Login
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (username, password) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
 
@@ -47,7 +47,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       `${config.baseUrl}/api/v1/get-token`,
-      { email, password },
+      { username, password },
       configData
     );
     const token = await data.token;
@@ -122,7 +122,7 @@ export const logout = () => async (dispatch) => {
   }
 };
 
-export const update = (name, email) => async (dispatch) => {
+export const update = (name, username) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
     const token = localStorage.getItem("token");
@@ -135,7 +135,7 @@ export const update = (name, email) => async (dispatch) => {
 
     const { data } = await axios.patch(
       `${config.baseUrl}/api/v1/me/update`,
-      { name, email },
+      { name, username },
       configData
     );
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });

@@ -46,9 +46,13 @@ export default function LoginSignUp() {
     const data = axios.post(
       `${config.baseUrl}/api/v1/register`,
       userData,
+      configData
     );
     if (data) {
       toast.success("Success")
+      window.location.reload();
+    } else {
+      toast.error("Failed!")
     }
   };
   useEffect(() => {

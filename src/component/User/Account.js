@@ -28,7 +28,7 @@ export default function Account({ user, loading, isAuthenticated }) {
                   <div>
                     {user.avatar ? (
                       <img
-                        src={user.avatar}
+                        src={user.avatar ? user.avatar : profile}
                         alt="Profile"
                         width={300}
                         height={300}
