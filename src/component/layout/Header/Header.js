@@ -3,8 +3,8 @@ import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import logo from "../../../images/logo.png";
 import { Link } from "react-router-dom";
 import "./Header.css";
-import profile from "../../../images/avatar.png";
 import { useSelector } from "react-redux";
+import profile from "./admin.jpeg";
 
 export default function Header({ user, isAuthenticated }) {
   const { cartItems } = useSelector((state) => state.cart);
@@ -66,7 +66,7 @@ export default function Header({ user, isAuthenticated }) {
                     className="d-flex align-items-center text-white text-decoration-none m-auto accountImg"
                   >
                     <img
-                      src={user.avatar}
+                      src={user.avatar?user.avatar:profile}
                       alt="Profile"
                       width={32}
                       height={32}

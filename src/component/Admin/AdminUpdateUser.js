@@ -18,7 +18,7 @@ const AdminUpdateUser = () => {
   const { loading, error } = useSelector((state) => state.updateUser);
   const { user } = useSelector((state) => state.userDetails);
 
-  const [email, setEmail] = useState("");
+  const [username, setusername] = useState("");
   const [role, setRole] = useState("");
 
   let maxLengthCheck = (object) => {
@@ -33,7 +33,7 @@ const AdminUpdateUser = () => {
   const updateProductSubmit = () => {
     const formData = new FormData();
     formData.append("role", role);
-    formData.append("email", email);
+    formData.append("username", username);
 
     dispatch(adminUpdateUserRole(formData));
     toast.success("update User Successful!");
@@ -44,7 +44,7 @@ const AdminUpdateUser = () => {
       dispatch(getUserDetails(id));
     } else {
       setRole(user.role);
-      setEmail(user.email);
+      setusername(user.username);
     }
 
     if (error) {
@@ -66,13 +66,13 @@ const AdminUpdateUser = () => {
               <EmailIcon />
               <input
                 type="text"
-                placeholder="Email"
-                name="Email"
+                placeholder="username"
+                name="username"
                 onInput={maxLengthCheck}
                 maxLength={32}
                 readOnly
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={username}
+                onChange={(e) => setusername(e.target.value)}
                 required
               />
             </div>
