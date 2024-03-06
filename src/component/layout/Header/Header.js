@@ -66,7 +66,7 @@ export default function Header({ user, isAuthenticated }) {
                     className="d-flex align-items-center text-white text-decoration-none m-auto accountImg"
                   >
                     <img
-                      src={user.avatar?user.avatar:profile}
+                      src={user?.avatar ? user?.avatar : profile}
                       alt="Profile"
                       width={32}
                       height={32}
