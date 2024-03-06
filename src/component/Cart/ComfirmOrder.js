@@ -4,11 +4,11 @@ import CheckOutStep from "./CheckOutStep";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./ComfirmOrder.css";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const ComfirmOrder = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
 
   const subtotal = cartItems.reduce(
@@ -23,16 +23,16 @@ const ComfirmOrder = () => {
 
   const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
 
-  const procecedToPayment = () => {
-    const data = {
-      subtotal,
-      shippingCharges,
-      tax,
-      totalPrice,
-    };
-    sessionStorage.setItem("orderInfo", JSON.stringify(data));
-    navigate("/proccess/payment");
-  };
+  // const procecedToPayment = () => {
+  //   const data = {
+  //     subtotal,
+  //     shippingCharges,
+  //     tax,
+  //     totalPrice,
+  //   };
+  //   sessionStorage.setItem("orderInfo", JSON.stringify(data));
+  //   navigate("/proccess/payment");
+  // };
 
   useEffect(() => {
     window.safestPayVendorToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWUyZTk0NDI0NDkyZTQ5ZTUzMTllMzIiLCJ1c2VybmFtZSI6IlByYXlhbnNoIiwiaWF0IjoxNzA5NjYxMTgzfQ.xRZSZUkrzLRPKR4M5Hde2nNLxittKSIqdlAn6O5pBdw';
