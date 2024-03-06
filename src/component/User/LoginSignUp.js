@@ -5,7 +5,7 @@ import "./LoginSignUp.css";
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, login, ragister } from "../../actions/userAction";
+import { clearErrors, login } from "../../actions/userAction";
 import Loader from "../layout/Loader/Loader";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
@@ -22,10 +22,7 @@ export default function LoginSignUp() {
   const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [userNameError, setUserNameError] = useState("");
   const [value, setValue] = React.useState("1");
-  const [submitSuccess, setSubmitSuccess] = useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -94,9 +91,6 @@ export default function LoginSignUp() {
                           maxLength="32"
                           required
                         />
-                        {userNameError && (
-                          <div className="passwordValid">{userNameError}</div>
-                        )}
                       </div>
                       <div className="loginFormPassword">
                         <LockOpen />
@@ -109,9 +103,6 @@ export default function LoginSignUp() {
                           minLength="4"
                           maxLength="32"
                         />
-                        {passwordError && (
-                          <div className="passwordValid">{passwordError}</div>
-                        )}
                       </div>
                       <Link className="forwardPassword" to="/account">
                         Farget Password?
@@ -169,9 +160,6 @@ export default function LoginSignUp() {
                           minLength="4"
                           maxLength="32"
                         />
-                        {passwordError && (
-                          <div className="passwordValid">{passwordError}</div>
-                        )}
                       </div>
                       <input
                         type="submit"
@@ -179,11 +167,6 @@ export default function LoginSignUp() {
                         className="submitBtn"
                       />
                     </form>
-                    {submitSuccess && (
-                      <p>
-                        Form submitted successfully! Reloading in 3 seconds...
-                      </p>
-                    )}
                   </TabPanel>
                 </TabContext>
               </Box>
