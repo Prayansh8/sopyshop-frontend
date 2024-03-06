@@ -26,23 +26,13 @@ export default function Account({ user, loading, isAuthenticated }) {
               <div className="container text-center det-coun">
                 <div className="accountImg">
                   <div>
-                    {user.avatar ? (
-                      <img
-                        src={user.avatar ? user.avatar : profile}
-                        alt="Profile"
-                        width={300}
-                        height={300}
-                        className="rounded-circle me-2"
-                      />
-                    ) : (
-                      <img
-                        src={profile}
-                        alt="Profile"
-                        width={300}
-                        height={300}
-                        className="rounded-circle me-2"
-                      />
-                    )}
+                    <img
+                      src={profile}
+                      alt="Profile"
+                      width={300}
+                      height={300}
+                      className="rounded-circle me-2"
+                    />
                   </div>
                   <div className="editBtnDiv">
                     <Link to="/update/avatar">

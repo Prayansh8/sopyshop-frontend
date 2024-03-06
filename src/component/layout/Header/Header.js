@@ -66,7 +66,7 @@ export default function Header({ user, isAuthenticated }) {
                     className="d-flex align-items-center text-white text-decoration-none m-auto accountImg"
                   >
                     <img
-                      src={user?.avatar ? user?.avatar : profile}
+                      src={profile}
                       alt="Profile"
                       width={32}
                       height={32}
@@ -105,29 +105,16 @@ export default function Header({ user, isAuthenticated }) {
             </Link>
           </div>
           <div className="navAccountCont">
-            {isAuthenticated ? (
-              <Link
-                to="/account"
-                className="d-flex justify-content-end align-items-end text-white text-decoration-none m-auto"
-              >
-                <img
-                  src={user.avatar}
-                  alt="Profile"
-                  className="rounded-circle accountMobileImg"
-                />
-              </Link>
-            ) : (
-              <Link
-                to="/account"
-                className="d-flex justify-content-end align-items-center text-white text-decoration-none m-auto"
-              >
-                <img
-                  src={profile}
-                  alt="Profile"
-                  className="rounded-circle accountMobileImg"
-                />
-              </Link>
-            )}
+            <Link
+              to="/account"
+              className="d-flex justify-content-end align-items-center text-white text-decoration-none m-auto"
+            >
+              <img
+                src={profile}
+                alt="Profile"
+                className="rounded-circle accountMobileImg"
+              />
+            </Link>
           </div>
         </div>
       </nav>
