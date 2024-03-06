@@ -90,7 +90,7 @@ export default function LoginSignUp() {
                           placeholder="username"
                           value={loginUserName}
                           onChange={(e) => setLoginUserName(e.target.value)}
-                          minLength="6"
+                          minLength="4"
                           maxLength="32"
                           required
                         />
@@ -106,7 +106,7 @@ export default function LoginSignUp() {
                           value={loginpassword}
                           required
                           onChange={(e) => setLoginPassword(e.target.value)}
-                          minLength="6"
+                          minLength="4"
                           maxLength="32"
                         />
                         {passwordError && (
@@ -152,7 +152,7 @@ export default function LoginSignUp() {
                           value={userName}
                           required
                           onChange={(e) => setUserName(e.target.value)}
-                          minLength="6"
+                          minLength="4"
                           maxLength="32"
                         />
                       </div>
@@ -166,7 +166,7 @@ export default function LoginSignUp() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           required
-                          minLength="6"
+                          minLength="4"
                           maxLength="32"
                         />
                         {passwordError && (

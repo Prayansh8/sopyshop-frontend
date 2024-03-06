@@ -35,10 +35,10 @@ const ComfirmOrder = () => {
   };
 
   useEffect(() => {
-    window.safestPayVendorToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWNmMWRmZGY3ODYxYzhmOTRiYWUxMTQiLCJ1c2VybmFtZSI6IlByYXlhbnNoIiwiaWF0IjoxNzA4NzA5MzY3LCJleHAiOjE3MDkwNTQ5Njd9.i1rR6OdxLgfUfENPeWoKS8DKwgYr-bQPtYesPfyCZxc';
+    window.safestPayVendorToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWUyZTk0NDI0NDkyZTQ5ZTUzMTllMzIiLCJ1c2VybmFtZSI6IlByYXlhbnNoIiwiaWF0IjoxNzA5NjYxMTgzfQ.xRZSZUkrzLRPKR4M5Hde2nNLxittKSIqdlAn6O5pBdw';
+    window.safestPayMagicButtonId = '65e75cdfb9ee66edeb39133a';
     const script = document.createElement("script");
-    // script.src = "https://cdn-safestpay.prayanshgupta.com/safest-payment-button.js";
-    script.src = "http://localhost:5500/dist/safest-payment-button.js";
+    script.src = "https://cdn-safestpay.prayanshgupta.com/safest-payment-button.js";
     script.async = true;
     document.body.appendChild(script);
   }, []);
