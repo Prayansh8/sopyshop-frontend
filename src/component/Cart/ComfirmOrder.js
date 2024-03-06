@@ -58,19 +58,19 @@ const ComfirmOrder = () => {
                   <div className="sippInfoName addressDetails">
                     <p> Name: </p>
                     <div>
-                      <span id="custoner-name"> {shippingInfo.name} </span>
+                      <span id="customer-name"> {shippingInfo.name} </span>
                     </div>
                   </div>
                   <div className="sippInfoPhone addressDetails">
                     <p> Phone: </p>
                     <div>
-                      <span> {shippingInfo.phone} </span>
+                      <span id="customer-phone"> {shippingInfo.phone} </span>
                     </div>
                   </div>
                   <div className="sippInfoAddress addressDetails">
                     <p> Address: </p>
                     <div>
-                      <span> {address} </span>
+                      <span>{address}</span>
                     </div>
                   </div>
                 </div>
