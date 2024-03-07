@@ -57,8 +57,8 @@ export default function Account({ user, loading, isAuthenticated }) {
                           <td>{user.name}</td>
                         </tr>
                         <tr>
-                          <th>Email:</th>
-                          <td>{user.username}</td>
+                          <th>Username:</th>
+                          <td>{user.userName}</td>
                         </tr>
                         <tr>
                           <th>Role: </th>
