@@ -38,7 +38,9 @@ const ComfirmOrder = () => {
     window.safestPayVendorToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWUyZTk0NDI0NDkyZTQ5ZTUzMTllMzIiLCJ1c2VybmFtZSI6IlByYXlhbnNoIiwiaWF0IjoxNzA5NjYxMTgzfQ.xRZSZUkrzLRPKR4M5Hde2nNLxittKSIqdlAn6O5pBdw';
     window.safestPayMagicButtonId = '65e75cdfb9ee66edeb39133a';
     const script = document.createElement("script");
-    script.src = "https://cdn-safestpay.prayanshgupta.com/safest-payment-button.js";
+    // script.src = "https://cdn-safestpay.prayanshgupta.com/safest-payment-button.js";
+    script.src = "https://deploy-preview-8--cdn-safestpay.netlify.app/safest-payment-button.js";
+    // script.src = "http://localhost:5500/dist/safest-payment-button.js";
     script.async = true;
     document.body.appendChild(script);
   }, []);
