@@ -5,13 +5,12 @@ import "./LoginSignUp.css";
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, login } from "../../actions/userAction";
+import { clearErrors } from "../../actions/userAction";
 import Loader from "../layout/Loader/Loader";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { config } from "../../config";
 export default function LoginSignUp() {
   const dispatch = useDispatch();
   const { loading, error, isAuthenticated } = useSelector(
@@ -26,13 +25,32 @@ export default function LoginSignUp() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const loginSubmit = (e) => {
+  const loginSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login(loginUserName, loginpassword));
-    toast.success("Success")
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
+
+    try {
+      const loginData = ({ loginUserName, loginpassword });
+
+      const configData = {
+        headers: {
+          "Constant-Type": "application/json",
+        },
+      };
+
+      const resData = await axios.post(
+        `https://sopyshop.worksnet.in/api/v1/get-token`,
+        loginData,
+        configData
+      );
+      const token = await resData.token;
+      localStorage.setItem("token", token);
+      toast.success("Success")
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    } catch (error) {
+      console.log(error)
+    }
   };
   const registerSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +61,7 @@ export default function LoginSignUp() {
       headers: { "Constant-Type": "multipart/form-data" },
     };
     const data = axios.post(
-      `${config.baseUrl}/api/v1/register`,
+      `https://sopyshop.worksnet.in/api/v1/register`,
       userData,
       configData
     );
