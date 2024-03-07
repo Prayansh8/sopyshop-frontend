@@ -29,7 +29,7 @@ export default function LoginSignUp() {
     e.preventDefault();
 
     try {
-      const loginData = ({ loginUserName, loginpassword });
+      const loginData = ({ userName: loginUserName, password: loginpassword });
 
       const configData = {
         headers: {
@@ -38,11 +38,13 @@ export default function LoginSignUp() {
       };
 
       const resData = await axios.post(
-        `https://sopyshop.worksnet.in/api/v1/get-token`,
+        // `https://sopyshop.worksnet.in/api/v1/get-token`,
+        'http://localhost:5000/api/v1/get-token',
         loginData,
         configData
       );
-      const token = await resData.token;
+      const token = await resData.data.token;
+      console.log(token)
       localStorage.setItem("token", token);
       toast.success("Success")
       setTimeout(() => {
