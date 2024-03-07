@@ -30,7 +30,9 @@ export default function LoginSignUp() {
     e.preventDefault();
     dispatch(login(loginUserName, loginpassword));
     toast.success("Success")
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
   };
   const registerSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +49,9 @@ export default function LoginSignUp() {
     );
     if (data) {
       toast.success("Success")
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } else {
       toast.error("Failed!")
     }
