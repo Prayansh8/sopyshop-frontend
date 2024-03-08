@@ -93,6 +93,7 @@ export const loadUser = () => async (dispatch) => {
     dispatch({ type: LOAD_USER_REQUEST });
 
     const token = localStorage.getItem("token");
+    console.log(token)
     const configData = {
       headers: { authorization: `Bearer ${token}` },
     };
