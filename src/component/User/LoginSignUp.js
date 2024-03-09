@@ -38,8 +38,8 @@ export default function LoginSignUp() {
       };
 
       const resData = await axios.post(
-        // `https://sopyshop.worksnet.in/api/v1/get-token`,
-        'http://localhost:5000/api/v1/get-token',
+        `https://sopyshop.worksnet.in/api/v1/get-token`,
+        // 'http://localhost:5000/api/v1/get-token',
         loginData,
         configData
       );
