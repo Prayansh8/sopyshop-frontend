@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { config } from "../../config";
 export default function LoginSignUp() {
   const dispatch = useDispatch();
   const { loading, error, isAuthenticated } = useSelector(
@@ -38,7 +39,7 @@ export default function LoginSignUp() {
       };
 
       const resData = await axios.post(
-        `https://sopyshop.worksnet.in/api/v1/get-token`,
+        `${config.baseUrl}/api/v1/get-token`,
         // 'http://localhost:5000/api/v1/get-token',
         loginData,
         configData
@@ -63,7 +64,7 @@ export default function LoginSignUp() {
       headers: { "Constant-Type": "multipart/form-data" },
     };
     const data = axios.post(
-      `https://sopyshop.worksnet.in/api/v1/register`,
+      `${config.baseUrl}/api/v1/register`,
       userData,
       configData
     );
