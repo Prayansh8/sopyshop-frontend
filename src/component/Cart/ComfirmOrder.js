@@ -4,11 +4,11 @@ import CheckOutStep from "./CheckOutStep";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./ComfirmOrder.css";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const ComfirmOrder = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
 
   const subtotal = cartItems.reduce(
@@ -23,25 +23,26 @@ const ComfirmOrder = () => {
 
   const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
 
-  // const procecedToPayment = () => {
-  //   const data = {
-  //     subtotal,
-  //     shippingCharges,
-  //     tax,
-  //     totalPrice,
-  //   };
-  //   sessionStorage.setItem("orderInfo", JSON.stringify(data));
-  //   navigate("/proccess/payment");
-  // };
+  const procecedToPayment = () => {
+    const data = {
+      subtotal,
+      shippingCharges,
+      tax,
+      totalPrice,
+    };
+    sessionStorage.setItem("orderInfo", JSON.stringify(data));
+    navigate("/proccess/payment");
+  };
 
-  useEffect(() => {
-    window.safestPayVendorToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWViZmRhZjRhYWM4MTJkNDk4ODljOTEiLCJpYXQiOjE3MDk5NjY1MTV9.ylsBGjX36gLazTYpD8zmrIE4FvTXq7WH3dTtTZ0VGzE';
-    window.safestPayMagicButtonId = '65ec68519934fa9ffdc3e0a1';
-    const script = document.createElement("script");
-    script.src = "https://cdn-safestpay.prayanshgupta.com/safest-payment-button.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+  // useEffect(() => {
+  //   window.safestPayVendorToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWViZmRhZjRhYWM4MTJkNDk4ODljOTEiLCJpYXQiOjE3MDk5NjY1MTV9.ylsBGjX36gLazTYpD8zmrIE4FvTXq7WH3dTtTZ0VGzE';
+  //   window.safestPayMagicButtonId = '65ec68519934fa9ffdc3e0a1';
+  //   const script = document.createElement("script");
+  //   script.src = "https://cdn-safestpay.prayanshgupta.com/safest-payment-button.js";
+  //   // script.src = "http://localhost:5500/dist/safest-payment-button.js"
+  //   script.async = true;
+  //   document.body.appendChild(script);
+  // }, []);
   return (
     <>
       <Fragment>
@@ -140,10 +141,10 @@ const ComfirmOrder = () => {
                       <span>₹<span id="product-amount">{totalPrice}</span></span>
                     </div>
                   </div>
-                  {/* <button className="ProccedBtn" onClick={procecedToPayment}>
-                  Procced to Payment
-                </button> */}
-                  <div id="safest-pay-button-position"></div>
+                  <button className="ProccedBtn" onClick={procecedToPayment}>
+                    Procced to Payment
+                  </button>
+                  {/* <div id="safest-pay-button-position"></div> */}
                 </div>
               </div>
             </div>

@@ -5,7 +5,7 @@ import logo from "../../../images/logo.png";
 export default function Footer() {
   return (
     <>
-      <div className="footer">
+      <div className="footer-1">
         <a href="/" className="mb-md-0 color-white text-decoration-none lh-1">
           <img src={logo} alt="Company logo" className="logoimg color-white" />
         </a>

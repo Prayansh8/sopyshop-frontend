@@ -1,38 +1,67 @@
-.logoimg {
-  height: 30px;
-  width: 30px;
-  padding: 2px;
-}
+ .logoimg {
+   height: 30px;
+   width: 30px;
+   padding: 2px;
+ }
 
+ /*
 .footer {
   text-align: center;
   background-color: #333;
   color: white;
   padding: 15px 10px;
-  position: unset;
-  bottom: 0;
   font-size: 16px;
   margin: 0 auto 0;
-  top: 90vh;
+  width: 100%;
 }
 
-/* CSS for the red text */
 .red-text {
   color: red;
 }
+
 .red-text:hover {
   color: rgb(0, 160, 168);
-}
+}*/
 
-@media only screen and (max-width: 767px) {
-  .footer {
-    font-size: 10px;
-    padding: 5px 2px;
-    margin: 0 auto 60px;
-  }
+ @media only screen and (max-width: 767px) {
+   .footer-1 {
+     font-size: 10px;
+     padding: 5px 2px;
+     margin: 0 auto 60px;
+   }
 
-  .logoimg {
-    height: 20px;
-    width: 20px;
-  }
-}
+   .logoimg {
+     height: 20px;
+     width: 20px;
+   }
+ }
+
+
+ .footer-1 {
+   background-color: #333;
+   color: #fff;
+   padding: 20px;
+   text-align: center;
+ }
+
+ .red-text {
+   color: #ff0000;
+   /* Adjust as needed */
+ }
+
+ .color-white {
+   color: #fff;
+   /* Adjust as needed */
+ }
+
+ .red-text:hover {
+   color: rgb(0, 160, 168);
+ }
+
+ .mb-md-0 {
+   margin-bottom: 0;
+ }
+
+ .lh-1 {
+   line-height: 1;
+ }
