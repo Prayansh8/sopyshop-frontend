@@ -35,7 +35,8 @@ import { Home } from "./component/Home/Home";
 import { Search } from "./component/Product/Search";
 import "./App.css"
 function App() {
-  const { user, isAuthenticated, loading } = useSelector((state) => state.loadUser);
+  const { userInfo, isAuthenticated, loading } = useSelector((state) => state.loadUser);
+  console.log(userInfo, isAuthenticated, loading)
   const dispatch = useDispatch();
 
   const stripeApiKey = config.stripe.stripeApi;
@@ -52,44 +53,49 @@ function App() {
 
   return (
     <Router>
-      <Header user={user} isAuthenticated={isAuthenticated} loading={loading} />
-      <div className="mainContainerDiv">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:keyword" element={<Products />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/process/payment" element={<Elements stripe={stripePromise}><PaymentProcess /></Elements>} />
-          <Route path="/cart" element={<Cart isAuthenticated={isAuthenticated} />} />
-          <Route path="/login" element={<LoginSignUp />} />
-          <Route path="/account" element={<Account user={user} isAuthenticated={isAuthenticated} loading={loading} />} />
-          {isAuthenticated && (
-            <>
-              <Route path="/shipping" element={<Shipping />} />
-              <Route path="/order/confirm" element={<ConfirmOrder />} />
-              <Route path="/success" element={<OrderSuccess />} />
-              <Route path="/orders" element={<MyOrders />} />
-              <Route path="/order/:id" element={<SingleOrder />} />
-              <Route path="/update" element={<UpdateUser user={user} loading={loading} />} />
-              <Route path="/update/avatar" element={<UpdateAvatar user={user} loading={loading} />} />
-              <Route path="/admin/order/:id" element={<OrderUpdate />} />
-            </>
-          )}
-          {user && user.role === "admin" && (
-            <>
-              <Route path="/admin/dashboard" element={<Dashboard />} />
-              <Route path="/admin/product" element={<ProductList />} />
-              <Route path="/admin/create/product" element={<CreateProduct />} />
-              <Route path="/admin/update/product/:id" element={<UpdateProduct />} />
-              <Route path="/admin/users" element={<Users />} />
-              <Route path="/admin/user/:id" element={<AdminUpdateUser />} />
-              <Route path="/admin/orders" element={<OrdersList />} />
-            </>
-          )}
-        </Routes>
+      <div style={{ height: "10%" }}>
+        <Header isAuthenticated={isAuthenticated} loading={loading} />
       </div>
-      <div className="mobileBottomBar">
+      <div
+        className="main">
+        <div className="mainContainerDiv">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:keyword" element={<Products />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/process/payment" element={<Elements stripe={stripePromise}><PaymentProcess /></Elements>} />
+            <Route path="/cart" element={<Cart isAuthenticated={isAuthenticated} />} />
+            <Route path="/login" element={<LoginSignUp />} />
+            <Route path="/account" element={<Account user={userInfo} isAuthenticated={isAuthenticated} loading={loading} />} />
+            {isAuthenticated && (
+              <>
+                <Route path="/shipping" element={<Shipping />} />
+                <Route path="/order/confirm" element={<ConfirmOrder />} />
+                <Route path="/success" element={<OrderSuccess />} />
+                <Route path="/orders" element={<MyOrders />} />
+                <Route path="/order/:id" element={<SingleOrder />} />
+                <Route path="/update" element={<UpdateUser user={userInfo} loading={loading} />} />
+                <Route path="/update/avatar" element={<UpdateAvatar user={userInfo} loading={loading} />} />
+                <Route path="/admin/order/:id" element={<OrderUpdate />} />
+              </>
+            )}
+            {userInfo && userInfo.user.role === "admin" && (
+              <>
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/admin/product" element={<ProductList />} />
+                <Route path="/admin/create/product" element={<CreateProduct />} />
+                <Route path="/admin/update/product/:id" element={<UpdateProduct />} />
+                <Route path="/admin/users" element={<Users />} />
+                <Route path="/admin/user/:id" element={<AdminUpdateUser />} />
+                <Route path="/admin/orders" element={<OrdersList />} />
+              </>
+            )}
+          </Routes>
+        </div>
+      </div>
+      <div className="mobileBottomBar" style={{ height: "10%" }}>
         <LabelBottomNavigation />
       </div>
       <Footer />

@@ -1,16 +1,14 @@
 import axios from "axios";
 import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  REGISTER_USER_REQUEST,
-  REGISTER_USER_SUCCESS,
-  REGISTER_USER_FAILURE,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAIL,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
-  LOGOUT_USER_SUCCESS,
-  LOGOUT_USER_FAILURE,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
@@ -30,72 +28,67 @@ import {
   DELETE_USER_SUCCESS,
   DELETE_USER_FAILURE,
   CLEAR_ERRORS,
+  USER_LOGOUT,
 } from "../constants/userConstants";
 import { config } from "../config";
 
 // Login
 
-export const login = (username, password) => async (dispatch) => {
+export const loginUser = (loginData) => async (dispatch) => {
   try {
-    dispatch({ type: LOGIN_REQUEST });
+    dispatch({ type: USER_LOGIN_REQUEST });
 
-    const configData = {
-      headers: {
-        "Constant-Type": "application/json",
-      },
-    };
+    const { data } = await axios.post(`${config.baseUrl}/api/v1/get-token`, loginData);
+    const token = data.token;
 
-    const { data } = await axios.post(
-      `${config.baseUrl}/api/v1/get-token`,
-      { username, password },
-      configData
-    );
-    const token = await data.token;
-    localStorage.setItem("token", token);
-    dispatch({ type: LOGIN_SUCCESS, payload: data });
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    // Store user info and token in local storage
+    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem('sopyshop-token', token);
   } catch (error) {
-    dispatch({ type: LOGIN_FAILURE, payload: error.response.data });
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
   }
 };
 
 // Register
 
-export const ragister = (userData) => async (dispatch) => {
+export const registerUser = (registrationData) => async (dispatch) => {
   try {
-    dispatch({ type: REGISTER_USER_REQUEST });
+    dispatch({ type: USER_REGISTER_REQUEST });
 
-    const configData = {
-      headers: { "Constant-Type": "multipart/form-data" },
-    };
-    const { data } = await axios.post(
-      `${config.baseUrl}/api/v1/register`,
-      userData,
-      configData
-    );
-    console.log("userData" + userData + " ", "data = ", data)
+    const { data } = await axios.post(`${config.baseUrl}/api/v1/register`, registrationData);
 
     dispatch({
-      type: REGISTER_USER_SUCCESS,
+      type: USER_REGISTER_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: REGISTER_USER_FAILURE,
-      payload: error.response.data,
+      type: USER_REGISTER_FAIL,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
     });
   }
 };
 
 // Load User
-
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
 
-    const token = localStorage.getItem("token");
-    console.log(token)
+    const token = localStorage.getItem('sopyshop-token');
     const configData = {
-      headers: { authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token}` },
     };
 
     const { data } = await axios.get(`${config.baseUrl}/api/v1/me`, configData);
@@ -107,20 +100,11 @@ export const loadUser = () => async (dispatch) => {
 
 // Logout user
 
-export const logout = () => async (dispatch) => {
-  try {
-    await axios.post(`${config.baseUrl}/api/v1/logout`, null, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
-
-    dispatch({ type: LOGOUT_USER_SUCCESS });
-    localStorage.removeItem("token");
-  } catch (error) {
-    dispatch({
-      type: LOGOUT_USER_FAILURE,
-      payload: error.response.data,
-    });
-  }
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem('userInfo');
+  localStorage.removeItem('sopyshop-token');
+  dispatch({ type: USER_LOGOUT });
+  window.location.reload();
 };
 
 export const update = (name, username) => async (dispatch) => {

@@ -1,15 +1,14 @@
 import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  REGISTER_USER_REQUEST,
-  REGISTER_USER_SUCCESS,
-  REGISTER_USER_FAILURE,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAIL,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
-  LOGOUT_USER_SUCCESS,
-  LOGOUT_USER_FAILURE,
+  USER_LOGOUT,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
@@ -35,81 +34,45 @@ import {
   DELETE_USER_RESET,
 } from "../constants/userConstants";
 
-export const userReducer = (state = { user: {}, token: {} }, action) => {
+
+const initialState = {
+  loading: false,
+  userInfo: null,
+  error: null,
+  isAuthenticated: false,
+};
+
+export const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_REQUEST:
-    case REGISTER_USER_REQUEST:
-      return { loding: true, isAuthenticated: false };
-    case LOGIN_SUCCESS:
-    case REGISTER_USER_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        isAuthenticated: true,
-        user: action.payload.user,
-        token: action.payload.token,
-      };
-
-    case LOGOUT_USER_SUCCESS:
-      return {
-        loding: false,
-        isAuthenticated: false,
-        user: null,
-      };
-
-    case LOGIN_FAILURE:
-    case REGISTER_USER_FAILURE:
-      return {
-        ...state,
-        loding: false,
-        isAuthenticated: false,
-        user: null,
-        token: null,
-        error: action.payload.message,
-      };
-    case LOGOUT_USER_FAILURE:
-      return {
-        ...state,
-        loding: false,
-        error: action.payload.message,
-      };
-
-    case CLEAR_ERRORS:
-      return {
-        ...state,
-        error: null,
-      };
-
+    case USER_REGISTER_REQUEST:
+    case USER_LOGIN_REQUEST:
+      return { ...state, loading: true };
+    case USER_REGISTER_SUCCESS:
+    case USER_LOGIN_SUCCESS:
+      return { ...state, loading: false, userInfo: action.payload };
+    case USER_REGISTER_FAIL:
+    case USER_LOGIN_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case USER_LOGOUT:
+      return { ...state, userInfo: null };
     default:
       return state;
   }
 };
 
-export const loadUserReducer = (state = { user: {} }, action) => {
+export const loadUserReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_USER_REQUEST:
-      return { loding: true, isAuthenticated: false };
+      return { ...state, loading: true, isAuthenticated: false };
     case LOAD_USER_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        isAuthenticated: true,
-        user: action.payload.user,
-      };
+      return { ...state, loading: false, userInfo: action.payload, isAuthenticated: true };
     case LOAD_USER_FAILURE:
       return {
-        loding: false,
+        ...state, loading: false,
         isAuthenticated: false,
         user: null,
-        error: action.payload.message,
+        error: action.payload
       };
-
-    case CLEAR_ERRORS:
-      return {
-        ...state,
-        error: null,
-      };
-
     default:
       return state;
   }

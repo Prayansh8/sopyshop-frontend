@@ -4,9 +4,14 @@
   scroll-behavior: smooth;
 }
 
+.main {
+  height: 80%;
+}
+
 body {
-  height: 100%;
-  min-height: 100%
+  margin: auto;
+  height: 80%;
+  min-height: 80%
 }
 
 .mobileBottomBar {
@@ -30,6 +35,6 @@ body {
   }
 }
 
-.fixed-action-btn{
+.fixed-action-btn {
   width: 100%;
 }

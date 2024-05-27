@@ -6,7 +6,7 @@ import "./Header.css";
 import { useSelector } from "react-redux";
 import profile from "./admin.jpeg";
 
-export default function Header({ user, isAuthenticated }) {
+export default function Header({ isAuthenticated }) {
   const { cartItems } = useSelector((state) => state.cart);
 
   return (
