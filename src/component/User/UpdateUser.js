@@ -9,9 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 const UpdateUser = ({ user, loading }) => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.update);
-
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
+  const [name, setName] = useState(user.user.firstName);
+  const [email, setEmail] = useState(user.user.email);
 
   const updateSubmit = (e) => {
     e.preventDefault();

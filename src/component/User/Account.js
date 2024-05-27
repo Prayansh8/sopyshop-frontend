@@ -2,18 +2,16 @@ import React, { Fragment } from "react";
 import Loader from "../layout/Loader/Loader";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../../actions/userAction";
+import { logoutUser } from "../../actions/userAction";
 import LoginSignUp from "./LoginSignUp";
 import "./Account.css";
 import MataData from "../layout/MataData";
 import profile from "./admin.jpeg";
 export default function Account({ user, loading, isAuthenticated }) {
   const dispatch = useDispatch();
-  function logoutUser() {
-    dispatch(logout());
-    localStorage.removeItem("token");
-    window.location.reload();
-  }
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
   return (
     <Fragment>
       <MataData title={"Sopyshop-Account"} />
@@ -54,15 +52,19 @@ export default function Account({ user, loading, isAuthenticated }) {
                       <tbody>
                         <tr>
                           <th>Name</th>
-                          <td>{user.name}</td>
+                          <td>{user.user.firstName} {user.user.lastName}</td>
                         </tr>
                         <tr>
-                          <th>Username:</th>
-                          <td>{user.userName}</td>
+                          <th>email:</th>
+                          <td>{user.user.email}</td>
                         </tr>
                         <tr>
-                          <th>Role: </th>
-                          <td>{user.role}</td>
+                          <th>phone:</th>
+                          <td>{user.user.phone}</td>
+                        </tr>
+                        <tr>
+                          <th>Dob: </th>
+                          <td>{user.user.dob}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -75,7 +77,7 @@ export default function Account({ user, loading, isAuthenticated }) {
                       </Link>
                     </div>
                     <div className="w-50">
-                      <button className="editBtnDetails" onClick={logoutUser}>
+                      <button className="editBtnDetails" onClick={handleLogout}>
                         Logout
                       </button>
                     </div>
