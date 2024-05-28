@@ -12,6 +12,13 @@ export default function Account({ user, loading, isAuthenticated }) {
   const handleLogout = () => {
     dispatch(logoutUser());
   };
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  };
   return (
     <Fragment>
       <MataData title={"Sopyshop-Account"} />
@@ -55,16 +62,20 @@ export default function Account({ user, loading, isAuthenticated }) {
                           <td>{user.user.firstName} {user.user.lastName}</td>
                         </tr>
                         <tr>
-                          <th>email:</th>
+                          <th>email</th>
                           <td>{user.user.email}</td>
                         </tr>
                         <tr>
-                          <th>phone:</th>
+                          <th>phone</th>
                           <td>{user.user.phone}</td>
                         </tr>
                         <tr>
-                          <th>Dob: </th>
-                          <td>{user.user.dob}</td>
+                          <th>Dob</th>
+                          <td>{formatDate(user.user.dob)}</td>
+                        </tr>
+                        <tr>
+                          <th>Role</th>
+                          <td>{user.user.role}</td>
                         </tr>
                       </tbody>
                     </table>

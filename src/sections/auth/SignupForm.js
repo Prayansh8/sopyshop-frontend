@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Grid, IconButton, InputAdornment, CircularProgress } from '@mui/material';
 import { AccountCircle, EmailOutlined, LockOutlined, Phone, Visibility, VisibilityOff } from '@mui/icons-material';
 import { toast } from 'react-toastify';
-import './SignupForm.css'; // Import the CSS file
+import './SignupForm.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../actions/userAction';
 
