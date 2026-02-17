@@ -1,66 +1,130 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Face, MailOutlineOutlined } from "@mui/icons-material";
-import "./UpdateUser.css";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, update } from "../../actions/userAction";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { 
+  Box, 
+  Container, 
+  Typography, 
+  Paper, 
+  TextField, 
+  Button, 
+  Stack, 
+  InputAdornment, 
+  CircularProgress,
+  useTheme,
+  alpha 
+} from "@mui/material";
+import { Face, MailOutline, Save } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import MataData from "../layout/MataData";
 
-const UpdateUser = ({ user, loading }) => {
+const UpdateUser = ({ user }) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.update);
-  const [name, setName] = useState(user.user.firstName);
-  const [email, setEmail] = useState(user.user.email);
+  const navigate = useNavigate();
+  const { error, isUpdated, loading } = useSelector((state) => state.update || {});
+  
+  const [firstName, setFirstName] = useState(user?.user?.firstName || "");
+  const [lastName, setLastName] = useState(user?.user?.lastName || "");
+  const [email, setEmail] = useState(user?.user?.email || "");
 
   const updateSubmit = (e) => {
     e.preventDefault();
-    dispatch(update(name, email));
-    setTimeout(() => {
-      window.location.href = "/account";
-    }, 500);
-    toast.success("Update Success!");
+    const myForm = new FormData();
+    myForm.set("firstName", firstName);
+    myForm.set("lastName", lastName);
+    myForm.set("email", email);
+    dispatch(update(myForm));
   };
+
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+    if (isUpdated) {
+      toast.success("Profile Updated Successfully");
+      navigate("/account");
+    }
+  }, [dispatch, error, isUpdated, navigate]);
+
   return (
-    <Fragment>
-      <div className="userUpdate">
-        <form id="update" onSubmit={updateSubmit} className="loginForm">
-          <div className="updateFormText">
-            <Face />
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              name="name"
-              required
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div className="updateFormText">
-            <MailOutlineOutlined />
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <input
-            type="submit"
-            value="update"
-            className="submitBtn"
-            disabled={loading ? true : false}
-          />
-        </form>
-      </div>
-    </Fragment>
+    <>
+      <MataData title="Update Profile | Sopyshop" />
+      <Box sx={{ bgcolor: "background.default", py: 8, minHeight: "100vh" }}>
+        <Container maxWidth="xs">
+          <Paper 
+            elevation={0}
+            sx={{ 
+              p: 4, 
+              borderRadius: 4, 
+              border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+              bgcolor: "background.paper"
+            }}
+          >
+            <Typography variant="h4" sx={{ fontWeight: 800, mb: 4, textAlign: 'center' }}>
+              Update Details
+            </Typography>
+
+            <Box component="form" onSubmit={updateSubmit}>
+              <Stack spacing={3}>
+                <TextField
+                  fullWidth
+                  label="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Face color="primary" sx={{ mr: 1 }} />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  label="Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Face color="primary" sx={{ mr: 1 }} />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  label="Email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <MailOutline color="primary" sx={{ mr: 1 }} />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  disabled={loading}
+                  startIcon={<Save />}
+                  sx={{ py: 1.5, fontWeight: 700 }}
+                >
+                  {loading ? <CircularProgress size={24} color="inherit" /> : "Save Changes"}
+                </Button>
+              </Stack>
+            </Box>
+          </Paper>
+        </Container>
+      </Box>
+    </>
   );
 };
 

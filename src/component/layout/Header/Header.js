@@ -1,123 +1,157 @@
-import React, { Fragment } from "react";
-import { FaShoppingCart, FaSearch } from "react-icons/fa";
-import logo from "../../../images/logo.png";
-import { Link } from "react-router-dom";
-import "./Header.css";
+import React, { useState } from "react";
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Button, 
+  IconButton, 
+  Badge, 
+  Box, 
+  Container, 
+  Avatar, 
+  Menu, 
+  MenuItem, 
+  Tooltip,
+  useTheme,
+  alpha
+} from "@mui/material";
+import { 
+  Search, 
+  ShoppingCart, 
+  DarkMode, 
+  LightMode, 
+  Menu as MenuIcon 
+} from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useColorMode } from "../../../ThemeContext";
+import logo from "../../../images/logo.png";
 import profile from "./admin.jpeg";
 
 export default function Header({ isAuthenticated }) {
   const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.loadUser);
+  const theme = useTheme();
+  const { toggleColorMode } = useColorMode();
+  const navigate = useNavigate();
+
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   return (
-    <Fragment>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark deckstop-Nav">
-        <div className="container-fluid px-4">
-          <Link className="navbar-brand logo" to="/">
-            <img src={logo} alt="sopyshop" />
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+    <AppBar 
+      position="sticky" 
+      elevation={0}
+      sx={{ 
+        bgcolor: alpha(theme.palette.background.paper, 0.8),
+        backdropFilter: "blur(20px)",
+        borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+        color: theme.palette.text.primary
+      }}
+    >
+      <Container maxWidth="xl">
+        <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
+          {/* Logo Section */}
+          <Box 
+            component={Link} 
+            to="/" 
+            sx={{ 
+              display: "flex", 
+              alignItems: "center", 
+              textDecoration: "none",
+              mr: 2
+            }}
           >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
-                <Link className="nav-link text-white" to="/">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link text-white" to="/products">
-                  Products
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link text-white" to="/account">
-                  Account
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-              <li className="nav-item nav-li">
-                <Link className="nav-link text-white" to="/search">
-                  <FaSearch className="text-white" />
-                </Link>
-              </li>
-              <li className="nav-item nav-li ">
-                <Link className="nav-link text-white" to="/cart">
-                  <FaShoppingCart className="text-white cartIcon" />
-                  <span className="cartLength"> {cartItems.length} </span>
-                </Link>
-              </li>
-              {isAuthenticated ? (
-                <li className="nav-item nav-li">
-                  <Link
-                    to="/account"
-                    className="d-flex align-items-center text-white text-decoration-none m-auto accountImg"
-                  >
-                    <img
-                      src={profile}
-                      alt="Profile"
-                      width={32}
-                      height={32}
-                      className="rounded-circle"
-                    />
-                  </Link>
-                </li>
-              ) : (
-                <li className="nav-item nav-li mx-2">
-                  <Link
-                    to="/account"
-                    className="d-flex align-items-center text-white text-decoration-none m-auto"
-                  >
-                    <img
-                      src={profile}
-                      alt="Profile"
-                      width={32}
-                      height={32}
-                      className="rounded-circle"
-                    />
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-      {/* mobile nav */}
-
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark mobile-Nav">
-        <div className="container-fluid px-3 disMobileFlex">
-          <div className="navLogoCont">
-            <Link className="navbar-brand logo" to="/">
-              <img src={logo} alt="sopyshop" />
-            </Link>
-          </div>
-          <div className="navAccountCont">
-            <Link
-              to="/account"
-              className="d-flex justify-content-end align-items-center text-white text-decoration-none m-auto"
+            <img src={logo} alt="sopyshop" style={{ height: "40px", marginRight: "10px" }} />
+            <Typography
+              variant="h6"
+              noWrap
+              sx={{
+                fontWeight: 800,
+                letterSpacing: ".1rem",
+                color: theme.palette.primary.main,
+                display: { xs: "none", md: "flex" }
+              }}
             >
-              <img
-                src={profile}
-                alt="Profile"
-                className="rounded-circle accountMobileImg"
-              />
-            </Link>
-          </div>
-        </div>
-      </nav>
-    </Fragment>
+              SOPYSHOP
+            </Typography>
+          </Box>
+
+          {/* Navigation Links - Desktop */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
+            <Button component={Link} to="/" sx={{ color: theme.palette.text.primary }}>Home</Button>
+            <Button component={Link} to="/products" sx={{ color: theme.palette.text.primary }}>Products</Button>
+            {userInfo?.user?.role === 'admin' && (
+               <Button component={Link} to="/admin/dashboard" sx={{ color: theme.palette.text.primary }}>Dashboard</Button>
+            )}
+          </Box>
+
+          {/* Action Icons Section */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.5, sm: 1.5 } }}>
+            <IconButton onClick={() => navigate("/search")} color="inherit">
+              <Search />
+            </IconButton>
+
+            <Tooltip title="Toggle Theme">
+              <IconButton onClick={toggleColorMode} color="inherit">
+                {theme.palette.mode === "dark" ? <LightMode /> : <DarkMode />}
+              </IconButton>
+            </Tooltip>
+
+            <IconButton onClick={() => navigate("/cart")} color="inherit">
+              <Badge badgeContent={cartItems.length} color="primary">
+                <ShoppingCart />
+              </Badge>
+            </IconButton>
+
+            {/* Profile Section */}
+            <Box sx={{ ml: 1 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, border: `2px solid ${alpha(theme.palette.primary.main, 0.5)}` }}>
+                  <Avatar 
+                    alt="User Profile" 
+                    src={userInfo?.user?.avatar || profile} 
+                    sx={{ width: 35, height: 35 }}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/account"); }}>
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+                <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/orders"); }}>
+                  <Typography textAlign="center">Orders</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" color="error">Logout</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }

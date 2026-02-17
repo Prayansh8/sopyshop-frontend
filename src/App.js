@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import WebFont from "webfontloader";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Box, useTheme } from "@mui/material";
+
 import Header from "./component/layout/Header/Header";
 import Footer from "./component/layout/Footer/Footer";
 import ProductDetails from "./component/Product/ProductDetails";
@@ -28,37 +30,39 @@ import OrdersList from "./component/Admin/OrdersList";
 import OrderUpdate from "./component/Admin/OrderUpdate";
 import MyOrders from "./component/Orders/MyOrders";
 import SingleOrder from "./component/Orders/SingleOrder";
+import Wishlist from "./component/Product/Wishlist";
 import { loadUser } from "./actions/userAction";
+import { getWishlist } from "./actions/wishlistAction";
 import { config } from "./config";
 import LabelBottomNavigation from "./component/layout/BottomBar/BottomBar";
 import { Home } from "./component/Home/Home";
 import { Search } from "./component/Product/Search";
-import "./App.css"
+import "./App.css";
+
 function App() {
   const { userInfo, isAuthenticated, loading } = useSelector((state) => state.loadUser);
-  console.log(userInfo, isAuthenticated, loading)
+  const theme = useTheme();
   const dispatch = useDispatch();
 
   const stripeApiKey = config.stripe.stripeApi;
   const stripePromise = loadStripe(stripeApiKey);
 
   useEffect(() => {
-    WebFont.load({
-      google: {
-        families: ["Roboto", "Chilanka"],
-      },
-    });
     dispatch(loadUser());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getWishlist());
+    }
+  }, [dispatch, isAuthenticated]);
+
   return (
     <Router>
-      <div style={{ height: "10%" }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: "background.default" }}>
         <Header isAuthenticated={isAuthenticated} loading={loading} />
-      </div>
-      <div
-        className="main">
-        <div className="mainContainerDiv">
+        
+        <Box component="main" sx={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetails />} />
@@ -78,6 +82,7 @@ function App() {
                 <Route path="/order/:id" element={<SingleOrder />} />
                 <Route path="/update" element={<UpdateUser user={userInfo} loading={loading} />} />
                 <Route path="/update/avatar" element={<UpdateAvatar user={userInfo} loading={loading} />} />
+                <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/admin/order/:id" element={<OrderUpdate />} />
               </>
             )}
@@ -93,13 +98,15 @@ function App() {
               </>
             )}
           </Routes>
-        </div>
-      </div>
-      <div className="mobileBottomBar" style={{ height: "10%" }}>
-        <LabelBottomNavigation />
-      </div>
-      <Footer />
-      <ToastContainer />
+        </Box>
+
+        <Box sx={{ display: { xs: 'block', md: 'none' }, height: 56 }}>
+           <LabelBottomNavigation />
+        </Box>
+
+        <Footer />
+        <ToastContainer position="bottom-center" autoClose={3000} theme={theme.palette.mode} />
+      </Box>
     </Router>
   );
 }

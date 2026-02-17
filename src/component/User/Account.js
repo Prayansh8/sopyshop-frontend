@@ -1,119 +1,217 @@
 import React, { Fragment } from "react";
 import Loader from "../layout/Loader/Loader";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../actions/userAction";
-import LoginSignUp from "./LoginSignUp";
-import "./Account.css";
 import MataData from "../layout/MataData";
-import profile from "./admin.jpeg";
-export default function Account({ user, loading, isAuthenticated }) {
+import { 
+  Box, 
+  Container, 
+  Typography, 
+  Grid, 
+  Paper, 
+  Avatar, 
+  Button, 
+  Stack, 
+  Divider, 
+  useTheme, 
+  alpha 
+} from "@mui/material";
+import { 
+  Logout, 
+  ShoppingBag, 
+  Dashboard as DashboardIcon, 
+  Edit, 
+  Badge,
+  Email,
+  Phone,
+  CalendarMonth,
+  AdminPanelSettings
+} from "@mui/icons-material";
+import { settingsConfig } from "../../settingsConfig";
+
+export default function Account() {
+  const theme = useTheme();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  
+  const { userInfo: user, loading, isAuthenticated } = useSelector((state) => state.loadUser);
+
   const handleLogout = () => {
     dispatch(logoutUser());
+    navigate("/login");
   };
+
   const formatDate = (isoString) => {
+    if (!isoString) return "N/A";
     const date = new Date(isoString);
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   };
+
+  if (isAuthenticated === false) {
+    navigate("/login");
+  }
+
   return (
     <Fragment>
-      <MataData title={"Sopyshop-Account"} />
-      {loading ? (
+      <MataData title={`${user?.user?.firstName || 'User'}'s Profile | Sopyshop`} />
+      {loading || !user ? (
         <Loader />
       ) : (
-        <Fragment>
-          {isAuthenticated ? (
-            <div className="container accountContainer">
-              <div className="container text-center det-coun">
-                <div className="accountImg">
-                  <div>
-                    <img
-                      src={profile}
-                      alt="Profile"
-                      width={300}
-                      height={300}
-                      className="rounded-circle me-2"
-                    />
-                  </div>
-                  <div className="editBtnDiv">
-                    <Link to="/update/avatar">
-                      <button className="editBtn">Edit Profile</button>
-                    </Link>
-                  </div>
-                  <div className="editBtnDiv">
-                    <Link to="/update">
-                      <button className="editBtn">Edit Details</button>
-                    </Link>
-                  </div>
-                </div>
-                <div className="accountDetails">
-                  <div className="accountDetails-1">
-                    <div className="detailsHed">
-                      <h1>Details</h1>
-                    </div>
-                    <table className="acc-table">
-                      <tbody>
-                        <tr>
-                          <th>Name</th>
-                          <td>{user.user.firstName} {user.user.lastName}</td>
-                        </tr>
-                        <tr>
-                          <th>email</th>
-                          <td>{user.user.email}</td>
-                        </tr>
-                        <tr>
-                          <th>phone</th>
-                          <td>{user.user.phone}</td>
-                        </tr>
-                        <tr>
-                          <th>Dob</th>
-                          <td>{formatDate(user.user.dob)}</td>
-                        </tr>
-                        <tr>
-                          <th>Role</th>
-                          <td>{user.user.role}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <br />
-                  <div className="d-flex">
-                    <div className="w-50">
-                      <Link to="/orders">
-                        <button className="editBtnDetails">Orders</button>
-                      </Link>
-                    </div>
-                    <div className="w-50">
-                      <button className="editBtnDetails" onClick={handleLogout}>
-                        Logout
-                      </button>
-                    </div>
-                  </div>
-                  <br />
-                  <div>
-                    {user.role === "admin" ? (
-                      <div>
-                        <Link to="/admin/dashboard">
-                          <button className="editBtnDetails">Dashboard</button>
-                        </Link>
-                      </div>
-                    ) : (
-                      <div></div>
+        <Box sx={{ bgcolor: "background.default", py: 8, minHeight: "100vh" }}>
+          <Container maxWidth="md">
+            <Typography variant="h3" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>
+              My Profile
+            </Typography>
+
+            <Grid container spacing={4}>
+              {/* Profile Card */}
+              <Grid item xs={12} md={4}>
+                <Paper 
+                  elevation={0}
+                  sx={{ 
+                    p: 4, 
+                    textAlign: 'center', 
+                    borderRadius: 4, 
+                    border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                    boxShadow: theme.palette.mode === 'light' 
+                      ? settingsConfig.styles.boxShadowLight 
+                      : settingsConfig.styles.boxShadowDark,
+                  }}
+                >
+                  <Avatar 
+                    src={user.user.avatar} 
+                    alt={user.user.firstName}
+                    sx={{ 
+                      width: 140, 
+                      height: 140, 
+                      mx: 'auto', 
+                      mb: 3,
+                      border: `4px solid ${alpha(theme.palette.primary.main, 0.2)}`
+                    }}
+                  />
+                  <Typography variant="h5" sx={{ fontWeight: 800, mb: 1 }}>
+                    {user.user.firstName} {user.user.lastName}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
+                    Joined on {formatDate(user.user.createdAt)}
+                  </Typography>
+
+                  <Stack spacing={2}>
+                    <Button 
+                      fullWidth 
+                      variant="contained" 
+                      startIcon={<Edit />} 
+                      component={Link} 
+                      to="/update"
+                      sx={{ fontWeight: 700 }}
+                    >
+                      Edit Bio
+                    </Button>
+                    <Button 
+                      fullWidth 
+                      variant="outlined" 
+                      startIcon={<Badge />} 
+                      component={Link} 
+                      to="/update/avatar"
+                      sx={{ fontWeight: 700 }}
+                    >
+                      Change Avatar
+                    </Button>
+                  </Stack>
+                </Paper>
+              </Grid>
+
+              {/* Account Details */}
+              <Grid item xs={12} md={8}>
+                <Paper 
+                  elevation={0}
+                  sx={{ 
+                    p: 4, 
+                    borderRadius: 4, 
+                    border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                  }}
+                >
+                  <Typography variant="h5" sx={{ fontWeight: 800, mb: 4 }}>
+                    Personal Information
+                  </Typography>
+
+                  <Stack spacing={3}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Email color="primary" />
+                      <Box>
+                        <Typography variant="caption" color="text.secondary">Email Address</Typography>
+                        <Typography variant="body1" sx={{ fontWeight: 600 }}>{user.user.email}</Typography>
+                      </Box>
+                    </Box>
+                    <Divider />
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Phone color="primary" />
+                      <Box>
+                        <Typography variant="caption" color="text.secondary">Phone Number</Typography>
+                        <Typography variant="body1" sx={{ fontWeight: 600 }}>{user.user.phone || 'Not provided'}</Typography>
+                      </Box>
+                    </Box>
+                    <Divider />
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <CalendarMonth color="primary" />
+                      <Box>
+                        <Typography variant="caption" color="text.secondary">Date of Birth</Typography>
+                        <Typography variant="body1" sx={{ fontWeight: 600 }}>{formatDate(user.user.dob)}</Typography>
+                      </Box>
+                    </Box>
+                    <Divider />
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <AdminPanelSettings color="primary" />
+                      <Box>
+                        <Typography variant="caption" color="text.secondary">Account Role</Typography>
+                        <Typography variant="body1" sx={{ fontWeight: 600, textTransform: 'capitalize' }}>{user.user.role}</Typography>
+                      </Box>
+                    </Box>
+                  </Stack>
+
+                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mt: 6 }}>
+                    <Button 
+                      variant="contained" 
+                      color="secondary" 
+                      startIcon={<ShoppingBag />} 
+                      component={Link} 
+                      to="/orders"
+                      sx={{ fontWeight: 700, px: 4 }}
+                    >
+                      My Orders
+                    </Button>
+                    {user.user.role === "admin" && (
+                      <Button 
+                        variant="contained" 
+                        color="primary" 
+                        startIcon={<DashboardIcon />} 
+                        component={Link} 
+                        to="/admin/dashboard"
+                        sx={{ fontWeight: 700, px: 4 }}
+                      >
+                        Admin Dashboard
+                      </Button>
                     )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <LoginSignUp />
-            </div>
-          )}
-        </Fragment>
+                    <Button 
+                      variant="text" 
+                      color="error" 
+                      startIcon={<Logout />} 
+                      onClick={handleLogout}
+                      sx={{ fontWeight: 700, ml: { sm: 'auto !important' } }}
+                    >
+                      Logout
+                    </Button>
+                  </Stack>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+        </Box>
       )}
     </Fragment>
   );

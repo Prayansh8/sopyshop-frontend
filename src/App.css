@@ -1,40 +1,31 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   scroll-behavior: smooth;
 }
 
-.main {
-  height: 80%;
-}
-
 body {
-  margin: auto;
-  height: 80%;
-  min-height: 80%
+  font-family: 'Roboto', 'Inter', sans-serif;
+  transition: background-color 0.3s ease;
 }
 
-.mobileBottomBar {
-  display: none;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.mainContainerDiv {
-  padding: 0;
-  overflow: auto;
+.main {
+  min-height: 80vh;
 }
 
 @media screen and (max-width: 700px) {
   .mobileBottomBar {
     display: block;
-    z-index: 1;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
   }
-}
-
-.fixed-action-btn {
-  width: 100%;
 }

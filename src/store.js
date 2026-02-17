@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import thunk from "redux-thunk";
+import { thunk } from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
   deleteProductReducer,
@@ -26,6 +26,7 @@ import {
   singleOrderReducer,
   updateOrderReducer,
 } from "./reducers/orderReducer";
+import { wishlistReducer } from "./reducers/wishlistReducer";
 
 const reducer = combineReducers({
   products: productsReducer,
@@ -47,6 +48,7 @@ const reducer = combineReducers({
   newReview: newReviewReducer,
   updateOrder: updateOrderReducer,
   deleteOrder: deleteOrderReducer,
+  wishlist: wishlistReducer,
 });
 
 const initialState = {

@@ -1,20 +1,35 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Typography, IconButton, InputAdornment, CircularProgress } from '@mui/material';
-import { AccountCircle, LockOutlined, Visibility, VisibilityOff } from '@mui/icons-material';
-import { toast } from 'react-toastify';
-import './SignInForm.css'; // Import the CSS file
+import { 
+  TextField, 
+  Button, 
+  Grid, 
+  Typography, 
+  IconButton, 
+  InputAdornment, 
+  CircularProgress,
+  Stack,
+  useTheme,
+  alpha,
+  Box
+} from '@mui/material';
+import { 
+  EmailOutlined, 
+  LockOutlined, 
+  Visibility, 
+  VisibilityOff 
+} from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../actions/userAction';
+import { Link } from 'react-router-dom';
 
 const SignInForm = () => {
-
+  const theme = useTheme();
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.user);
-  const { loading, error, userInfo } = userLogin;
+  const { loading, error } = useSelector((state) => state.loadUser);
   const [showPassword, setShowPassword] = useState(false);
 
   const [loginData, setLoginData] = useState({
-    identifier: '',
+    email: '',
     password: '',
   });
 
@@ -25,81 +40,84 @@ const SignInForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser(loginData));
-  };
-
-  if (userInfo) {
-    toast.success('Login Successful!');
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
-  }
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    dispatch(loginUser(loginData.email, loginData.password));
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
+    <Box component="form" onSubmit={handleSubmit}>
+      <Stack spacing={3}>
         <TextField
           required
-          label="Email, Username, or Phone"
+          label="Email Address"
           fullWidth
-          name="identifier"
-          value={loginData.identifier}
+          name="email"
+          type="email"
+          value={loginData.email}
           onChange={handleChange}
           variant="outlined"
-          margin="normal"
           InputProps={{
-            startAdornment: <AccountCircle />,
-          }}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          required
-          label="Password"
-          fullWidth
-          name="password"
-          value={loginData.password}
-          onChange={handleChange}
-          variant="outlined"
-          margin="normal"
-          type={showPassword ? 'text' : 'password'}
-          InputProps={{
-            startAdornment: <LockOutlined />,
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
+            startAdornment: (
+              <InputAdornment position="start">
+                <EmailOutlined sx={{ color: 'text.secondary', mr: 1 }} />
               </InputAdornment>
             ),
           }}
-          inputProps={{
-            minLength: 4,
-            maxLength: 32,
-          }}
         />
-      </Grid>
-      <Grid item xs={12}>
-        <Button
-          href="/forgot-password" // Link to the forgot password page
-          className="forgot-password-button"
+        
+        <Box>
+          <TextField
+            required
+            label="Password"
+            fullWidth
+            name="password"
+            value={loginData.password}
+            onChange={handleChange}
+            variant="outlined"
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockOutlined sx={{ color: 'text.secondary', mr: 1 }} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
+            <Typography 
+              variant="body2" 
+              component={Link} 
+              to="/password/forgot" 
+              sx={{ 
+                color: 'primary.main', 
+                textDecoration: 'none', 
+                fontWeight: 600,
+                "&:hover": { textDecoration: 'underline' } 
+              }}
+            >
+              Forgot Password?
+            </Typography>
+          </Box>
+        </Box>
+
+        <Button 
+          type="submit"
+          variant="contained" 
+          color="primary" 
+          fullWidth 
+          disabled={loading}
+          sx={{ py: 1.5, fontSize: '1rem', fontWeight: 700 }}
         >
-          Forgot Password?
+          {loading ? <CircularProgress size={24} color="inherit" /> : "Sign In"}
         </Button>
-      </Grid>
-      <Grid item xs={12}>
-        {loading && <CircularProgress />}
-        {error && <Typography color="error">{error}</Typography>}
-        <Button variant="contained" color="primary" fullWidth onClick={handleSubmit}>Sign In</Button>
-      </Grid>
-    </Grid>
+      </Stack>
+    </Box>
   );
 };
 
