@@ -16,8 +16,8 @@ export const settingsConfig = {
     // Backgrounds
     lightBg: "#eef2f6",
     lightPaper: "#ffffff",
-    darkBg: "#111936",
-    darkPaper: "#1a223f",
+    darkBg: "#060d12",
+    darkPaper: "#060d12",
     
     // Text
     lightTextPrimary: "#364152",
