@@ -32,12 +32,6 @@ import {
   LocalOffer, 
   Clear,
   Opacity,
-  CardGiftcard,
-  Checkroom,
-  IceSkating,
-  Smartphone,
-  Laptop as LaptopIcon,
-  Devices,
   HomeOutlined,
   GridView,
   ViewStream

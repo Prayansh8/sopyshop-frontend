@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import { 
   TextField, 
   Button, 
-  Grid, 
   Typography, 
   IconButton, 
   InputAdornment, 
   CircularProgress,
   Stack,
-  useTheme,
-  alpha,
   Box
 } from '@mui/material';
 import { 
@@ -23,9 +20,9 @@ import { loginUser } from '../../actions/userAction';
 import { Link } from 'react-router-dom';
 
 const SignInForm = () => {
-  const theme = useTheme();
+
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.loadUser);
+  const { loading } = useSelector((state) => state.loadUser);
   const [showPassword, setShowPassword] = useState(false);
 
   const [loginData, setLoginData] = useState({
