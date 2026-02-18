@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../actions/productAction";
+import { getCategories } from "../../actions/categoryAction";
 import ProductCard from "./ProductCard";
 import MataData from "../layout/MataData";
 import Loader from "../layout/Loader/Loader";
@@ -26,11 +27,11 @@ const ProductSection = ({ title, subtitle, icon, products, categoryLink, theme }
           <Box sx={{ p: 1, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.1), color: 'primary.main', display: 'flex' }}>
             {icon}
           </Box>
-          <Typography variant="h3" sx={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1 }}>
+        <Typography variant="h3" sx={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1, color: 'text.primary' }}>
             {title}
           </Typography>
         </Stack>
-        <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 500 }}>
+        <Typography variant="h6" sx={{ fontWeight: 500, color: 'text.secondary' }}>
           {subtitle}
         </Typography>
       </Box>
@@ -70,28 +71,36 @@ export const Home = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const { loading, error, products } = useSelector((state) => state.products);
+  const { categories } = useSelector((state) => state.categories);
 
   useEffect(() => {
     // Increase limit to 100 to have enough products for all sections on home page
     dispatch(getProducts("", [0, 1000000], 1, "", "", 100));
-  }, [dispatch, error]);
+    dispatch(getCategories());
+  }, [dispatch]);
 
   const featured = useMemo(() => products?.slice(0, 8), [products]);
   
-  const techProducts = useMemo(() => 
-    products?.filter(p => ["Electronics & Gadgets", "Computer & Accessories"].includes(p.category)).slice(0, 4), 
-    [products]
-  );
+  const techProducts = useMemo(() => {
+    const techCategoryIds = categories
+      ?.filter(cat => ["electronics", "Electronics & Gadgets", "Computer & Accessories"].includes(cat.name))
+      .map(cat => cat._id);
+    return products?.filter(p => techCategoryIds?.includes(p.category)).slice(0, 4);
+  }, [products, categories]);
   
-  const houseDecoProducts = useMemo(() => 
-    products?.filter(p => ["Home Decor", "Furniture"].includes(p.category)).slice(0, 4), 
-    [products]
-  );
+  const houseDecoProducts = useMemo(() => {
+    const homeCategoryIds = categories
+      ?.filter(cat => ["furniture", "Home Decor", "home-decoration", "House Decoration"].includes(cat.name))
+      .map(cat => cat._id);
+    return products?.filter(p => homeCategoryIds?.includes(p.category)).slice(0, 4);
+  }, [products, categories]);
   
-  const fashionProducts = useMemo(() => 
-    products?.filter(p => p.category === "Fashion & Lifestyle").slice(0, 4), 
-    [products]
-  );
+  const fashionProducts = useMemo(() => {
+    const fashionCategoryIds = categories
+      ?.filter(cat => ["fashion", "Fashion & Lifestyle", "tops", "womens-dresses", "mens-shirts"].includes(cat.name))
+      .map(cat => cat._id);
+    return products?.filter(p => fashionCategoryIds?.includes(p.category)).slice(0, 4);
+  }, [products, categories]);
 
   return (
     <>
@@ -195,41 +204,47 @@ export const Home = () => {
           <Divider sx={{ opacity: 0.5 }} />
 
           {/* New Sections */}
-          <Box id="tech">
-            <ProductSection 
-              title="Tech & Electronics" 
-              subtitle="Latest gadgets from Laptops to Smart Watches"
-              icon={<Devices />}
-              products={techProducts}
-              categoryLink="/products?category=Electronics & Gadgets"
-              theme={theme}
-            />
-          </Box>
+          {techProducts && techProducts.length > 0 && (
+            <Box id="tech">
+              <ProductSection 
+                title="Tech & Electronics" 
+                subtitle="Latest gadgets from Laptops to Smart Watches"
+                icon={<Devices />}
+                products={techProducts}
+                categoryLink="/products?category=Electronics & Gadgets"
+                theme={theme}
+              />
+            </Box>
+          )}
 
-          <Box sx={{ bgcolor: alpha(theme.palette.primary.main, 0.02) }}>
-            <ProductSection 
-              title="Home & Living" 
-              subtitle="Transform your space with modern furniture and decor"
-              icon={<HomeOutlined />}
-              products={houseDecoProducts}
-              categoryLink="/products?category=Home Decor"
-              theme={theme}
-            />
-          </Box>
+          {houseDecoProducts && houseDecoProducts.length > 0 && (
+            <Box sx={{ bgcolor: alpha(theme.palette.primary.main, 0.02) }}>
+              <ProductSection 
+                title="Home & Living" 
+                subtitle="Transform your space with modern furniture and decor"
+                icon={<HomeOutlined />}
+                products={houseDecoProducts}
+                categoryLink="/products?category=Home Decor"
+                theme={theme}
+              />
+            </Box>
+          )}
 
-          <Box>
-            <ProductSection 
-              title="Fashion Store" 
-              subtitle="Premium apparel and footwear for your style"
-              icon={<Checkroom />}
-              products={fashionProducts}
-              categoryLink="/products?category=Fashion & Lifestyle"
-              theme={theme}
-            />
-          </Box>
+          {fashionProducts && fashionProducts.length > 0 && (
+            <Box>
+              <ProductSection 
+                title="Fashion Store" 
+                subtitle="Premium apparel and footwear for your style"
+                icon={<Checkroom />}
+                products={fashionProducts}
+                categoryLink="/products?category=Fashion & Lifestyle"
+                theme={theme}
+              />
+            </Box>
+          )}
           
           <Box sx={{ py: 15, textAlign: "center", bgcolor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.02) : alpha(theme.palette.common.black, 0.02) }}>
-            <Typography variant="h3" sx={{ fontWeight: 900, mb: 3 }}>Ready to see everything?</Typography>
+            <Typography variant="h3" sx={{ fontWeight: 900, mb: 3, color: 'text.primary' }}>Ready to see everything?</Typography>
             <Button 
               variant="contained" 
               size="large" 
