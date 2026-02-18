@@ -15,7 +15,6 @@ import {
   Button
 } from "@mui/material";
 import { AddShoppingCart, FavoriteBorder, Favorite, Visibility } from "@mui/icons-material";
-import { settingsConfig } from "../../settingsConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "../../actions/cartAction";
 import { toggleWishlist } from "../../actions/wishlistAction";
@@ -74,17 +73,19 @@ export default function ProductCard({ product, horizontal = false }) {
               {isWishlisted ? <Favorite fontSize="small" /> : <FavoriteBorder fontSize="small" />}
             </IconButton>
         </Box>
-        <CardContent sx={{ flexGrow: 1, p: 4, display: 'flex', flexDirection: 'column' }}>
-            <Typography variant="caption" sx={{ color: 'primary.main', fontWeight: 900, textTransform: 'uppercase', mb: 1 }}>
-                {product.category}
-            </Typography>
-            <Typography variant="h4" component={Link} to={`/product/${product._id}`} sx={{ fontWeight: 900, textDecoration: 'none', color: 'inherit', mb: 2 }}>
-                {product.name}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3, opacity: 0.8, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                {product.description}
-            </Typography>
-            <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 'auto' }}>
+        <CardContent sx={{ flexGrow: 1, p: 4, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <Box>
+                <Typography variant="caption" sx={{ color: 'primary.main', fontWeight: 900, textTransform: 'uppercase', mb: 1 }}>
+                    {product.category}
+                </Typography>
+                <Typography variant="h4" component={Link} to={`/product/${product._id}`} sx={{ fontWeight: 900, textDecoration: 'none', color: 'inherit', mb: 2 }}>
+                    {product.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3, opacity: 0.8, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    {product.description}
+                </Typography>
+            </Box>
+            <Stack direction="row" alignItems="center" spacing={2}>
                 <Rating value={product.ratings} readOnly size="small" precision={0.5} />
                 <Typography variant="caption" sx={{ fontWeight: 700, color: 'text.disabled' }}>({product.numOfReviews} Reviews)</Typography>
             </Stack>
@@ -113,6 +114,7 @@ export default function ProductCard({ product, horizontal = false }) {
     <Card 
       sx={{ 
         height: '100%',
+        minWidth: { xs: '100%', sm: 280 },
         display: "flex", 
         flexDirection: "column",
         position: "relative",
@@ -130,7 +132,8 @@ export default function ProductCard({ product, horizontal = false }) {
         borderRadius: 6,
         border: `1px solid ${alpha(theme.palette.divider, 0.08)}`,
         bgcolor: "background.paper",
-        overflow: "hidden"
+        overflow: "hidden",
+        justifyContent: "space-between"
       }}
     >
       <Box sx={{ position: "relative", height: 280, overflow: 'hidden', bgcolor: alpha(theme.palette.divider, 0.02) }}>
@@ -208,26 +211,28 @@ export default function ProductCard({ product, horizontal = false }) {
         )}
       </Box>
 
-      <CardContent sx={{ flexGrow: 1, p: 3, display: 'flex', flexDirection: 'column' }}>
-        <Typography variant="caption" sx={{ color: 'text.disabled', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1.5, mb: 1 }}>
-          {product.category}
-        </Typography>
-        
-        <Link to={`/product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <Typography 
-            variant="h6" 
-            sx={{ 
-              fontWeight: 900, fontSize: "1.1rem", lineHeight: 1.3, mb: 2,
-              height: '2.6rem', overflow: 'hidden', display: '-webkit-box',
-              WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
-              '&:hover': { color: 'primary.main' }
-            }}
-          >
-            {product.name}
+      <CardContent sx={{ flexGrow: 1, p: 3, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Box>
+          <Typography variant="caption" sx={{ color: 'primary.main', fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1.5, mb: 1 }}>
+            {product.category}
           </Typography>
-        </Link>
+          
+          <Link to={`/product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                fontWeight: 900, fontSize: "1.1rem", lineHeight: 1.3, mb: 2,
+                height: '2.6rem', overflow: 'hidden', display: '-webkit-box',
+                WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+                '&:hover': { color: 'primary.main' }
+              }}
+            >
+              {product.name}
+            </Typography>
+          </Link>
+        </Box>
         
-        <Box sx={{ display: "flex", alignItems: "center", mb: 3, mt: 'auto' }}>
+        <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
           <Rating value={product.ratings || 0} precision={0.5} readOnly size="small" sx={{ color: 'primary.main' }} />
           <Typography variant="caption" sx={{ ml: 1, color: 'text.secondary', fontWeight: 700 }}>
             ({product.numOfReviews})

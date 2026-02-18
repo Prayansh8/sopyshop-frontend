@@ -28,15 +28,15 @@ import { config } from "../config";
 
 // get all products
 export const getProducts =
-  (keyword = "", price = [0, 150000], currentPage = 1, category, sort = "") =>
+  (keyword = "", price = [0, 1000000], currentPage = 1, category, sort = "", limit = 8) =>
   async (dispatch) => {
     try {
       dispatch({ type: GET_PRODUCTS_REQUEST });
 
-      let link = `${config.baseUrl}/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&page=${currentPage}&sort=${sort}`;
+      let link = `${config.baseUrl}/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&page=${currentPage}&sort=${sort}&limit=${limit}`;
 
       if (category) {
-        link = `${config.baseUrl}/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&page=${currentPage}&category=${category}&sort=${sort}`;
+        link = `${config.baseUrl}/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&page=${currentPage}&category=${category}&sort=${sort}&limit=${limit}`;
       }
 
       const { data } = await axios.get(link);

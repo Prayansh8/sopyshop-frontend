@@ -40,7 +40,7 @@ const SignInForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser(loginData.email, loginData.password));
+    dispatch(loginUser(loginData));
   };
 
   return (

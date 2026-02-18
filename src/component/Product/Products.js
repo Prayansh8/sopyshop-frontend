@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, clearErrors } from "../../actions/productAction";
+import { getCategories } from "../../actions/categoryAction";
 import ProductCard from "../Home/ProductCard";
 import Loader from "../layout/Loader/Loader";
 import MataData from "../layout/MataData";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { 
   Box, 
   Container, 
   Typography, 
   Grid, 
-  Slider, 
-  Paper, 
   Pagination,
   Button,
   useTheme,
@@ -19,54 +18,46 @@ import {
   Divider,
   Drawer,
   IconButton,
-  useMediaQuery,
-  Breadcrumbs,
-  Link as MuiLink,
   Stack,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
   Chip,
-  Tooltip,
-  Fade,
-  Grow
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Grow,
+  Avatar
 } from "@mui/material";
 import { 
-  FilterList, 
-  NavigateNext, 
   Tune, 
-  Sort, 
   Category, 
   LocalOffer, 
   Clear,
-  Spa,
-  Waves,
   Opacity,
   CardGiftcard,
   Checkroom,
   IceSkating,
   Smartphone,
   Laptop as LaptopIcon,
-  CameraAlt,
-  Headphones as HeadphonesIcon,
+  Devices,
+  HomeOutlined,
   GridView,
-  ViewStream,
-  KeyboardArrowDown
+  ViewStream
 } from "@mui/icons-material";
 import { toast } from "react-toastify";
 
-const categories = [
-  { name: "Luxury Soaps", icon: <Spa fontSize="small" /> },
-  { name: "Bath Salts", icon: <Waves fontSize="small" /> },
-  { name: "Essential Oils", icon: <Opacity fontSize="small" /> },
-  { name: "Spa Gift Sets", icon: <CardGiftcard fontSize="small" /> },
-  { name: "Clothes", icon: <Checkroom fontSize="small" /> },
-  { name: "Shoes", icon: <IceSkating fontSize="small" /> },
-  { name: "Phone", icon: <Smartphone fontSize="small" /> },
-  { name: "Laptop", icon: <LaptopIcon fontSize="small" /> },
-  { name: "Camera", icon: <CameraAlt fontSize="small" /> },
-  { name: "Headphones", icon: <HeadphonesIcon fontSize="small" /> }
+const categoryIconMap = {
+  "beauty": <Opacity fontSize="small" />,
+  "fragrances": <Tune fontSize="small" />,
+  "furniture": <HomeOutlined fontSize="small" />,
+  "groceries": <LocalOffer fontSize="small" />,
+};
+
+const priceRanges = [
+  { label: "All Prices", value: [0, 1000000] },
+  { label: "Under ₹500", value: [0, 500] },
+  { label: "₹500 - ₹2,000", value: [500, 2000] },
+  { label: "₹2,000 - ₹5,000", value: [2000, 5000] },
+  { label: "₹5,000 - ₹10,000", value: [5000, 10000] },
+  { label: "Over ₹10,000", value: [10000, 1000000] },
 ];
 
 const sortOptions = [
@@ -79,12 +70,14 @@ const sortOptions = [
 
 export default function Products() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [drawerOpen, setDrawerOpen] = useState(false);
   
   const { keyword } = useParams();
-  const [price, setPrice] = useState([0, 500000]);
-  const [category, setCategory] = useState("");
+  const [searchParams] = useSearchParams();
+  const categoryParam = searchParams.get("category");
+
+  const [price, setPrice] = useState([0, 1000000]);
+  const [category, setCategory] = useState(categoryParam || "");
   const [currentPage, setCurrentPage] = useState(1);
   const [sort, setSort] = useState("-createdAt");
   const [viewMode, setViewMode] = useState("grid");
@@ -94,8 +87,24 @@ export default function Products() {
     (state) => state.products
   );
 
-  const handlePriceChange = (event, newPrice) => {
-    setPrice(newPrice);
+  const { categories } = useSelector((state) => state.categories);
+
+  useEffect(() => {
+    if (categoryParam) {
+      setCategory(categoryParam);
+      setCurrentPage(1);
+    }
+  }, [categoryParam]);
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
+
+  const handlePriceChange = (event) => {
+    const selectedRange = priceRanges.find(range => range.label === event.target.value);
+    if (selectedRange) {
+      setPrice(selectedRange.value);
+    }
   };
 
   const handleCategoryClick = (cat) => {
@@ -104,7 +113,7 @@ export default function Products() {
   };
 
   const clearFilters = () => {
-    setPrice([0, 500000]);
+    setPrice([0, 1000000]);
     setCategory("");
     setSort("-createdAt");
     setCurrentPage(1);
@@ -133,33 +142,43 @@ export default function Products() {
         <Typography variant="subtitle2" sx={{ fontWeight: 800, color: 'text.secondary', mb: 3, textTransform: 'uppercase', letterSpacing: 1.5 }}>
           Price Range
         </Typography>
-        <Box sx={{ px: 2 }}>
-          <Slider
-            value={price}
+        <Box sx={{ px: 1 }}>
+          <RadioGroup 
+            value={priceRanges.find(r => r.value[0] === price[0] && r.value[1] === price[1])?.label || "All Prices"} 
             onChange={handlePriceChange}
-            valueLabelDisplay="auto"
-            min={0}
-            max={500000}
-            sx={{ 
-              color: theme.palette.primary.main,
-              height: 6,
-              '& .MuiSlider-thumb': {
-                width: 24,
-                height: 24,
-                bgcolor: '#fff',
-                border: '4px solid currentColor',
-                '&:hover, &.Mui-active': { boxShadow: `0 0 0 10px ${alpha(theme.palette.primary.main, 0.1)}` }
-              }
-            }}
-          />
-          <Stack direction="row" justifyContent="space-between" sx={{ mt: 2 }}>
-            <Typography variant="body2" sx={{ fontWeight: 700, bgcolor: alpha(theme.palette.divider, 0.05), px: 1.5, py: 0.5, borderRadius: 1.5 }}>
-              ₹{price[0].toLocaleString()}
-            </Typography>
-            <Typography variant="body2" sx={{ fontWeight: 700, bgcolor: alpha(theme.palette.divider, 0.05), px: 1.5, py: 0.5, borderRadius: 1.5 }}>
-              ₹{price[1].toLocaleString()}
-            </Typography>
-          </Stack>
+          >
+            {priceRanges.map((range) => (
+              <FormControlLabel
+                key={range.label}
+                value={range.label}
+                control={
+                  <Radio 
+                    size="small"
+                    sx={{
+                      color: alpha(theme.palette.primary.main, 0.2),
+                      '&.Mui-checked': { color: theme.palette.primary.main }
+                    }}
+                  />
+                }
+                label={
+                  <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary' }}>
+                    {range.label}
+                  </Typography>
+                }
+                sx={{ 
+                  mb: 1,
+                  mx: 0,
+                  width: '100%',
+                  borderRadius: 2,
+                  transition: '0.2s',
+                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.05) },
+                  ...(priceRanges.find(r => r.value[0] === price[0] && r.value[1] === price[1])?.label === range.label && {
+                    bgcolor: alpha(theme.palette.primary.main, 0.08),
+                  })
+                }}
+              />
+            ))}
+          </RadioGroup>
         </Box>
       </Box>
 
@@ -210,38 +229,7 @@ export default function Products() {
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
       <MataData title={"Sopyshop | Collections"} />
       
-      {/* Immersive Hero Section */}
-      <Box 
-        sx={{ 
-          pt: { xs: 8, md: 12 }, 
-          pb: { xs: 6, md: 10 }, 
-          bgcolor: alpha(theme.palette.primary.main, 0.03),
-          textAlign: 'center',
-          position: 'relative',
-          overflow: 'hidden'
-        }}
-      >
-        <Container maxWidth="xl">
-          <Grow in timeout={800}>
-            <Box>
-              <Breadcrumbs 
-                separator={<NavigateNext fontSize="tiny" />} 
-                sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}
-              >
-                <MuiLink underline="hover" color="inherit" href="/" sx={{ fontSize: '0.8rem', fontWeight: 700 }}>Home</MuiLink>
-                <Typography color="text.primary" sx={{ fontSize: '0.8rem', fontWeight: 900 }}>Collections</Typography>
-              </Breadcrumbs>
-              
-              <Typography variant="h1" sx={{ fontWeight: 900, mb: 2, letterSpacing: '-0.04em', fontSize: { xs: '2.5rem', md: '4.5rem' } }}>
-                The <Box component="span" sx={{ color: 'primary.main' }}>Premium</Box> Catalog
-              </Typography>
-              <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto', fontWeight: 500, lineHeight: 1.6, px: 2 }}>
-                Quality is not an act, it is a habit. Discover our carefully curated selection of lifestyle upgrades.
-              </Typography>
-            </Box>
-          </Grow>
-        </Container>
-      </Box>
+
 
       {/* Sticky Horizontal Control Bar */}
       <Box 
@@ -300,25 +288,31 @@ export default function Products() {
                   '&:hover': { bgcolor: category === "" ? 'primary.dark' : alpha(theme.palette.divider, 0.1) }
                 }}
               />
-              {categories.map((cat) => (
-                <Chip
-                  key={cat.name}
-                  icon={React.cloneElement(cat.icon, { style: { color: category === cat.name ? '#fff' : 'inherit' } })}
-                  label={cat.name}
-                  onClick={() => handleCategoryClick(cat.name)}
-                  sx={{ 
-                    borderRadius: 2.5, 
-                    fontWeight: 700, 
-                    px: 1.5, 
-                    py: 2.5,
-                    bgcolor: category === cat.name ? 'primary.main' : 'transparent',
-                    color: category === cat.name ? '#fff' : 'text.primary',
-                    border: `1px solid ${category === cat.name ? 'primary.main' : alpha(theme.palette.divider, 0.2)}`,
-                    transition: '0.3s',
-                    '&:hover': { bgcolor: category === cat.name ? 'primary.dark' : alpha(theme.palette.divider, 0.1) }
-                  }}
-                />
-              ))}
+              {categories && categories.map((cat) => {
+                const icon = categoryIconMap[cat.name] || <Category fontSize="small" />;
+                const imageUrl = cat.image?.url;
+
+                return (
+                  <Chip
+                    key={cat._id}
+                    icon={!imageUrl ? React.cloneElement(icon, { style: { color: category === cat.name ? '#fff' : 'inherit' } }) : undefined}
+                    avatar={imageUrl ? <Avatar src={imageUrl} sx={{ width: 24, height: 24 }} /> : undefined}
+                    label={cat.name.charAt(0).toUpperCase() + cat.name.slice(1)}
+                    onClick={() => handleCategoryClick(cat.name)}
+                    sx={{ 
+                      borderRadius: 2.5, 
+                      fontWeight: 700, 
+                      px: 1.5, 
+                      py: 2.5,
+                      bgcolor: category === cat.name ? 'primary.main' : 'transparent',
+                      color: category === cat.name ? '#fff' : 'text.primary',
+                      border: `1px solid ${category === cat.name ? 'primary.main' : alpha(theme.palette.divider, 0.2)}`,
+                      transition: '0.3s',
+                      '&:hover': { bgcolor: category === cat.name ? 'primary.dark' : alpha(theme.palette.divider, 0.1) }
+                    }}
+                  />
+                )
+              })}
             </Box>
 
             {/* Results Count & View Toggle */}
@@ -359,7 +353,13 @@ export default function Products() {
               <Box sx={{ mb: 4, display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
                 {keyword && <Chip label={`Search: ${keyword}`} onDelete={() => (window.location.href = "/products")} sx={{ borderRadius: 2, fontWeight: 700 }} />}
                 {category && <Chip label={`Category: ${category}`} onDelete={() => setCategory("")} sx={{ borderRadius: 2, fontWeight: 700 }} />}
-                {(price[0] !== 0 || price[1] !== 500000) && <Chip label={`Price: ₹${price[0]} - ₹${price[1]}`} onDelete={() => setPrice([0, 500000])} sx={{ borderRadius: 2, fontWeight: 700 }} />}
+                {(price[0] !== 0 || price[1] !== 1000000) && (
+                  <Chip 
+                    label={`Price: ${priceRanges.find(r => r.value[0] === price[0] && r.value[1] === price[1])?.label || 'Custom'}`} 
+                    onDelete={() => setPrice([0, 1000000])} 
+                    sx={{ borderRadius: 2, fontWeight: 700 }} 
+                  />
+                )}
                 <Button size="small" onClick={clearFilters} sx={{ fontWeight: 800, textTransform: 'none' }}>Clear All</Button>
               </Box>
             )}
@@ -379,11 +379,11 @@ export default function Products() {
               </Box>
             ) : (
               <Box>
-                <Grid container spacing={4}>
+                <Grid container spacing={4} justifyContent="space-between">
                   {products.map((item, index) => (
-                    <Grid item key={item._id} xs={12} sm={6} md={viewMode === "grid" ? 3 : 12} lg={viewMode === "grid" ? 3 : 12}>
-                      <Grow in timeout={300 + index * 100}>
-                        <Box>
+                    <Grid item key={item._id} xs={12} sm={6} md={viewMode === "grid" ? 3 : 12} lg={viewMode === "grid" ? 3 : 12} sx={{ display: 'flex' }}>
+                      <Grow in timeout={300 + index * 100} style={{ display: 'flex', width: '100%' }}>
+                        <Box sx={{ width: '100%', display: 'flex' }}>
                             <ProductCard product={item} horizontal={viewMode === "list"} />
                         </Box>
                       </Grow>
