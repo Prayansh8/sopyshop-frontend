@@ -61,7 +61,7 @@ export default function Header({ isAuthenticated }) {
           zIndex: theme.zIndex.appBar
         }}
       >
-        <Box maxWidth="xl">
+        <Box maxWidth="xl" mx={3}>
           <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
             {/* Logo Section */}
             <Box 

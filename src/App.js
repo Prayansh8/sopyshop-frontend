@@ -66,7 +66,7 @@ function App() {
 
   return (
     <Router>
-      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: "background.default" }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: "background.default"}}>
         <Header isAuthenticated={isAuthenticated} loading={loading} />
         
         <Box component="main" sx={{ flexGrow: 1 }}>

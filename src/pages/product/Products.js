@@ -192,7 +192,7 @@ export default function Products() {
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        sx={{ mb: 4 }}
+        sx={{ mb: 1 }}
       >
         <Typography
           variant="h5"
@@ -208,13 +208,13 @@ export default function Products() {
         </IconButton>
       </Stack>
 
-      <Box sx={{ mb: 6 }}>
+      <Box sx={{ mb: 1 }}>
         <Typography
           variant="subtitle2"
           sx={{
             fontWeight: 800,
             color: "text.secondary",
-            mb: 3,
+            mb: 1,
             textTransform: "uppercase",
             letterSpacing: 1.5,
           }}
@@ -272,7 +272,7 @@ export default function Products() {
         </Box>
       </Box>
 
-      <Divider sx={{ mb: 4 }} />
+      <Divider sx={{ mb: 2 }} />
 
       <Box>
         <Typography
@@ -280,7 +280,7 @@ export default function Products() {
           sx={{
             fontWeight: 800,
             color: "text.secondary",
-            mb: 2,
+            mb: 1,
             textTransform: "uppercase",
             letterSpacing: 1.5,
           }}
@@ -311,7 +311,7 @@ export default function Products() {
         </Stack>
       </Box>
 
-      <Box sx={{ mt: 8 }}>
+      <Box sx={{ mt: 1 }}>
         <Button
           fullWidth
           variant="outlined"
@@ -345,7 +345,7 @@ export default function Products() {
           py: 2,
         }}
       >
-        <Box maxWidth="xl">
+        <Box maxWidth="xl" mx={2}>
           <Stack
             direction="row"
             alignItems="center"
@@ -556,7 +556,7 @@ export default function Products() {
             price[0] !== 0 ||
             price[1] !== 1000000 ||
             keywordParam) && (
-            <Box sx={{ mb: 4, display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+            <Box sx={{ mb: 1, display: "flex", flexWrap: "wrap", gap: 1.5 }}>
               {keywordParam && (
                 <Chip
                   label={`Search: ${keywordParam}`}
