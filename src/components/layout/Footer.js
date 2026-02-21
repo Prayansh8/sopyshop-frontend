@@ -25,7 +25,7 @@ export default function Footer() {
         mt: 'auto'
       }}
     >
-      <Box maxWidth="lg">
+      <Box maxWidth="xl">
         <Stack spacing={4} alignItems="center" textAlign="center">
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <img src={logo} alt="Company logo" style={{ height: "40px" }} />

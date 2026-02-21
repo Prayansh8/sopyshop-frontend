@@ -21,7 +21,7 @@ const ProductSection = ({ title, subtitle, icon, products, categoryLink, theme, 
   if (!loading && (!products || products.length === 0)) return null;
 
   return (
-    <Box sx={{ py: 10 }}>
+    <Box sx={{ py: 6, px: 2 }}>
       <Box sx={{ mb: 6, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
         <Box>
           <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1 }}>
@@ -58,24 +58,24 @@ const ProductSection = ({ title, subtitle, icon, products, categoryLink, theme, 
             </Grid>
           ))}
         </Grid>
-  )
-}
+      )
+      }
 
-{
-  !loading && (
-    <Box sx={{ mt: 5, display: { xs: 'flex', sm: 'none' }, justifyContent: 'center' }}>
-      <Button
-        component={Link}
-        to={categoryLink}
-        variant="outlined"
-        fullWidth
-        sx={{ py: 1.5, borderRadius: 3, fontWeight: 800 }}
-      >
-        View All {title}
-      </Button>
-    </Box>
-  )
-}
+      {
+        !loading && (
+          <Box sx={{ mt: 5, display: { xs: 'flex', sm: 'none' }, justifyContent: 'center' }}>
+            <Button
+              component={Link}
+              to={categoryLink}
+              variant="outlined"
+              fullWidth
+              sx={{ py: 1.5, borderRadius: 3, fontWeight: 800 }}
+            >
+              View All {title}
+            </Button>
+          </Box>
+        )
+      }
     </Box >
   );
 };
@@ -136,7 +136,7 @@ export const Home = () => {
       {/* Banner Section */}
       <Box
         sx={{
-          height: "75vh",
+          height: "58vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -146,10 +146,11 @@ export const Home = () => {
             ? `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.12)} 0%, ${alpha(theme.palette.primary.main, 0.05)} 100%)`
             : `linear-gradient(135deg, ${theme.palette.background.default} 0%, ${alpha(theme.palette.primary.main, 0.1)} 100%)`,
           position: "relative",
-          overflow: "hidden"
+          overflow: "hidden",
+          mx: "auto"
         }}
       >
-        <Box maxWidth="md">
+        <Box maxWidth="lg">
           <Typography
             variant="h1"
             color="text.primary"
@@ -174,7 +175,7 @@ export const Home = () => {
           >
             From latest electronics to modern home decor and fashion – curated just for you.
           </Typography>
-          <Stack direction="row" spacing={2} >
+          <Stack direction="row" spacing={2} justifyContent="center">
             <Button
               variant="contained"
               size="large"
@@ -197,81 +198,84 @@ export const Home = () => {
         </Box>
       </Box>
 
-      {/* Featured Products Section */}
-      <Box id="featured">
-        <ProductSection
-          title="Featured Products"
-          subtitle="Our most loved and handpicked collections"
-          icon={<StarRate />}
-          products={featured}
-          categoryLink="/products"
-          theme={theme}
-          loading={loading}
-        />
+      <Box mx="auto" maxWidth="lg">
+        {/* Featured Products Section */}
+        <Box id="featured">
+          <ProductSection
+            title="Featured Products"
+            subtitle="Our most loved and handpicked collections"
+            icon={<StarRate />}
+            products={featured}
+            categoryLink="/products"
+            theme={theme}
+            loading={loading}
+          />
+        </Box>
+
+        <Divider sx={{ opacity: 0.5 }} />
+
+        {/* New Sections */}
+        <Box id="tech">
+          <ProductSection
+            title="Tech & Electronics"
+            subtitle="Latest gadgets from Laptops to Smart Watches"
+            icon={<Devices />}
+            products={techProducts}
+            categoryLink="/products?category=Electronics & Gadgets"
+            theme={theme}
+            loading={loading}
+          />
+        </Box>
+
+        <Box sx={{ bgcolor: alpha(theme.palette.primary.main, 0.02) }}>
+          <ProductSection
+            title="Home & Living"
+            subtitle="Transform your space with modern furniture and decor"
+            icon={<HomeOutlined />}
+            products={houseDecoProducts}
+            categoryLink="/products?category=Home Decor"
+            theme={theme}
+            loading={loading}
+          />
+        </Box>
+
+        <Box>
+          <ProductSection
+            title="Fashion Store"
+            subtitle="Premium apparel and footwear for your style"
+            icon={<Checkroom />}
+            products={fashionProducts}
+            categoryLink="/products?category=Fashion & Lifestyle"
+            theme={theme}
+            loading={loading}
+          />
+        </Box>
+
+        <Box sx={{ bgcolor: alpha(theme.palette.primary.main, 0.02) }}>
+          <ProductSection
+            title="Daily Groceries"
+            subtitle="Fresh essentials and pantry favorites delivered to you"
+            icon={<LocalGroceryStore />}
+            products={groceryProducts}
+            categoryLink="/products?category=groceries"
+            theme={theme}
+            loading={loading}
+          />
+        </Box>
+
+        <Box>
+          <ProductSection
+            title="Beauty & Glow"
+            subtitle="Premium fragrances, skincare and self-care essentials"
+            icon={<Brush />}
+            products={beautyProducts}
+            categoryLink="/products?category=beauty"
+            theme={theme}
+            loading={loading}
+          />
+        </Box>
       </Box>
 
-      <Divider sx={{ opacity: 0.5 }} />
-
-      {/* New Sections */}
-      <Box id="tech">
-        <ProductSection
-          title="Tech & Electronics"
-          subtitle="Latest gadgets from Laptops to Smart Watches"
-          icon={<Devices />}
-          products={techProducts}
-          categoryLink="/products?category=Electronics & Gadgets"
-          theme={theme}
-          loading={loading}
-        />
-      </Box>
-
-      <Box sx={{ bgcolor: alpha(theme.palette.primary.main, 0.02) }}>
-        <ProductSection
-          title="Home & Living"
-          subtitle="Transform your space with modern furniture and decor"
-          icon={<HomeOutlined />}
-          products={houseDecoProducts}
-          categoryLink="/products?category=Home Decor"
-          theme={theme}
-          loading={loading}
-        />
-      </Box>
-
-      <Box>
-        <ProductSection
-          title="Fashion Store"
-          subtitle="Premium apparel and footwear for your style"
-          icon={<Checkroom />}
-          products={fashionProducts}
-          categoryLink="/products?category=Fashion & Lifestyle"
-          theme={theme}
-          loading={loading}
-        />
-      </Box>
-
-      <Box sx={{ bgcolor: alpha(theme.palette.primary.main, 0.02) }}>
-        <ProductSection
-          title="Daily Groceries"
-          subtitle="Fresh essentials and pantry favorites delivered to you"
-          icon={<LocalGroceryStore />}
-          products={groceryProducts}
-          categoryLink="/products?category=groceries"
-          theme={theme}
-          loading={loading}
-        />
-      </Box>
-
-      <Box>
-        <ProductSection
-          title="Beauty & Glow"
-          subtitle="Premium fragrances, skincare and self-care essentials"
-          icon={<Brush />}
-          products={beautyProducts}
-          categoryLink="/products?category=beauty"
-          theme={theme}
-          loading={loading}
-        />
-      </Box>
 
       <Box sx={{ py: 15, textAlign: "center", bgcolor: theme.palette.mode === 'dark' ? alpha(theme.palette.common.white, 0.02) : alpha(theme.palette.common.black, 0.02) }}>
         <Typography variant="h3" sx={{ fontWeight: 900, mb: 3, color: 'text.primary' }}>Ready to see everything?</Typography>

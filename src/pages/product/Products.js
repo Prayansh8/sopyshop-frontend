@@ -343,6 +343,7 @@ export default function Products() {
           bgcolor: alpha(theme.palette.background.paper, 0.85),
           backdropFilter: "blur(20px)",
           py: 2,
+          mx: "auto",
         }}
       >
         <Box maxWidth="xl" mx={2}>
@@ -549,7 +550,7 @@ export default function Products() {
       </Box>
 
       {/* Main Content Area */}
-      <Box maxWidth="xl" sx={{ py: 6 }}>
+      <Box maxWidth="lg" sx={{ py: 3, mx: "auto" }}>
         <Box>
           {/* Active Chips Row */}
           {(category ||
