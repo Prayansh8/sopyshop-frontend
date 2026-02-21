@@ -1,0 +1,260 @@
+import axios from "axios";
+import {
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAIL,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILURE,
+  UPDATE_USER_AVATAR_REQUEST,
+  UPDATE_USER_AVATAR_SUCCESS,
+  UPDATE_USER_AVATAR_FAILURE,
+  GET_ALL_USERS_REQUEST,
+  GET_ALL_USERS_FAILURE,
+  GET_ALL_USERS_SUCCESS,
+  ADMIN_UPDATE_USER_REQUEST,
+  ADMIN_UPDATE_USER_SUCCESS,
+  ADMIN_UPDATE_USER_FAILURE,
+  GET_USER_REQUEST,
+  GET_USER_FAILURE,
+  GET_USER_SUCCESS,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAILURE,
+  CLEAR_ERRORS,
+  USER_LOGOUT,
+} from "../constants/userConstants";
+import { config } from "../../config";
+
+// Login
+
+export const loginUser = (loginData) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_LOGIN_REQUEST });
+
+    const { data } = await axios.post(`${config.baseUrl}/api/v1/get-token`, loginData);
+    const token = data.token;
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    // Store user info and token in local storage
+    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem('sopyshop-token', token);
+  } catch (error) {
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+// Register
+
+export const registerUser = (registrationData) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_REGISTER_REQUEST });
+
+    const { data } = await axios.post(`${config.baseUrl}/api/v1/register`, registrationData);
+
+    dispatch({
+      type: USER_REGISTER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
+
+// Load User
+export const loadUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOAD_USER_REQUEST });
+
+    const token = localStorage.getItem('sopyshop-token');
+    const configData = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    const { data } = await axios.get(`${config.baseUrl}/api/v1/me`, configData);
+    dispatch({ type: LOAD_USER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: LOAD_USER_FAILURE, payload: error.response.data });
+  }
+};
+
+// Logout user
+
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem('userInfo');
+  localStorage.removeItem('sopyshop-token');
+  dispatch({ type: USER_LOGOUT });
+  window.location.reload();
+};
+
+export const update = (name, username) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_REQUEST });
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.patch(
+      `${config.baseUrl}/api/v1/me/update`,
+      { name, username },
+      configData
+    );
+    dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_FAILURE,
+      payload: error.response.data,
+    });
+  }
+};
+
+// Update Avatar
+
+export const UpdateAvatarAction = (myAvatar) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_AVATAR_REQUEST });
+
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.put(
+      `${config.baseUrl}/api/v1/me/update/avatar`,
+      myAvatar,
+      configData
+    );
+    dispatch({ type: UPDATE_USER_AVATAR_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_AVATAR_FAILURE,
+      payload: error.response.data,
+    });
+  }
+};
+
+// get All Users
+
+export const getAllUsers = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_USERS_REQUEST });
+
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${config.baseUrl}/api/v1/users`,
+      configData
+    );
+    dispatch({ type: GET_ALL_USERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_USERS_FAILURE,
+      payload: error.response.data,
+    });
+  }
+};
+
+// Get user Details
+
+export const getUserDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_USER_REQUEST });
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${config.baseUrl}/api/v1/user/${id}`,
+      configData
+    );
+
+    dispatch({ type: GET_USER_SUCCESS, payload: data.user });
+  } catch (error) {
+    dispatch({ type: GET_USER_FAILURE, payload: error.response.data });
+  }
+};
+
+// Update user By Admin
+
+export const adminUpdateUserRole = (userData) => async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_UPDATE_USER_REQUEST });
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.patch(
+      `${config.baseUrl}/api/v1/admin/update`,
+      userData,
+      configData
+    );
+    dispatch({ type: ADMIN_UPDATE_USER_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_UPDATE_USER_FAILURE,
+      payload: error.response.data,
+    });
+  }
+};
+
+// Delete user by admin
+export const deleteUserByAdmin = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_USER_REQUEST });
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: { authorization: `Bearer ${token}` },
+    };
+
+    const { data } = await axios.delete(
+      `${config.baseUrl}/api/v1/admin/delete/${id}`,
+      configData
+    );
+
+    dispatch({ type: DELETE_USER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: DELETE_USER_FAILURE, payload: error.response.data });
+  }
+};
+
+// clear error
+export const clearErrors = () => (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
+};

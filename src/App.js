@@ -7,48 +7,55 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Box, useTheme } from "@mui/material";
 
-import Header from "./component/layout/Header/Header";
-import Footer from "./component/layout/Footer/Footer";
-import ProductDetails from "./component/Product/ProductDetails";
-import Products from "./component/Product/Products";
-import LoginSignUp from "./component/User/LoginSignUp";
-import Account from "./component/User/Account";
-import UpdateUser from "./component/User/UpdateUser";
-import Cart from "./component/Cart/Cart";
-import Shipping from "./component/Cart/Shipping";
-import UpdateAvatar from "./component/User/UpdateAvatar";
-import Dashboard from "./component/Admin/Dashboard";
-import ProductList from "./component/Admin/ProductList";
-import CreateProduct from "./component/Admin/CreateProduct";
-import Users from "./component/Admin/Users";
-import UpdateProduct from "./component/Admin/UpdateProduct";
-import AdminUpdateUser from "./component/Admin/AdminUpdateUser";
-import ConfirmOrder from "./component/Cart/ComfirmOrder";
-import PaymentProcess from "./component/Cart/PaymentProcess";
-import OrderSuccess from "./component/Cart/OrderSuccess";
-import OrdersList from "./component/Admin/OrdersList";
-import OrderUpdate from "./component/Admin/OrderUpdate";
-import MyOrders from "./component/Orders/MyOrders";
-import SingleOrder from "./component/Orders/SingleOrder";
-import Wishlist from "./component/Product/Wishlist";
-import { loadUser } from "./actions/userAction";
-import { getWishlist } from "./actions/wishlistAction";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+import ProductDetails from "./pages/product/ProductDetails";
+import Products from "./pages/product/Products";
+import LoginSignUp from "./pages/user/LoginSignUp";
+import Account from "./pages/user/Account";
+import UpdateUser from "./pages/user/UpdateUser";
+import Cart from "./pages/cart/Cart";
+import Shipping from "./pages/cart/Shipping";
+import UpdateAvatar from "./pages/user/UpdateAvatar";
+import Dashboard from "./pages/admin/Dashboard";
+import ProductList from "./pages/admin/ProductList";
+import CreateProduct from "./pages/admin/CreateProduct";
+import Users from "./pages/admin/Users";
+import UpdateProduct from "./pages/admin/UpdateProduct";
+import AdminUpdateUser from "./pages/admin/AdminUpdateUser";
+import ConfirmOrder from "./pages/cart/ConfirmOrder";
+import PaymentProcess from "./pages/cart/PaymentProcess";
+import OrderSuccess from "./pages/cart/OrderSuccess";
+import OrdersList from "./pages/admin/OrdersList";
+import OrderUpdate from "./pages/admin/OrderUpdate";
+import MyOrders from "./pages/orders/MyOrders";
+import SingleOrder from "./pages/orders/SingleOrder";
+import Wishlist from "./pages/product/Wishlist";
+import LabelBottomNavigation from "./components/layout/BottomBar";
+import { Home } from "./pages/Home";
+import Search from "./pages/product/SearchPage";
+
+// Redux Actions
+import { loadUser } from "./redux/actions/userAction";
+import { getWishlist } from "./redux/actions/wishlistAction";
+import { getAllProducts } from "./redux/actions/productAction";
+import { getCategories } from "./redux/actions/categoryAction";
+
 import { config } from "./config";
-import LabelBottomNavigation from "./component/layout/BottomBar/BottomBar";
-import { Home } from "./component/Home/Home";
-import { Search } from "./component/Product/Search";
 import "./App.css";
+
+const stripeApiKey = config.stripe.stripeApi;
+const stripePromise = loadStripe(stripeApiKey);
 
 function App() {
   const { userInfo, isAuthenticated, loading } = useSelector((state) => state.loadUser);
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const stripeApiKey = config.stripe.stripeApi;
-  const stripePromise = loadStripe(stripeApiKey);
-
   useEffect(() => {
     dispatch(loadUser());
+    dispatch(getAllProducts());
+    dispatch(getCategories());
   }, [dispatch]);
 
   useEffect(() => {
