@@ -87,14 +87,14 @@ export const Home = () => {
 
   // Categories are now pre-fetched in App.js
 
-  const featured = useMemo(() => products?.slice(0, 6), [products]);
+  const featured = useMemo(() => products?.slice(0, 8), [products]);
 
   const techProducts = useMemo(() => {
     const techCategoryNames = ["electronics", "Electronics & Gadgets", "Computer & Accessories", "smartphones", "laptops"];
     return products?.filter(p => {
       const catName = categories.find(c => c._id === p.category)?.name || p.category;
       return techCategoryNames.some(tc => catName.toLowerCase() === tc.toLowerCase());
-    }).slice(0, 3);
+    }).slice(0, 4);
   }, [products, categories]);
 
   const houseDecoProducts = useMemo(() => {
@@ -102,7 +102,7 @@ export const Home = () => {
     return products?.filter(p => {
       const catName = categories.find(c => c._id === p.category)?.name || p.category;
       return homeCategoryNames.some(hc => catName.toLowerCase() === hc.toLowerCase());
-    }).slice(0, 3);
+    }).slice(0, 4);
   }, [products, categories]);
 
   const fashionProducts = useMemo(() => {
@@ -110,7 +110,7 @@ export const Home = () => {
     return products?.filter(p => {
       const catName = categories.find(c => c._id === p.category)?.name || p.category;
       return fashionCategoryNames.some(fc => catName.toLowerCase() === fc.toLowerCase());
-    }).slice(0, 3);
+    }).slice(0, 4);
   }, [products, categories]);
 
   const groceryProducts = useMemo(() => {
@@ -118,7 +118,7 @@ export const Home = () => {
     return products?.filter(p => {
       const catName = categories.find(c => c._id === p.category)?.name || p.category;
       return groceryCategoryNames.some(gc => catName.toLowerCase() === gc.toLowerCase());
-    }).slice(0, 3);
+    }).slice(0, 4);
   }, [products, categories]);
 
   const beautyProducts = useMemo(() => {
@@ -126,7 +126,7 @@ export const Home = () => {
     return products?.filter(p => {
       const catName = categories.find(c => c._id === p.category)?.name || p.category;
       return beautyCategoryNames.some(bc => catName.toLowerCase() === bc.toLowerCase());
-    }).slice(0, 3);
+    }).slice(0, 4);
   }, [products, categories]);
 
   return (
@@ -200,7 +200,7 @@ export const Home = () => {
 
       <Box mx="auto" maxWidth="lg">
         {/* Featured Products Section */}
-        <Box id="featured">
+        <Box id="featured" sx={{ py: 5 }}>
           <ProductSection
             title="Featured Products"
             subtitle="Our most loved and handpicked collections"
@@ -215,7 +215,7 @@ export const Home = () => {
         <Divider sx={{ opacity: 0.5 }} />
 
         {/* New Sections */}
-        <Box id="tech">
+        <Box id="tech" sx={{ py: 3 }}>
           <ProductSection
             title="Tech & Electronics"
             subtitle="Latest gadgets from Laptops to Smart Watches"
