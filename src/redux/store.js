@@ -27,7 +27,7 @@ import {
   updateOrderReducer,
 } from "./reducers/orderReducer";
 import { wishlistReducer } from "./reducers/wishlistReducer";
-import { categoryReducer } from "./reducers/categoryReducer";
+import { categoryReducer, newCategoryReducer, updateDeleteCategoryReducer } from "./reducers/categoryReducer";
 
 const reducer = combineReducers({
   products: productsReducer,
@@ -51,6 +51,8 @@ const reducer = combineReducers({
   deleteOrder: deleteOrderReducer,
   wishlist: wishlistReducer,
   categories: categoryReducer,
+  newCategory: newCategoryReducer,
+  categoryOperation: updateDeleteCategoryReducer,
 });
 
 const initialState = {

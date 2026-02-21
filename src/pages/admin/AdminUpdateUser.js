@@ -1,17 +1,28 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import AdminLayout from "../../components/admin/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   adminUpdateUserRole,
   clearErrors,
   getUserDetails,
 } from "../../redux/actions/userAction";
-import EmailIcon from "@mui/icons-material/Email";
-import { VerifiedUser } from "@mui/icons-material";
+import { 
+  Box, 
+  Button, 
+  Typography, 
+  Paper, 
+  TextField, 
+  MenuItem,
+  InputAdornment,
+  Grid
+} from "@mui/material";
+import { Email as EmailIcon, VerifiedUser, Security } from "@mui/icons-material";
 
 const AdminUpdateUser = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const { loading, error } = useSelector((state) => state.updateUser);
@@ -20,30 +31,25 @@ const AdminUpdateUser = () => {
   const [username, setusername] = useState("");
   const [role, setRole] = useState("");
 
-  let maxLengthCheck = (object) => {
-    if (object.target.value.length > object.target.maxLength) {
-      object.target.value = object.target.value.slice(
-        0,
-        object.target.maxLength
-      );
-    }
-  };
-
-  const updateProductSubmit = () => {
+  const updateProductSubmit = (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("role", role);
     formData.append("username", username);
 
-    dispatch(adminUpdateUserRole(formData));
-    toast.success("update User Successful!");
+    dispatch(adminUpdateUserRole(id, formData));
+    toast.success("User Role Updated Successfully!");
+    setTimeout(() => {
+      navigate('/admin/users');
+    }, 2000);
   };
 
   useEffect(() => {
     if (user && user._id !== id) {
       dispatch(getUserDetails(id));
     } else {
-      setRole(user.role);
-      setusername(user.username);
+      setRole(user.role || "");
+      setusername(user.name || user.username || "");
     }
 
     if (error) {
@@ -53,53 +59,75 @@ const AdminUpdateUser = () => {
   }, [error, dispatch, user, id]);
 
   return (
-    <Fragment>
-      <div className="container">
-        <div className="updateUserContaner">
-          <form
-            id="Product"
-            onSubmit={updateProductSubmit}
-            className="loginForm"
-          >
-            <div className="updateUserFormText">
-              <EmailIcon />
-              <input
-                type="text"
-                placeholder="username"
-                name="username"
-                onInput={maxLengthCheck}
-                maxLength={32}
-                readOnly
-                value={username}
-                onChange={(e) => setusername(e.target.value)}
-                required
-              />
-            </div>
-            <div className="updateUserFormText">
-              <VerifiedUser />
-              <select onChange={(e) => setRole(e.target.value)}>
-                <option>{user.role}</option>
-                <option className={user.role === "user" ? "d-none" : "d-block"}>
-                  user
-                </option>
-                <option
-                  className={user.role === "admin" ? "d-none" : "d-block"}
-                >
-                  admin
-                </option>
-              </select>
-            </div>
+    <AdminLayout title="Update User Info">
+      <Box sx={{ maxWidth: 600, mx: 'auto', mt: 4 }}>
+        <Paper elevation={3} sx={{ p: 4, borderRadius: 4 }}>
+          <Typography variant="h5" sx={{ mb: 4, fontWeight: 800, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+            <Security color="primary" /> Manage User Role
+          </Typography>
 
-            <input
-              type="submit"
-              value="Update"
-              className="submitBtn"
-              disabled={loading ? true : false}
-            />
+          <form onSubmit={updateProductSubmit}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Username"
+                  variant="outlined"
+                  required
+                  value={username}
+                  onChange={(e) => setusername(e.target.value)}
+                  inputProps={{ minLength: 1, maxLength: 32 }}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <EmailIcon color="action" />
+                      </InputAdornment>
+                    ),
+                  }}
+                  helperText="Usernames cannot be changed here."
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  select
+                  fullWidth
+                  label="Role"
+                  variant="outlined"
+                  required
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <VerifiedUser color="action" />
+                      </InputAdornment>
+                    ),
+                  }}
+                >
+                  <MenuItem value="user">User</MenuItem>
+                  <MenuItem value="admin">Admin</MenuItem>
+                </TextField>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  size="large"
+                  disabled={loading ? true : false}
+                  sx={{ py: 1.5, fontWeight: 800, borderRadius: 2 }}
+                >
+                  Update User
+                </Button>
+              </Grid>
+            </Grid>
           </form>
-        </div>
-      </div>
-    </Fragment>
+        </Paper>
+      </Box>
+    </AdminLayout>
   );
 };
 

@@ -12,7 +12,7 @@ import {
   IconButton,
   Stack,
   Button,
-  Tooltip,
+  Tooltip
 } from "@mui/material";
 import {
   AddShoppingCart,

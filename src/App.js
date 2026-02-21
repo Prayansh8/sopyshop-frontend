@@ -20,6 +20,9 @@ import UpdateAvatar from "./pages/user/UpdateAvatar";
 import Dashboard from "./pages/admin/Dashboard";
 import ProductList from "./pages/admin/ProductList";
 import CreateProduct from "./pages/admin/CreateProduct";
+import CategoryList from "./pages/admin/CategoryList";
+import CategoryCreate from "./pages/admin/CategoryCreate";
+import CategoryUpdate from "./pages/admin/CategoryUpdate";
 import Users from "./pages/admin/Users";
 import UpdateProduct from "./pages/admin/UpdateProduct";
 import AdminUpdateUser from "./pages/admin/AdminUpdateUser";
@@ -97,8 +100,11 @@ function App() {
               <>
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route path="/admin/product" element={<ProductList />} />
+                <Route path="/admin/categories" element={<CategoryList />} />
                 <Route path="/admin/create/product" element={<CreateProduct />} />
+                <Route path="/admin/create/category" element={<CategoryCreate />} />
                 <Route path="/admin/update/product/:id" element={<UpdateProduct />} />
+                <Route path="/admin/update/category/:id" element={<CategoryUpdate />} />
                 <Route path="/admin/users" element={<Users />} />
                 <Route path="/admin/user/:id" element={<AdminUpdateUser />} />
                 <Route path="/admin/orders" element={<OrdersList />} />

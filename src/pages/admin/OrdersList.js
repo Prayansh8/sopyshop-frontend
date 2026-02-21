@@ -1,18 +1,27 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
+import AdminLayout from "../../components/admin/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
-import Sidebar from "../../components/admin/Sidebar";
 import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import { 
+  Box, 
+  Typography, 
+  IconButton, 
+  useTheme, 
+  Paper,
+  alpha,
+  Chip
+} from "@mui/material";
+import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import {
   clearErrors,
   deleteOrderByAdmin,
-  getAllOrdersByAdmin } from "../../redux/actions/orderAction";
-import MobileAdminBar from "../../components/admin/MobileAdminBar";
+  getAllOrdersByAdmin
+} from "../../redux/actions/orderAction";
 
 const OrdersList = () => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const { orders, error } = useSelector((state) => state.orders);
   const { isDeleteded } = useSelector((state) => state.deleteOrder);
@@ -23,6 +32,7 @@ const OrdersList = () => {
       window.location.reload();
     }, 500);
   };
+
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -30,83 +40,88 @@ const OrdersList = () => {
     }
 
     if (isDeleteded) {
-      toast.success("Product Deleted");
+      toast.success("Order Deleted");
     }
     dispatch(getAllOrdersByAdmin());
   }, [error, dispatch, isDeleteded]);
 
   const columns = [
-    { field: "id", headerName: "Order Id", minWidth: 300, flex: 0.5 },
-    { field: "user", headerName: "User Id", minWidth: 300, flex: 1 },
+    { field: "id", headerName: "Order ID", flex: 1, minWidth: 220 },
+    { field: "user", headerName: "User ID", flex: 1, minWidth: 220 },
     {
       field: "orderStatus",
-      headerName: "Srder Status",
-      minWidth: 100,
-      flex: 0.3 },
-    {
-      field: "totalPrice",
-      headerName: "Total Price",
-      type: "number",
-      minWidth: 100,
-      flex: 0.5 },
+      headerName: "Status",
+      flex: 0.5,
+      minWidth: 120,
+      renderCell: (params) => {
+        let color = 'default';
+        if (params.value === 'Processing') color = 'warning';
+        if (params.value === 'Shipped') color = 'info';
+        if (params.value === 'Delivered') color = 'success';
+        return <Chip label={params.value} color={color} size="small" sx={{ fontWeight: 600 }} />;
+      }
+    },
+    { field: "totalPrice", headerName: "Amount (₹)", type: "number", flex: 0.5, minWidth: 120 },
     {
       field: "action",
-      headerName: "Action",
-      type: "number",
-      minWidth: 200,
-      flex: 0.3,
+      headerName: "Actions",
+      flex: 0.5,
+      minWidth: 120,
       sortable: false,
       renderCell: (params) => {
         return (
-          <Fragment>
-            <Link to={`/admin/order/${params.id}`}>
-              <EditIcon />
-            </Link>
-            <button
-              className="deleteProductBtn"
-              onClick={() => deleteOrderHendeler(params.id)}
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <IconButton
+              component={Link}
+              to={`/admin/order/${params.id}`}
+              size="small"
+              sx={{ color: theme.palette.primary.main, bgcolor: alpha(theme.palette.primary.main, 0.1) }}
             >
-              <DeleteIcon />
-            </button>
-          </Fragment>
+              <EditIcon fontSize="small" />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() => deleteOrderHendeler(params.id)}
+              sx={{ color: theme.palette.error.main, bgcolor: alpha(theme.palette.error.main, 0.1) }}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </Box>
         );
-      } },
+      }
+    },
   ];
 
-  const rows = [];
-
-  orders &&
-    orders.forEach((item) => {
-      rows.push({
-        id: item._id,
-        user: item.user,
-        orderStatus: item.orderStatus,
-        totalPrice: item.totalPrice });
-    });
+  const rows = (orders || []).map((item) => ({
+    id: item._id,
+    user: item.user,
+    orderStatus: item.orderStatus,
+    totalPrice: item.totalPrice
+  }));
 
   return (
-    <Fragment>
-      <div>
-        <div className="mobileTopBarContainer">
-          <MobileAdminBar />
-        </div>
-        <div className="mainCont">
-          <div className="rightContAdmin">
-            <Sidebar />
-          </div>
-          <div className="leftContAdmin">
-            <div className="AdminProductCont">
-              <div>
-                <h2>All Orders</h2>
-              </div>
-            </div>
-            <div className="DataGIrd">
-              <DataGrid rows={rows} columns={columns} />
-            </div>
-          </div>
-        </div>
-      </div>
-    </Fragment>
+    <AdminLayout title="Orders Management">
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" sx={{ fontWeight: 800 }}>All Orders</Typography>
+      </Box>
+
+      <Paper sx={{ width: '100%', height: 600, borderRadius: 2, overflow: 'hidden', boxShadow: theme.shadows[2] }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSizeOptions={[10, 25, 50]}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 10 } },
+          }}
+          disableRowSelectionOnClick
+          sx={{
+            border: 'none',
+            '& .MuiDataGrid-cell:focus': { outline: 'none' },
+            '& .MuiDataGrid-columnHeaders': { bgcolor: alpha(theme.palette.primary.main, 0.05) }
+          }}
+        />
+      </Paper>
+    </AdminLayout>
   );
 };
 

@@ -14,20 +14,20 @@ import {
 } from "@mui/material";
 import { Delete as DeleteIcon, Edit as EditIcon, Add as AddIcon } from "@mui/icons-material";
 import {
-  deleteProduct,
-  getAdminProducts,
+  deleteCategory,
+  getCategories,
   clearErrors
-} from "../../redux/actions/productAction";
+} from "../../redux/actions/categoryAction";
 import { toast } from "react-toastify";
 
-const ProductList = () => {
+const CategoryList = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { products, error } = useSelector((state) => state.products);
-  const { isDeleteded } = useSelector((state) => state.deleteProduct);
+  const { categories, error } = useSelector((state) => state.categories);
+  const { isDeleted } = useSelector((state) => state.categoryOperation);
 
-  const deleteProductHendeler = (id) => {
-    dispatch(deleteProduct(id));
+  const deleteCategoryHandler = (id) => {
+    dispatch(deleteCategory(id));
     setTimeout(() => {
       window.location.reload();
     }, 500);
@@ -39,17 +39,15 @@ const ProductList = () => {
       dispatch(clearErrors());
     }
 
-    if (isDeleteded) {
-      toast.success("Product Deleted");
+    if (isDeleted) {
+      toast.success("Category Deleted");
     }
-    dispatch(getAdminProducts());
-  }, [error, dispatch, isDeleteded]);
+    dispatch(getCategories());
+  }, [error, dispatch, isDeleted]);
 
   const columns = [
-    { field: "id", headerName: "Product ID", flex: 1, minWidth: 200 },
+    { field: "id", headerName: "Category ID", flex: 1, minWidth: 200 },
     { field: "name", headerName: "Name", flex: 1.5, minWidth: 200 },
-    { field: "stock", headerName: "Stock", type: "number", flex: 0.5, minWidth: 100 },
-    { field: "price", headerName: "Price (₹)", type: "number", flex: 0.5, minWidth: 100 },
     {
       field: "action",
       headerName: "Actions",
@@ -61,7 +59,7 @@ const ProductList = () => {
           <Box sx={{ display: 'flex', gap: 1 }}>
             <IconButton
               component={Link}
-              to={`/admin/update/product/${params.id}`}
+              to={`/admin/update/category/${params.id}`}
               size="small"
               sx={{ color: theme.palette.primary.main, bgcolor: alpha(theme.palette.primary.main, 0.1) }}
             >
@@ -69,7 +67,7 @@ const ProductList = () => {
             </IconButton>
             <IconButton
               size="small"
-              onClick={() => deleteProductHendeler(params.id)}
+              onClick={() => deleteCategoryHandler(params.id)}
               sx={{ color: theme.palette.error.main, bgcolor: alpha(theme.palette.error.main, 0.1) }}
             >
               <DeleteIcon fontSize="small" />
@@ -80,25 +78,23 @@ const ProductList = () => {
     },
   ];
 
-  const rows = (products || []).map((item) => ({
+  const rows = (categories || []).map((item) => ({
     id: item._id,
-    stock: item.stock,
-    price: item.price,
     name: item.name
   }));
 
   return (
-    <AdminLayout title="Products Management">
+    <AdminLayout title="Categories Management">
       <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography variant="h4" sx={{ fontWeight: 800 }}>All Products</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 800 }}>All Categories</Typography>
         <Button
           component={Link}
-          to={`/admin/create/product`}
+          to={`/admin/create/category`}
           variant="contained"
           startIcon={<AddIcon />}
           sx={{ borderRadius: 2, fontWeight: 700, px: 3 }}
         >
-          Create Product
+          Create Category
         </Button>
       </Box>
 
@@ -122,4 +118,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default CategoryList;
