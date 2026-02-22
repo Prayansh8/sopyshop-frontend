@@ -83,7 +83,7 @@ const ProductSection = ({ title, subtitle, icon, products, categoryLink, theme, 
 export const Home = () => {
   const theme = useTheme();
   const { loading, allProducts: products } = useSelector((state) => state.products);
-  const { categories } = useSelector((state) => state.categories);
+  const { categories = [] } = useSelector((state) => state.categories || {});
 
   // Categories are now pre-fetched in App.js
 
@@ -93,7 +93,7 @@ export const Home = () => {
     const techCategoryNames = ["electronics", "Electronics & Gadgets", "Computer & Accessories", "smartphones", "laptops"];
     return products?.filter(p => {
       const categoryId = p.category?._id || p.category;
-      const catName = categories.find(c => c._id === categoryId)?.name || p.category?.name || (typeof p.category === 'string' ? p.category : "");
+      const catName = categories?.find(c => c._id === categoryId)?.name || p.category?.name || (typeof p.category === 'string' ? p.category : "");
       return catName && techCategoryNames.some(tc => catName.toLowerCase() === tc.toLowerCase());
     }).slice(0, 4);
   }, [products, categories]);
@@ -102,7 +102,7 @@ export const Home = () => {
     const homeCategoryNames = ["furniture", "Home Decor", "home-decoration", "House Decoration"];
     return products?.filter(p => {
       const categoryId = p.category?._id || p.category;
-      const catName = categories.find(c => c._id === categoryId)?.name || p.category?.name || (typeof p.category === 'string' ? p.category : "");
+      const catName = categories?.find(c => c._id === categoryId)?.name || p.category?.name || (typeof p.category === 'string' ? p.category : "");
       return catName && homeCategoryNames.some(hc => catName.toLowerCase() === hc.toLowerCase());
     }).slice(0, 4);
   }, [products, categories]);
@@ -111,7 +111,7 @@ export const Home = () => {
     const fashionCategoryNames = ["fashion", "Fashion & Lifestyle", "tops", "womens-dresses", "mens-shirts", "mens-shoes", "womens-shoes", "womens-bags", "womens-jewellery"];
     return products?.filter(p => {
       const categoryId = p.category?._id || p.category;
-      const catName = categories.find(c => c._id === categoryId)?.name || p.category?.name || (typeof p.category === 'string' ? p.category : "");
+      const catName = categories?.find(c => c._id === categoryId)?.name || p.category?.name || (typeof p.category === 'string' ? p.category : "");
       return catName && fashionCategoryNames.some(fc => catName.toLowerCase() === fc.toLowerCase());
     }).slice(0, 4);
   }, [products, categories]);
@@ -120,7 +120,7 @@ export const Home = () => {
     const groceryCategoryNames = ["groceries", "Food & Beverage"];
     return products?.filter(p => {
       const categoryId = p.category?._id || p.category;
-      const catName = categories.find(c => c._id === categoryId)?.name || p.category?.name || (typeof p.category === 'string' ? p.category : "");
+      const catName = categories?.find(c => c._id === categoryId)?.name || p.category?.name || (typeof p.category === 'string' ? p.category : "");
       return catName && groceryCategoryNames.some(gc => catName.toLowerCase() === gc.toLowerCase());
     }).slice(0, 4);
   }, [products, categories]);
@@ -129,7 +129,7 @@ export const Home = () => {
     const beautyCategoryNames = ["beauty", "fragrances", "skincare", "Personal Care"];
     return products?.filter(p => {
       const categoryId = p.category?._id || p.category;
-      const catName = categories.find(c => c._id === categoryId)?.name || p.category?.name || (typeof p.category === 'string' ? p.category : "");
+      const catName = categories?.find(c => c._id === categoryId)?.name || p.category?.name || (typeof p.category === 'string' ? p.category : "");
       return catName && beautyCategoryNames.some(bc => catName.toLowerCase() === bc.toLowerCase());
     }).slice(0, 4);
   }, [products, categories]);

@@ -31,8 +31,10 @@ export const categoryReducer = (state = { categories: [] }, action) => {
       };
     case ALL_CATEGORIES_FAILURE:
       return {
+        ...state,
         loading: false,
         error: action.payload,
+        categories: [],
       };
     case CLEAR_ERRORS:
       return {
