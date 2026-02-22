@@ -11,6 +11,15 @@ import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Loader from "./components/common/Loader";
 
+// Redux Actions
+import { loadUser } from "./redux/actions/userAction";
+import { getWishlist } from "./redux/actions/wishlistAction";
+import { getAllProducts } from "./redux/actions/productAction";
+import { getCategories } from "./redux/actions/categoryAction";
+
+import { config } from "./config";
+import "./App.css";
+
 // Lazy Loaded Pages
 const Home = lazy(() => import("./pages/Home").then(module => ({ default: module.Home })));
 const ProductDetails = lazy(() => import("./pages/product/ProductDetails"));
@@ -38,15 +47,6 @@ const MyOrders = lazy(() => import("./pages/orders/MyOrders"));
 const SingleOrder = lazy(() => import("./pages/orders/SingleOrder"));
 const Wishlist = lazy(() => import("./pages/product/Wishlist"));
 const Search = lazy(() => import("./pages/product/SearchPage"));
-
-// Redux Actions
-import { loadUser } from "./redux/actions/userAction";
-import { getWishlist } from "./redux/actions/wishlistAction";
-import { getAllProducts } from "./redux/actions/productAction";
-import { getCategories } from "./redux/actions/categoryAction";
-
-import { config } from "./config";
-import "./App.css";
 
 const stripeApiKey = config.stripe.stripeApi;
 const stripePromise = loadStripe(stripeApiKey);
