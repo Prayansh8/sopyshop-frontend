@@ -5,18 +5,18 @@ import { addItemToCart, removeItemToCart } from "../../redux/actions/cartAction"
 import Metadata from "../../components/layout/Metadata";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { 
-  Box, 
-   
-  Typography, 
-  Grid, 
-  Button, 
-  IconButton, 
-  Paper, 
-  Divider, 
-  Stack, 
-  useTheme, 
-  alpha 
+import {
+  Box,
+
+  Typography,
+  Grid,
+  Button,
+  IconButton,
+  Paper,
+  Divider,
+  Stack,
+  useTheme,
+  alpha
 } from "@mui/material";
 import { Add, Remove, ShoppingCartCheckout, DeleteOutline } from "@mui/icons-material";
 
@@ -71,7 +71,7 @@ const Cart = ({ isAuthenticated }) => {
       <Metadata title={"Shopping Cart | Sopyshop"} />
       <Box sx={{ bgcolor: "background.default", py: 8, minHeight: "100vh" }}>
         <Box maxWidth="lg">
-          <Typography variant="h3" sx={{ fontWeight: 800, mb: 6, textAlign: 'center' }}>
+          <Typography variant="h3" sx={{ fontWeight: 800, mb: 6, textAlign: 'center', color: 'text.primary' }}>
             Your Shopping Cart
           </Typography>
 
@@ -102,7 +102,7 @@ const Cart = ({ isAuthenticated }) => {
                         <Grid item xs={12} sm={6}>
                           <CartItemCard item={item} deleteCartItems={deleteCartItem} />
                         </Grid>
-                        
+
                         <Grid item xs={6} sm={3}>
                           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: alpha(theme.palette.divider, 0.05), borderRadius: 2, p: 0.5, mx: 'auto', width: 'fit-content' }}>
                             <IconButton size="small" onClick={() => minusQuantity(item.product, item.quantity)} color="primary">
@@ -156,10 +156,10 @@ const Cart = ({ isAuthenticated }) => {
                     </Box>
                   </Stack>
 
-                  <Button 
-                    variant="contained" 
-                    fullWidth 
-                    size="large" 
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    size="large"
                     startIcon={<ShoppingCartCheckout />}
                     onClick={checkOutHandler}
                     sx={{ py: 2, fontWeight: 800 }}

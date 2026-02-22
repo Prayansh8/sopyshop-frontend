@@ -33,7 +33,7 @@ import OrderUpdate from "./pages/admin/OrderUpdate";
 import MyOrders from "./pages/orders/MyOrders";
 import SingleOrder from "./pages/orders/SingleOrder";
 import Wishlist from "./pages/product/Wishlist";
-import LabelBottomNavigation from "./components/layout/BottomBar";
+
 import { Home } from "./pages/Home";
 import Search from "./pages/product/SearchPage";
 
@@ -67,9 +67,7 @@ const PublicLayout = ({ isAuthenticated, loading }) => (
     <Box component="main" sx={{ flexGrow: 1 }}>
       <Outlet />
     </Box>
-    <Box sx={{ display: { xs: 'block', md: 'none' }, height: 56 }}>
-       <LabelBottomNavigation />
-    </Box>
+
     <Footer />
   </>
 );
