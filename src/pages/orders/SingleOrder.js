@@ -3,13 +3,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, getSingleOrder } from "../../redux/actions/orderAction";
 import { toast } from "react-toastify";
 import { useParams, Link } from "react-router-dom";
+import { 
+  Box, 
+  Typography, 
+  Container, 
+  Paper, 
+  Grid, 
+  Divider, 
+  Stack, 
+  alpha, 
+  useTheme,
+  Chip
+} from "@mui/material";
+import { 
+  LocalShipping, 
+  Payment, 
+  Inventory, 
+} from "@mui/icons-material";
+import Loader from "../../components/common/Loader";
+import Metadata from "../../components/layout/Metadata";
 
-const SingleOrder = () => {
+const SingleOrder = ({ id: orderIdProp }) => {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const theme = useTheme();
+  const { id: paramsId } = useParams();
+  const id = orderIdProp || paramsId;
 
-  const { order, error } = useSelector((state) => state.singleOrder);
-  const { shippingInfo } = useSelector((state) => state.cart);
+  const { order, error, loading } = useSelector((state) => state.singleOrder);
 
   useEffect(() => {
     if (error) {
@@ -17,186 +37,149 @@ const SingleOrder = () => {
       dispatch(clearErrors());
     }
 
-    dispatch(getSingleOrder(id));
+    if (id) {
+        dispatch(getSingleOrder(id));
+    }
   }, [error, dispatch, id]);
+
+  if (loading) return <Loader />;
+  if (!order || !order._id) return null;
+
+  const shippingInfo = order.shippingInfo;
 
   return (
     <Fragment>
-      <div className="OrderMainContainer">
-        <div className="mainContSppinDetais">
-          <div className="orderId">
-            <p>Order #{order && order._id}</p>
-          </div>
+      <Metadata title={`Order Details #${order._id} | Sopyshop`} />
+      
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Stack spacing={4}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography variant="h4" sx={{ fontWeight: 900, flexGrow: 1 }}>
+              Order Details
+            </Typography>
+            <Chip 
+              label={order.orderStatus} 
+              color={order.orderStatus === 'Delivered' ? 'success' : 'warning'}
+              sx={{ fontWeight: 900, borderRadius: 2, px: 1 }}
+            />
+          </Box>
 
-          {/* Shipping Info */}
-          <div className="shippingInfo">
-            <div className="shippingInfoText">
-              <p>Shipping Info:</p>
-            </div>
-            <div className="detailsTable">
-              <div className="dis-flex">
-                <div className="disRight">
-                  <p>Name</p>
-                </div>
-                <div className="disMid">
-                  <span>-</span>
-                </div>
-                <div className="disLeft">
-                  <span>{order.user && order.user.name}</span>
-                </div>
-              </div>
-              <div className="dis-flex">
-                <div className="disRight">
-                  <p>Phone</p>
-                </div>
-                <div className="disMid">
-                  <span>-</span>
-                </div>
-                <div className="disLeft">
-                  <span>{order.shippingInfo && order.shippingInfo.phone}</span>
-                </div>
-              </div>
-              <div className="dis-flex">
-                <div className="disRight">
-                  <p>Address</p>
-                </div>
-                <div className="disMid">
-                  <span>-</span>
-                </div>
-                <div className="disLeft">
-                  <span>
-                    {order.shippingInfo &&
-                      `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`}
-                  </span>
-                </div>
-              </div>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: -3, mb: 2 }}>
+            Order ID: <b>#{order._id}</b>
+          </Typography>
 
-              {/* Amount */}
-              <div className="dis-flex">
-                <div className="disRight">
-                  <p>Amount</p>
-                </div>
-                <div className="disMid">
-                  <span>-</span>
-                </div>
-                <div className="disLeft">
-                  <span>₹{order.itemPrice && order.itemPrice}</span>
-                </div>
-              </div>
-              <div className="dis-flex">
-                <div className="disRight">
-                  <p>Tax (GST)</p>
-                </div>
-                <div className="disMid">
-                  <span>-</span>
-                </div>
-                <div className="disLeft">
-                  <span>₹{order.taxPrice && order.taxPrice}</span>
-                </div>
-              </div>
-              <div className="dis-flex">
-                <div className="disRight">
-                  <p>Shipping Charges</p>
-                </div>
-                <div className="disMid">
-                  <span>-</span>
-                </div>
-                <div className="disLeft">
-                  <span>₹{order.shippingPrice && order.shippingPrice}</span>
-                </div>
-              </div>
-              <div className="dis-flex">
-                <div className="disRight">
-                  <p>Total Amount</p>
-                </div>
-                <div className="disMid">
-                  <span>-</span>
-                </div>
-                <div className="disLeft">
-                  <span>₹{order.totalPrice && order.totalPrice}</span>
-                </div>
-              </div>
+          <Grid container spacing={4}>
+            {/* Left Column: Info */}
+            <Grid item xs={12} lg={8}>
+              <Stack spacing={4}>
+                {/* Shipping Info Card */}
+                <Paper elevation={0} sx={{ p: 4, borderRadius: 4, border: `1px solid ${alpha(theme.palette.divider, 0.1)}` }}>
+                  <Typography variant="h6" sx={{ fontWeight: 800, mb: 3, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <LocalShipping color="primary" /> Shipping Information
+                  </Typography>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <Typography variant="caption" color="text.secondary">NAME</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                        {order.user?.firstName} {order.user?.lastName}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Typography variant="caption" color="text.secondary">PHONE</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 700 }}>{shippingInfo?.phone}</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="caption" color="text.secondary">ADDRESS</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                        {shippingInfo?.address}, {shippingInfo?.city}, {shippingInfo?.state}, {shippingInfo?.pinCode}, {shippingInfo?.country}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Paper>
 
-              {/* payment */}
-              <div className="dis-flex">
-                <div className="disRight">
-                  <p>Payment</p>
-                </div>
-                <div className="disMid">
-                  <span>-</span>
-                </div>
-                <div className="disLeft">
-                  <p
-                    className={
-                      order.paymentInfo &&
-                      order.paymentInfo.status === "succeeded"
-                        ? "greenColor"
-                        : "redColor"
-                    }
-                  >
-                    {order.paymentInfo &&
-                    order.paymentInfo.status === "succeeded"
-                      ? "PAID"
-                      : "NOT PAID"}
-                  </p>
-                </div>
-              </div>
+                {/* Order Items Card */}
+                <Paper elevation={0} sx={{ p: 4, borderRadius: 4, border: `1px solid ${alpha(theme.palette.divider, 0.1)}` }}>
+                  <Typography variant="h6" sx={{ fontWeight: 800, mb: 3, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Inventory color="primary" /> Order Items
+                  </Typography>
+                  <Stack spacing={3}>
+                    {order.orderItems?.map((item) => (
+                      <Box key={item.product} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <Box sx={{ width: 80, height: 80, borderRadius: 2, overflow: 'hidden', border: `1px solid ${alpha(theme.palette.divider, 0.1)}` }}>
+                          <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </Box>
+                        <Box sx={{ flexGrow: 1 }}>
+                          <Typography variant="subtitle1" component={Link} to={`/product/${item.product}`} sx={{ fontWeight: 700, textDecoration: 'none', color: 'inherit', '&:hover': { color: 'primary.main' } }}>
+                            {item.name}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {item.quantity} x ₹{item.price.toLocaleString()}
+                          </Typography>
+                        </Box>
+                        <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>
+                          ₹{(item.price * item.quantity).toLocaleString()}
+                        </Typography>
+                      </Box>
+                    ))}
+                  </Stack>
+                </Paper>
+              </Stack>
+            </Grid>
 
-              {/* Order Status */}
-              <div className="dis-flex">
-                <div className="disRight">
-                  <p>Order Status</p>
-                </div>
-                <div className="disMid">
-                  <span>-</span>
-                </div>
-                <div className="disLeft">
-                  <p
-                    className={
-                      order.orderStatus && order.orderStatus === "Delivered"
-                        ? "greenColor"
-                        : "redColor"
-                    }
-                  >
-                    {order.orderStatus && order.orderStatus}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+            {/* Right Column: Payment & Summary */}
+            <Grid item xs={12} lg={4}>
+              <Stack spacing={4}>
+                {/* Payment Info Card */}
+                <Paper elevation={0} sx={{ p: 4, borderRadius: 4, bgcolor: alpha(theme.palette.primary.main, 0.02), border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}` }}>
+                  <Typography variant="h6" sx={{ fontWeight: 800, mb: 3, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Payment color="primary" /> Payment Status
+                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                    <Box sx={{ 
+                      width: 12, 
+                      height: 12, 
+                      borderRadius: '50%', 
+                      bgcolor: order.paymentInfo?.status === "succeeded" ? "success.main" : "error.main" 
+                    }} />
+                    <Typography variant="h6" sx={{ fontWeight: 900, color: order.paymentInfo?.status === "succeeded" ? "success.main" : "error.main" }}>
+                      {order.paymentInfo?.status === "succeeded" ? "PAID" : "UNPAID"}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" color="text.secondary">
+                    Transaction ID: <br/><b>{order.paymentInfo?.id || 'N/A'}</b>
+                  </Typography>
+                </Paper>
 
-          {/* Order Items */}
-          <div className="orderItemsCont">
-            <div className="orderItemsText">
-              <p>Order Items:</p>
-            </div>
-
-            <div className="proOrder">
-              {order.orderItems &&
-                order.orderItems.map((item) => (
-                  <div className="productD proOrderDet" key={item.product}>
-                    <div className="imgPro ">
-                      <img
-                        className="productImgOrd"
-                        src={item.image}
-                        alt="Product"
-                      />
-                    </div>
-                    <div className="productItem">
-                      <Link to={`/product/${item.product}`}>{item.name}</Link>
-                    </div>
-                    <div className="totalprice">
-                      <span>
-                        {item.quantity} x ₹{item.price} =
-                        <b>₹{item.price * item.quantity}</b>
-                      </span>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-      </div>
+                {/* Summary Card */}
+                <Paper elevation={0} sx={{ p: 4, borderRadius: 4, border: `1px solid ${alpha(theme.palette.divider, 0.1)}` }}>
+                  <Typography variant="h6" sx={{ fontWeight: 800, mb: 3 }}>Order Summary</Typography>
+                  <Stack spacing={2}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <Typography color="text.secondary">Subtotal</Typography>
+                      <Typography sx={{ fontWeight: 600 }}>₹{order.itemPrice?.toLocaleString()}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <Typography color="text.secondary">Shipping</Typography>
+                      <Typography sx={{ fontWeight: 600 }}>₹{order.shippingPrice?.toLocaleString()}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <Typography color="text.secondary">GST (18%)</Typography>
+                      <Typography sx={{ fontWeight: 600 }}>₹{order.taxPrice?.toLocaleString()}</Typography>
+                    </Box>
+                    <Divider sx={{ my: 1 }} />
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <Typography variant="h6" sx={{ fontWeight: 800 }}>Total</Typography>
+                      <Typography variant="h6" sx={{ fontWeight: 900, color: 'primary.main' }}>
+                        ₹{order.totalPrice?.toLocaleString()}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </Paper>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Stack>
+      </Container>
     </Fragment>
   );
 };

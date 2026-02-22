@@ -52,8 +52,8 @@ export const loginUser = (loginData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
-      payload: error.response && error.response.data.message
-        ? error.response.data.message
+      payload: error.response && (error.response ? error.response.data : { message: error.message }).message
+        ? (error.response ? error.response.data : { message: error.message }).message
         : error.message,
     });
   }
@@ -74,8 +74,8 @@ export const registerUser = (registrationData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
-      payload: error.response && error.response.data.message
-        ? error.response.data.message
+      payload: error.response && (error.response ? error.response.data : { message: error.message }).message
+        ? (error.response ? error.response.data : { message: error.message }).message
         : error.message,
     });
   }
@@ -94,7 +94,7 @@ export const loadUser = () => async (dispatch) => {
     const { data } = await axios.get(`${config.baseUrl}/api/v1/me`, configData);
     dispatch({ type: LOAD_USER_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: LOAD_USER_FAILURE, payload: error.response.data });
+    dispatch({ type: LOAD_USER_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
   }
 };
 
@@ -127,7 +127,7 @@ export const update = (name, username) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_USER_FAILURE,
-      payload: error.response.data,
+      payload: (error.response ? error.response.data : { message: error.message }),
     });
   }
 };
@@ -154,7 +154,7 @@ export const UpdateAvatarAction = (myAvatar) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_USER_AVATAR_FAILURE,
-      payload: error.response.data,
+      payload: (error.response ? error.response.data : { message: error.message }),
     });
   }
 };
@@ -179,7 +179,7 @@ export const getAllUsers = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ALL_USERS_FAILURE,
-      payload: error.response.data,
+      payload: (error.response ? error.response.data : { message: error.message }),
     });
   }
 };
@@ -203,13 +203,12 @@ export const getUserDetails = (id) => async (dispatch) => {
 
     dispatch({ type: GET_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: GET_USER_FAILURE, payload: error.response.data });
+    dispatch({ type: GET_USER_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
   }
 };
 
-// Update user By Admin
-
-export const adminUpdateUserRole = (userData) => async (dispatch) => {
+// Update user role -- Admin
+export const adminUpdateUserRole = (id, userData) => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_UPDATE_USER_REQUEST });
     const token = localStorage.getItem("sopyshop-token");
@@ -221,7 +220,7 @@ export const adminUpdateUserRole = (userData) => async (dispatch) => {
     };
 
     const { data } = await axios.patch(
-      `${config.baseUrl}/api/v1/admin/update`,
+      `${config.baseUrl}/api/v1/admin/update/role`,
       userData,
       configData
     );
@@ -229,8 +228,34 @@ export const adminUpdateUserRole = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ADMIN_UPDATE_USER_FAILURE,
-      payload: error.response.data,
+      payload: (error.response ? error.response.data : { message: error.message }),
     });
+  }
+};
+
+// Add shipping info
+export const addShippingInfoAction = (shippingData) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios.post(
+      `${config.baseUrl}/api/v1/me/shipping/add`,
+      shippingData,
+      configData
+    );
+    
+    // Refresh user data to get updated shippingInfo array
+    dispatch(loadUser());
+  } catch (error) {
+    // We don't necessarily need a full alert here as shipping info 
+    // is secondary to the checkout process itself
+    console.error("Error adding shipping info:", error);
   }
 };
 
@@ -250,7 +275,7 @@ export const deleteUserByAdmin = (id) => async (dispatch) => {
 
     dispatch({ type: DELETE_USER_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: DELETE_USER_FAILURE, payload: error.response.data });
+    dispatch({ type: DELETE_USER_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
   }
 };
 

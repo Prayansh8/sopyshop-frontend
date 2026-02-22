@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import AdminLayout from "../../components/admin/AdminLayout";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import {} from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { 
   Box, 
@@ -19,18 +18,18 @@ import {
   deleteOrderByAdmin,
   getAllOrdersByAdmin
 } from "../../redux/actions/orderAction";
+import OrderUpdate from "./OrderUpdate";
 
 const OrdersList = () => {
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
   const theme = useTheme();
   const dispatch = useDispatch();
   const { orders, error } = useSelector((state) => state.orders);
-  const { isDeleteded } = useSelector((state) => state.deleteOrder);
+  const { isDeleted } = useSelector((state) => state.deleteOrder);
 
   const deleteOrderHendeler = (id) => {
     dispatch(deleteOrderByAdmin(id));
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
   };
 
   useEffect(() => {
@@ -39,11 +38,14 @@ const OrdersList = () => {
       dispatch(clearErrors());
     }
 
-    if (isDeleteded) {
+    if (isDeleted) {
       toast.success("Order Deleted");
+      dispatch({ type: "DELETE_ORDER_RESET" });
+      dispatch(getAllOrdersByAdmin());
+    } else {
+      dispatch(getAllOrdersByAdmin());
     }
-    dispatch(getAllOrdersByAdmin());
-  }, [error, dispatch, isDeleteded]);
+  }, [error, dispatch, isDeleted]);
 
   const columns = [
     { field: "id", headerName: "Order ID", flex: 1, minWidth: 220 },
@@ -70,21 +72,23 @@ const OrdersList = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box sx={{ display: 'flex', gap: 1, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
             <IconButton
-              component={Link}
-              to={`/admin/order/${params.id}`}
+              onClick={() => {
+                setSelectedId(params.id);
+                setOpenUpdate(true);
+              }}
               size="small"
-              sx={{ color: theme.palette.primary.main, bgcolor: alpha(theme.palette.primary.main, 0.1) }}
+              sx={{ color: theme.palette.primary.main, bgcolor: alpha(theme.palette.primary.main, 0.1), width: 32, height: 32 }}
             >
-              <EditIcon fontSize="small" />
+              <EditIcon sx={{ fontSize: 18 }} />
             </IconButton>
             <IconButton
               size="small"
               onClick={() => deleteOrderHendeler(params.id)}
-              sx={{ color: theme.palette.error.main, bgcolor: alpha(theme.palette.error.main, 0.1) }}
+              sx={{ color: theme.palette.error.main, bgcolor: alpha(theme.palette.error.main, 0.1), width: 32, height: 32 }}
             >
-              <DeleteIcon fontSize="small" />
+              <DeleteIcon sx={{ fontSize: 18 }} />
             </IconButton>
           </Box>
         );
@@ -100,10 +104,18 @@ const OrdersList = () => {
   }));
 
   return (
-    <AdminLayout title="Orders Management">
+    <>
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" sx={{ fontWeight: 800 }}>All Orders</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 800, color: 'text.primary' }}>All Orders</Typography>
       </Box>
+
+      {openUpdate && selectedId && (
+        <OrderUpdate 
+          open={openUpdate} 
+          handleClose={() => { setOpenUpdate(false); setSelectedId(""); }} 
+          orderId={selectedId} 
+        />
+      )}
 
       <Paper sx={{ width: '100%', height: 600, borderRadius: 2, overflow: 'hidden', boxShadow: theme.shadows[2] }}>
         <DataGrid
@@ -121,7 +133,7 @@ const OrdersList = () => {
           }}
         />
       </Paper>
-    </AdminLayout>
+    </>
   );
 };
 

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import AdminLayout from "../../components/admin/AdminLayout";
 import { Link } from "react-router-dom";
 import { 
   Paper, 
@@ -131,7 +130,7 @@ const Dashboard = () => {
   const barChartValues = Object.values(categoryCounts);
 
   return (
-    <AdminLayout title="Analytics Dashboard">
+    <>
       <Box sx={{ pb: 4 }}>
         <Grid container spacing={3} sx={{ mb: 4 }}>
           <Grid item xs={12} sm={6} md={3}>
@@ -284,7 +283,7 @@ const Dashboard = () => {
 
         </Grid>
       </Box>
-    </AdminLayout>
+    </>
   );
 };
 

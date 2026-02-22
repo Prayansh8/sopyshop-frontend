@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
-import AdminLayout from "../../components/admin/AdminLayout";
+import React, { useEffect, useState } from "react";
 import { deleteUserByAdmin, getAllUsers } from "../../redux/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import {} from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { 
   Box, 
@@ -15,25 +14,32 @@ import {
 } from "@mui/material";
 import { Delete as DeleteIcon, Edit as EditIcon, Security } from "@mui/icons-material";
 import { toast } from "react-toastify";
+import AdminUpdateUser from "./AdminUpdateUser";
 
 const Users = () => {
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
   const theme = useTheme();
   const dispatch = useDispatch();
   const { users, error } = useSelector((state) => state.getAllUsers);
+  const { isDeleted, message } = useSelector((state) => state.profile);
 
   const deleteUserHendeler = (id) => {
     dispatch(deleteUserByAdmin(id));
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
   };
 
   useEffect(() => {
     if (error) {
       toast.error(error);
     }
-    dispatch(getAllUsers());
-  }, [error, dispatch]);
+    if (isDeleted) {
+      toast.success(message || "User Deleted");
+      dispatch({ type: "DELETE_USER_RESET" });
+      dispatch(getAllUsers());
+    } else {
+      dispatch(getAllUsers());
+    }
+  }, [error, dispatch, isDeleted, message]);
 
   const columns = [
     { field: "id", headerName: "User ID", flex: 1, minWidth: 220 },
@@ -65,21 +71,23 @@ const Users = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box sx={{ display: 'flex', gap: 1, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
             <IconButton
-              component={Link}
-              to={`/admin/user/${params.id}`}
+              onClick={() => {
+                setSelectedId(params.id);
+                setOpenUpdate(true);
+              }}
               size="small"
-              sx={{ color: theme.palette.primary.main, bgcolor: alpha(theme.palette.primary.main, 0.1) }}
+              sx={{ color: theme.palette.primary.main, bgcolor: alpha(theme.palette.primary.main, 0.1), width: 32, height: 32 }}
             >
-              <EditIcon fontSize="small" />
+              <EditIcon sx={{ fontSize: 18 }} />
             </IconButton>
             <IconButton
               size="small"
               onClick={() => deleteUserHendeler(params.id)}
-              sx={{ color: theme.palette.error.main, bgcolor: alpha(theme.palette.error.main, 0.1) }}
+              sx={{ color: theme.palette.error.main, bgcolor: alpha(theme.palette.error.main, 0.1), width: 32, height: 32 }}
             >
-              <DeleteIcon fontSize="small" />
+              <DeleteIcon sx={{ fontSize: 18 }} />
             </IconButton>
           </Box>
         );
@@ -95,10 +103,18 @@ const Users = () => {
   }));
 
   return (
-    <AdminLayout title="Users Management">
+    <>
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" sx={{ fontWeight: 800 }}>System Users</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 800, color: 'text.primary' }}>System Users</Typography>
       </Box>
+
+      {openUpdate && selectedId && (
+        <AdminUpdateUser 
+          open={openUpdate} 
+          handleClose={() => { setOpenUpdate(false); setSelectedId(""); }} 
+          userId={selectedId} 
+        />
+      )}
 
       <Paper sx={{ width: '100%', height: 600, borderRadius: 2, overflow: 'hidden', boxShadow: theme.shadows[2] }}>
         <DataGrid
@@ -116,7 +132,7 @@ const Users = () => {
           }}
         />
       </Paper>
-    </AdminLayout>
+    </>
   );
 };
 

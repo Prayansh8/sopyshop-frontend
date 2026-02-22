@@ -1,10 +1,23 @@
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import CheckOutStep from "../../components/cart/CheckOutStep";
-import { Typography } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Container,
+  Paper,
+  Grid,
+  Divider,
+  Button,
+  Stack,
+  alpha,
+  useTheme
+} from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import Metadata from "../../components/layout/Metadata";
 
 const ConfirmOrder = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
 
@@ -28,127 +41,172 @@ const ConfirmOrder = () => {
       totalPrice,
     };
     sessionStorage.setItem("orderInfo", JSON.stringify(data));
-    navigate("/proccess/payment");
+    navigate("/process/payment");
   };
 
-  // useEffect(() => {
-  //   window.safestPayVendorToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWViZmRhZjRhYWM4MTJkNDk4ODljOTEiLCJpYXQiOjE3MDk5NjY1MTV9.ylsBGjX36gLazTYpD8zmrIE4FvTXq7WH3dTtTZ0VGzE';
-  //   window.safestPayMagicButtonId = '65ec68519934fa9ffdc3e0a1';
-  //   const script = document.createElement("script");
-  //   script.src = "https://cdn-safestpay.prayanshgupta.com/safest-payment-button.js";
-  //   // script.src = "http://localhost:5500/dist/safest-payment-button.js"
-  //   script.async = true;
-  //   document.body.appendChild(script);
-  // }, []);
   return (
-    <>
-      <Fragment>
-        <div className="mainContOrd">
-          <CheckOutStep activeStep={1} />
-          <div className="row sippingInfo">
-            <div className="col-7 sippingInfo-right border-e">
-              <div className="sippDetaild">
-                <div className="sippHeding">
-                  <Typography>Shipping Info</Typography>
-                </div>
-                <div className="sippInfoDetails">
-                  <div className="sippInfoName addressDetails">
-                    <p> Name: </p>
-                    <div>
-                      <span id="customer-name"> {shippingInfo.name} </span>
-                    </div>
-                  </div>
-                  <div className="sippInfoPhone addressDetails">
-                    <p> Phone: </p>
-                    <div>
-                      <span id="customer-phone"> {shippingInfo.phone} </span>
-                    </div>
-                  </div>
-                  <div className="sippInfoAddress addressDetails">
-                    <p> Address: </p>
-                    <div>
-                      <span>{address}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <Fragment>
+      <Metadata title={"Sopyshop | Confirm Order"} />
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <CheckOutStep activeStep={1} />
+        
+        <Grid container spacing={4} sx={{ mt: 2 }}>
+          {/* Left Side: Shipping & Items */}
+          <Grid item xs={12} md={8}>
+            <Stack spacing={4}>
+              {/* Shipping Info */}
+              <Paper 
+                elevation={0} 
+                sx={{ 
+                  p: 4, 
+                  borderRadius: 4, 
+                  border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                  boxShadow: `0 4px 20px ${alpha(theme.palette.common.black, 0.05)}`
+                }}
+              >
+                <Typography variant="h5" sx={{ fontWeight: 900, mb: 3, letterSpacing: '-0.01em' }}>
+                  Shipping Information
+                </Typography>
+                <Box sx={{ ml: 1 }}>
+                  <Stack spacing={1.5}>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                      <Typography variant="body1" sx={{ fontWeight: 800, minWidth: 100, color: 'text.secondary' }}>Name:</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 600 }}>{shippingInfo.name}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                      <Typography variant="body1" sx={{ fontWeight: 800, minWidth: 100, color: 'text.secondary' }}>Phone:</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 600 }}>{shippingInfo.phone}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                      <Typography variant="body1" sx={{ fontWeight: 800, minWidth: 100, color: 'text.secondary' }}>Address:</Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 600 }}>{address}</Typography>
+                    </Box>
+                  </Stack>
+                </Box>
+              </Paper>
 
-              <div className="productDetailOrder">
-                <div className="sippHeding">
-                  <Typography>Your Cart Item</Typography>
-                </div>
-                <div className="productInfoDetails">
-                  {cartItems &&
-                    cartItems.map((item) => (
-                      <div className="productD" key={item.product}>
-                        <div className="imgPro">
-                          <img
-                            className="productImgOrd"
-                            src={item.image}
-                            alt="Product"
-                          />
-                        </div>
-                        <div className="productItem">
-                          <Link to={`/product/${item.product}`}>{item.name}</Link>
-                        </div>
-                        <div className="totalprice">
-                          <span>
-                            {item.quantity} x ₹{item.price} ={" "}
-                            <b>₹{item.price * item.quantity}</b>
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            </div>
-            <div className="col-5 sippingInfo-left">
-              <div className="orderSummery">
-                <div className="orderHeding">
-                  <Typography>Order Summery</Typography>
-                </div>
-                <div>
-                  <div className="totalDetailsCont">
-                    <div className="totalDetails">
-                      <p>Subtotal:</p>
-                      <div>
-                        <span>₹{subtotal}</span>
-                      </div>
-                    </div>
-                    <div className="totalDetails">
-                      <p>Shipping Charges:</p>
-                      <div>
-                        <span>₹{shippingCharges}</span>
-                      </div>
-                    </div>
-                    <div className="totalDetails">
-                      <p>GST:</p>
-                      <div>
-                        <span>₹{tax}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="totalP">
-                    <div className="totalTextInOrder">
-                      <p>
-                        <b>total:</b>
-                      </p>
-                    </div>
-                    <div className="totllPriceInOrd">
-                      <span>₹<span id="product-amount">{totalPrice}</span></span>
-                    </div>
-                  </div>
-                  <button className="ProccedBtn" onClick={procecedToPayment}>
-                    Procced to Payment
-                  </button>
-                  {/* <div id="safest-pay-button-position"></div> */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Fragment>
-    </>
+              {/* Cart Items */}
+              <Paper 
+                elevation={0} 
+                sx={{ 
+                  p: 4, 
+                  borderRadius: 4, 
+                  border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                  boxShadow: `0 4px 20px ${alpha(theme.palette.common.black, 0.05)}`
+                }}
+              >
+                <Typography variant="h5" sx={{ fontWeight: 900, mb: 3, letterSpacing: '-0.01em' }}>
+                  Your Order Items
+                </Typography>
+                <Stack spacing={2} divider={<Divider />}>
+                  {cartItems && cartItems.map((item) => (
+                    <Box 
+                      key={item.product} 
+                      sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'space-between',
+                        py: 1
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                        <Box 
+                          component="img"
+                          src={item.image}
+                          alt={item.name}
+                          sx={{ 
+                            width: 80, 
+                            height: 80, 
+                            objectFit: 'cover', 
+                            borderRadius: 2,
+                            boxShadow: theme.shadows[1]
+                          }}
+                        />
+                        <Link 
+                          to={`/product/${item.product}`}
+                          style={{ textDecoration: 'none', color: theme.palette.text.primary }}
+                        >
+                          <Typography variant="body1" sx={{ fontWeight: 700, '&:hover': { color: 'primary.main' } }}>
+                            {item.name}
+                          </Typography>
+                        </Link>
+                      </Box>
+                      <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                        {item.quantity} x ₹{item.price.toLocaleString()} = {" "}
+                        <Box component="span" sx={{ color: 'primary.main', ml: 1 }}>
+                          ₹{(item.price * item.quantity).toLocaleString()}
+                        </Box>
+                      </Typography>
+                    </Box>
+                  ))}
+                </Stack>
+              </Paper>
+            </Stack>
+          </Grid>
+
+          {/* Right Side: Order Summary */}
+          <Grid item xs={12} md={4}>
+            <Paper 
+              elevation={0} 
+              sx={{ 
+                p: 4, 
+                borderRadius: 4, 
+                position: 'sticky',
+                top: 100,
+                border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                boxShadow: `0 8px 32px ${alpha(theme.palette.common.black, 0.08)}`,
+                bgcolor: 'background.paper'
+              }}
+            >
+              <Typography variant="h5" sx={{ fontWeight: 900, mb: 4, textAlign: 'center' }}>
+                Order Summary
+              </Typography>
+              
+              <Stack spacing={2.5}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.secondary' }}>Subtotal</Typography>
+                  <Typography variant="body1" sx={{ fontWeight: 700 }}>₹{subtotal.toLocaleString()}</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.secondary' }}>Shipping Charges</Typography>
+                  <Typography variant="body1" sx={{ fontWeight: 700 }}>₹{shippingCharges}</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.secondary' }}>GST (18%)</Typography>
+                  <Typography variant="body1" sx={{ fontWeight: 700 }}>₹{tax.toLocaleString()}</Typography>
+                </Box>
+                
+                <Divider sx={{ my: 1 }} />
+                
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography variant="h6" sx={{ fontWeight: 900 }}>Total Price</Typography>
+                  <Typography variant="h5" color="primary" sx={{ fontWeight: 900 }}>
+                    ₹{totalPrice.toLocaleString()}
+                  </Typography>
+                </Box>
+
+                <Button
+                  fullWidth
+                  variant="contained"
+                  size="large"
+                  onClick={procecedToPayment}
+                  sx={{ 
+                    mt: 3, 
+                    py: 2, 
+                    borderRadius: 3, 
+                    fontSize: '1.1rem', 
+                    fontWeight: 900,
+                    boxShadow: theme.shadows[6]
+                  }}
+                >
+                  Proceed to Payment
+                </Button>
+              </Stack>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
+    </Fragment>
   );
 };
 

@@ -47,7 +47,7 @@ export const createOrder = (order) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_ORDER_FAILURE,
-      payload: error.response.data.message,
+      payload: (error.response ? error.response.data : { message: error.message }).message,
     });
   }
 };
@@ -72,7 +72,7 @@ export const getMyOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: MY_ORDER_FAILURE,
-      payload: error.response.data.message,
+      payload: (error.response ? error.response.data : { message: error.message }).message,
     });
   }
 };
@@ -97,7 +97,7 @@ export const getAllOrdersByAdmin = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_All_ORDERS_FAILURE,
-      payload: error.response.data.message,
+      payload: (error.response ? error.response.data : { message: error.message }).message,
     });
   }
 };
@@ -122,7 +122,7 @@ export const getSingleOrder = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ORDER_FAILURE,
-      payload: error.response.data.message,
+      payload: (error.response ? error.response.data : { message: error.message }).message,
     });
   }
 };
@@ -149,7 +149,7 @@ export const adminUpdateOrder = (id, orderStatus) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_ORDER_FAILURE,
-      payload: error.response.data,
+      payload: (error.response ? error.response.data : { message: error.message }),
     });
   }
 };
@@ -171,7 +171,7 @@ export const deleteOrderByAdmin = (id) => async (dispatch) => {
 
     dispatch({ type: DELETE_ORDER_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: DELETE_ORDER_FAILURE, payload: error.response.data });
+    dispatch({ type: DELETE_ORDER_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
   }
 };
 

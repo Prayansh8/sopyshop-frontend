@@ -103,7 +103,13 @@ export const CustomThemeProvider = ({ children }) => {
             styleOverrides: {
               root: {
                 backgroundImage: "none",
+                borderRadius: `${layout.borderRadius}px`,
               },
+            },
+          },
+          MuiContainer: {
+            defaultProps: {
+              maxWidth: layout.containerMaxWidth || "lg",
             },
           },
           MuiAppBar: {
@@ -114,6 +120,8 @@ export const CustomThemeProvider = ({ children }) => {
             },
           },
         },
+        layout: layout,
+        customStyles: settingsConfig.styles,
       });
     },
     [mode]

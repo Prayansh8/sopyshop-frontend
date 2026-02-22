@@ -84,19 +84,19 @@ export const updateReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_USER_REQUEST:
     case UPDATE_USER_AVATAR_REQUEST:
-      return { ...state, loding: true };
+      return { ...state, loading: true };
     case UPDATE_USER_SUCCESS:
     case UPDATE_USER_AVATAR_SUCCESS:
       return {
         ...state,
-        loding: false,
+        loading: false,
         isUpdated: action.payload,
       };
     case UPDATE_USER_FAILURE:
     case UPDATE_USER_AVATAR_FAILURE:
       return {
         ...state,
-        loding: false,
+        loading: false,
         error: action.payload.message,
       };
     case UPDATE_USER_RESET:
@@ -118,16 +118,16 @@ export const updateReducer = (state = {}, action) => {
 export const getAllUsersReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case GET_ALL_USERS_REQUEST:
-      return { ...state, loding: true };
+      return { ...state, loading: true };
     case GET_ALL_USERS_SUCCESS:
       return {
         ...state,
-        loding: false,
+        loading: false,
         users: action.payload.users,
       };
     case GET_ALL_USERS_FAILURE:
       return {
-        loding: false,
+        loading: false,
         users: null,
         error: action.payload.message,
       };
@@ -175,17 +175,17 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
 export const updateUserReducer = (state = {}, action) => {
   switch (action.type) {
     case ADMIN_UPDATE_USER_REQUEST:
-      return { ...state, loding: true };
+      return { ...state, loading: true };
     case ADMIN_UPDATE_USER_SUCCESS:
       return {
         ...state,
-        loding: false,
+        loading: false,
         isUpdated: action.payload,
       };
     case ADMIN_UPDATE_USER_FAILURE:
       return {
         ...state,
-        loding: false,
+        loading: false,
         error: action.payload.message,
       };
     case ADMIN_UPDATE_USER_RESET:
@@ -215,7 +215,8 @@ export const deleteUserReducer = (state = {}, action) => {
       return {
         ...state,
         loading: false,
-        isDeleteded: true,
+        isDeleted: true,
+        message: action.payload.message,
       };
     case DELETE_USER_FAILURE:
       return {

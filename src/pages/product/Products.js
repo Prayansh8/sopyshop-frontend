@@ -143,11 +143,13 @@ export default function Products() {
     // Filter by Category
     if (category) {
       result = result.filter((product) => {
-        // Find category name if stored as ID or check name
+        const categoryId = product.category?._id || product.category;
         const productCategory =
-          categories.find((cat) => cat._id === product.category)?.name ||
-          product.category;
-        return productCategory.toLowerCase() === category.toLowerCase();
+          categories.find((cat) => cat._id === categoryId)?.name ||
+          product.category?.name ||
+          (typeof product.category === 'string' ? product.category : "");
+          
+        return productCategory && productCategory.toLowerCase() === category.toLowerCase();
       });
     }
 
@@ -341,10 +343,10 @@ export default function Products() {
           bgcolor: alpha(theme.palette.background.paper, 0.85),
           backdropFilter: "blur(20px)",
           py: 2,
-          mx: "auto",
+          px: 2,
         }}
       >
-        <Box maxWidth="xl" mx={2}>
+        <Box>
           <Stack
             direction="row"
             alignItems="center"

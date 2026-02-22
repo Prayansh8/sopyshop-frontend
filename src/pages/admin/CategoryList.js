@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import AdminLayout from "../../components/admin/AdminLayout";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import {} from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { 
   Box, 
@@ -19,8 +18,14 @@ import {
   clearErrors
 } from "../../redux/actions/categoryAction";
 import { toast } from "react-toastify";
+import CategoryCreate from "./CategoryCreate";
+import CategoryUpdate from "./CategoryUpdate";
 
 const CategoryList = () => {
+  const [openCreate, setOpenCreate] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
+
   const theme = useTheme();
   const dispatch = useDispatch();
   const { categories, error } = useSelector((state) => state.categories);
@@ -28,9 +33,6 @@ const CategoryList = () => {
 
   const deleteCategoryHandler = (id) => {
     dispatch(deleteCategory(id));
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
   };
 
   useEffect(() => {
@@ -41,8 +43,11 @@ const CategoryList = () => {
 
     if (isDeleted) {
       toast.success("Category Deleted");
+      dispatch({ type: "DELETE_CATEGORY_RESET" });
+      dispatch(getCategories());
+    } else {
+      dispatch(getCategories());
     }
-    dispatch(getCategories());
   }, [error, dispatch, isDeleted]);
 
   const columns = [
@@ -56,21 +61,23 @@ const CategoryList = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box sx={{ display: 'flex', gap: 1, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
             <IconButton
-              component={Link}
-              to={`/admin/update/category/${params.id}`}
+              onClick={() => {
+                setSelectedId(params.id);
+                setOpenUpdate(true);
+              }}
               size="small"
-              sx={{ color: theme.palette.primary.main, bgcolor: alpha(theme.palette.primary.main, 0.1) }}
+              sx={{ color: theme.palette.primary.main, bgcolor: alpha(theme.palette.primary.main, 0.1), width: 32, height: 32 }}
             >
-              <EditIcon fontSize="small" />
+              <EditIcon sx={{ fontSize: 18 }} />
             </IconButton>
             <IconButton
               size="small"
               onClick={() => deleteCategoryHandler(params.id)}
-              sx={{ color: theme.palette.error.main, bgcolor: alpha(theme.palette.error.main, 0.1) }}
+              sx={{ color: theme.palette.error.main, bgcolor: alpha(theme.palette.error.main, 0.1), width: 32, height: 32 }}
             >
-              <DeleteIcon fontSize="small" />
+              <DeleteIcon sx={{ fontSize: 18 }} />
             </IconButton>
           </Box>
         );
@@ -84,12 +91,11 @@ const CategoryList = () => {
   }));
 
   return (
-    <AdminLayout title="Categories Management">
+    <>
       <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography variant="h4" sx={{ fontWeight: 800 }}>All Categories</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 800, color: 'text.primary' }}>All Categories</Typography>
         <Button
-          component={Link}
-          to={`/admin/create/category`}
+          onClick={() => setOpenCreate(true)}
           variant="contained"
           startIcon={<AddIcon />}
           sx={{ borderRadius: 2, fontWeight: 700, px: 3 }}
@@ -97,6 +103,15 @@ const CategoryList = () => {
           Create Category
         </Button>
       </Box>
+
+      <CategoryCreate open={openCreate} handleClose={() => setOpenCreate(false)} />
+      {openUpdate && selectedId && (
+        <CategoryUpdate 
+          open={openUpdate} 
+          handleClose={() => { setOpenUpdate(false); setSelectedId(""); }} 
+          categoryId={selectedId} 
+        />
+      )}
 
       <Paper sx={{ width: '100%', height: 600, borderRadius: 2, overflow: 'hidden', boxShadow: theme.shadows[2] }}>
         <DataGrid
@@ -114,7 +129,7 @@ const CategoryList = () => {
           }}
         />
       </Paper>
-    </AdminLayout>
+    </>
   );
 };
 

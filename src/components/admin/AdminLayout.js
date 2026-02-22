@@ -22,14 +22,13 @@ import {
   People, 
   ShoppingCart, 
   Inventory,
-  AddBox,
   Category
 } from '@mui/icons-material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, Outlet } from 'react-router-dom';
 
 const drawerWidth = 260;
 
-const AdminLayout = ({ children, title }) => {
+const AdminLayout = () => {
   const theme = useTheme();
   const location = useLocation();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -47,11 +46,14 @@ const AdminLayout = ({ children, title }) => {
     { text: 'Users', icon: <People />, path: '/admin/users' },
   ];
 
+  const currentRoute = menuItems.find(item => location.pathname.startsWith(item.path));
+  const pageTitle = currentRoute ? currentRoute.text : 'Admin Panel';
+
   const drawer = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', bgcolor: theme.palette.background.paper }}>
       <Toolbar sx={{ justifyContent: 'center', py: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 900, color: theme.palette.primary.main, letterSpacing: 1 }}>
-          SOPY ADMIN
+          SOPYSHOP ADMIN
         </Typography>
       </Toolbar>
       <Divider sx={{ opacity: 0.5 }} />
@@ -65,18 +67,37 @@ const AdminLayout = ({ children, title }) => {
                 to={item.path}
                 onClick={() => isMobile && setMobileOpen(false)}
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: 3,
+                  py: 1.5,
+                  mb: 0.5,
                   bgcolor: isActive ? alpha(theme.palette.primary.main, 0.1) : 'transparent',
                   color: isActive ? theme.palette.primary.main : theme.palette.text.secondary,
                   '&:hover': {
-                    bgcolor: alpha(theme.palette.primary.main, 0.05),
+                    bgcolor: alpha(theme.palette.primary.main, 0.08),
                     color: theme.palette.primary.main,
-                  }
+                    transform: 'translateX(4px)',
+                  },
+                  transition: 'all 0.2s',
+                  position: 'relative',
+                  ...(isActive && {
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      left: -16,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      height: '60%',
+                      width: 4,
+                      bgcolor: theme.palette.primary.main,
+                      borderRadius: 1,
+                    }
+                  })
                 }}
               >
                 <ListItemIcon sx={{ 
                   color: isActive ? theme.palette.primary.main : theme.palette.text.secondary,
-                  minWidth: 40
+                  minWidth: 40,
+                  transition: 'all 0.2s'
                 }}>
                   {item.icon}
                 </ListItemIcon>
@@ -122,9 +143,13 @@ const AdminLayout = ({ children, title }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{ fontWeight: 700 }}>
-            {title || 'Admin Panel'}
+          <Typography variant="h6" noWrap component="div" sx={{ fontWeight: 800 }}>
+            {pageTitle}
           </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+          <IconButton color="primary" component={Link} to="/" sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1), borderRadius: 2, px: 2, '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.2) } }}>
+            <Typography variant="button" sx={{ fontWeight: 700 }}>Back to Store</Typography>
+          </IconButton>
         </Toolbar>
       </AppBar>
       
@@ -161,9 +186,9 @@ const AdminLayout = ({ children, title }) => {
       
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { md: `calc(100% - ${drawerWidth}px)` }, mt: '64px' }}
+        sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, width: { md: `calc(100% - ${drawerWidth}px)` }, mt: '64px' }}
       >
-        {children}
+        <Outlet />
       </Box>
     </Box>
   );

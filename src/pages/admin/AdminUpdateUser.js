@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from "react";
-import AdminLayout from "../../components/admin/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useParams, useNavigate } from "react-router-dom";
 import {
   adminUpdateUserRole,
   clearErrors,
   getUserDetails,
+  getAllUsers,
 } from "../../redux/actions/userAction";
-import { 
-  Box, 
+import { IconButton, 
   Button, 
   Typography, 
-  Paper, 
-  TextField, 
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
   MenuItem,
   InputAdornment,
   Grid
 } from "@mui/material";
-import { Email as EmailIcon, VerifiedUser, Security } from "@mui/icons-material";
+import { Email as EmailIcon, VerifiedUser, Security , Close as CloseIcon
+} from "@mui/icons-material";
 
-const AdminUpdateUser = () => {
+const AdminUpdateUser = ({ open, handleClose, userId }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { id } = useParams();
+    const id = userId;
 
-  const { loading, error } = useSelector((state) => state.updateUser);
+  const { loading, error, isUpdated } = useSelector((state) => state.updateUser);
   const { user } = useSelector((state) => state.userDetails);
 
   const [username, setusername] = useState("");
@@ -38,35 +38,40 @@ const AdminUpdateUser = () => {
     formData.append("username", username);
 
     dispatch(adminUpdateUserRole(id, formData));
-    toast.success("User Role Updated Successfully!");
-    setTimeout(() => {
-      navigate('/admin/users');
-    }, 2000);
   };
 
   useEffect(() => {
     if (user && user._id !== id) {
       dispatch(getUserDetails(id));
-    } else {
+    } else if (user) {
       setRole(user.role || "");
       setusername(user.name || user.username || "");
     }
 
     if (error) {
-      toast.error(error);
+       // Support both string errors and object errors with message property
+      toast.error(typeof error === 'string' ? error : error.message || "An error occurred");
       dispatch(clearErrors());
     }
-  }, [error, dispatch, user, id]);
+
+    if (isUpdated) {
+      toast.success("User Role Updated Successfully!");
+      dispatch({ type: "UPDATE_USER_RESET" });
+      dispatch(getAllUsers());
+      handleClose();
+    }
+  }, [error, dispatch, user, id, isUpdated, handleClose]);
 
   return (
-    <AdminLayout title="Update User Info">
-      <Box sx={{ maxWidth: 600, mx: 'auto', mt: 4 }}>
-        <Paper elevation={3} sx={{ p: 4, borderRadius: 4 }}>
-          <Typography variant="h5" sx={{ mb: 4, fontWeight: 800, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-            <Security color="primary" /> Manage User Role
-          </Typography>
-
-          <form onSubmit={updateProductSubmit}>
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: 3, boxShadow: 24, margin: 2 } }}>
+      <DialogTitle sx={{ pt: 3, pb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Typography variant="h5" sx={{ fontWeight: 800, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+          <Security color="primary" /> Manage User Role
+        </Typography>
+        <IconButton onClick={handleClose} sx={{ color: "text.secondary" }}><CloseIcon /></IconButton>
+      </DialogTitle>
+      <DialogContent dividers sx={{ p: { xs: 2, sm: 4 } }}>
+        <form onSubmit={updateProductSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TextField
@@ -125,9 +130,8 @@ const AdminUpdateUser = () => {
               </Grid>
             </Grid>
           </form>
-        </Paper>
-      </Box>
-    </AdminLayout>
+      </DialogContent>
+    </Dialog>
   );
 };
 

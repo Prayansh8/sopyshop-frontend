@@ -12,11 +12,12 @@ import {
 import {
   getAllUsersReducer,
   loadUserReducer,
+  updateReducer,
   updateUserReducer,
   userDetailsReducer,
   userReducer,
+  deleteUserReducer,
 } from "./reducers/userReducer";
-import { update } from "./actions/userAction";
 import { cartReducer } from "./reducers/cartReducer";
 import {
   deleteOrderReducer,
@@ -34,7 +35,7 @@ const reducer = combineReducers({
   productDetails: productDetailsReducer,
   user: userReducer,
   loadUser: loadUserReducer,
-  update: update,
+  update: updateReducer,
   cart: cartReducer,
   newProducts: newProductsReducer,
   deleteProduct: deleteProductReducer,
@@ -42,6 +43,7 @@ const reducer = combineReducers({
   updateProduct: updateProductReducer,
   updateUser: updateUserReducer,
   userDetails: userDetailsReducer,
+  profile: deleteUserReducer,
   newOrder: newOrderReducer,
   singleOrder: singleOrderReducer,
   orders: getAllOrdersReducer,

@@ -135,17 +135,17 @@ export const myOrdersReducer = (state = { orders: [] }, action) => {
 export const updateOrderReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_ORDER_REQUEST:
-      return { ...state, loding: true };
+      return { ...state, loading: true };
     case UPDATE_ORDER_SUCCESS:
       return {
         ...state,
-        loding: false,
+        loading: false,
         isUpdated: action.payload,
       };
     case UPDATE_ORDER_FAILURE:
       return {
         ...state,
-        loding: false,
+        loading: false,
         error: action.payload.message,
       };
     case UPDATE_ORDER_RESET:
@@ -176,7 +176,7 @@ export const deleteOrderReducer = (state = {}, action) => {
       return {
         ...state,
         loading: false,
-        isDeleteded: true,
+        isDeleted: true,
       };
     case DELETE_ORDER_FAILURE:
       return {

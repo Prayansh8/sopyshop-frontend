@@ -1,31 +1,25 @@
 import React, { useEffect, useState } from "react";
-import AdminLayout from "../../components/admin/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, createCategory } from "../../redux/actions/categoryAction";
+import { clearErrors, createCategory, getCategories } from "../../redux/actions/categoryAction";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { 
-  Box, 
+import { IconButton, 
   Button, 
   Typography, 
-  Paper, 
+  Dialog,
+  DialogTitle,
+  DialogContent,
   TextField, 
-  MenuItem,
   InputAdornment,
-  Grid,
-  useTheme
+  Grid
 } from "@mui/material";
 import {
   Category as CategoryIcon,
   Image as ImageIcon
+, Close as CloseIcon
 } from "@mui/icons-material";
-import { IconButton, alpha } from "@mui/material";
-
-const CategoryCreate = () => {
-  const theme = useTheme();
+const CategoryCreate = ({ open, handleClose }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.newCategory);
+  const { loading, error, success } = useSelector((state) => state.newCategory);
 
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -40,31 +34,37 @@ const CategoryCreate = () => {
     };
     
     dispatch(createCategory(categoryData));
-    toast.success("Category Created Successfully!");
-    setTimeout(() => {
-      navigate('/admin/categories');
-      window.location.reload();
-    }, 2000);
   };
 
   useEffect(() => {
-    // If not loaded, dispatch from layout or here
     if (error) {
-      toast.error(error);
+       // Support both string errors and object errors with message property
+      toast.error(typeof error === 'string' ? error : error.message || "An error occurred");
       dispatch(clearErrors());
     }
-  }, [error, dispatch]);
+
+    if (success) {
+      toast.success("Category Created Successfully!");
+      dispatch({ type: "NEW_CATEGORY_RESET" });
+      dispatch(getCategories());
+      handleClose();
+      // Reset form
+      setName("");
+      setImageUrl("");
+    }
+  }, [error, dispatch, success, handleClose]);
 
   return (
-    <AdminLayout title="Create Category">
-      <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4 }}>
-        <Paper elevation={3} sx={{ p: 4, borderRadius: 4 }}>
-          <Typography variant="h5" sx={{ mb: 4, fontWeight: 800, textAlign: 'center' }}>
-            Add New Category
-          </Typography>
-
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: 3, boxShadow: 24, margin: 2 } }}>
+      <DialogTitle sx={{ pt: 3, pb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Typography variant="h5" sx={{ fontWeight: 800, textAlign: 'center' }}>
+          Add New Category
+        </Typography>
+        <IconButton onClick={handleClose} sx={{ color: "text.secondary" }}><CloseIcon /></IconButton>
+      </DialogTitle>
+      <DialogContent dividers sx={{ p: { xs: 2, sm: 4 } }}>
           <form onSubmit={categorySubmit}>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} sx={{ mt: 1 }}>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
@@ -118,9 +118,8 @@ const CategoryCreate = () => {
               </Grid>
             </Grid>
           </form>
-        </Paper>
-      </Box>
-    </AdminLayout>
+      </DialogContent>
+    </Dialog>
   );
 };
 

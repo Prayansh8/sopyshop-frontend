@@ -43,7 +43,7 @@ export const getAdminProducts = () => async (dispatch) => {
 
     dispatch({ type: ADMIN_PRODUCTS_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: ADMIN_PRODUCTS_FAILURE, payload: error.response.data });
+    dispatch({ type: ADMIN_PRODUCTS_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
   }
 };
 
@@ -57,7 +57,7 @@ export const getProductDetails = (id) => async (dispatch) => {
 
     dispatch({ type: PRODUCTS_DETAILS_SUCCESS, payload: data.product });
   } catch (error) {
-    dispatch({ type: PRODUCTS_DETAILS_FAILURE, payload: error.response.data });
+    dispatch({ type: PRODUCTS_DETAILS_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
   }
 };
 
@@ -73,14 +73,14 @@ export const createProduct = (productData) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `${config.baseUrl}/api/v1/product/new`,
+      `${config.baseUrl}/api/v1/admin/product/new`,
       productData,
       configData
     );
 
     dispatch({ type: NEW_PRODUCTS_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: NEW_PRODUCTS_FAILURE, payload: error.response.data });
+    dispatch({ type: NEW_PRODUCTS_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
   }
 };
 
@@ -95,13 +95,13 @@ export const deleteProduct = (id) => async (dispatch) => {
     };
 
     const { data } = await axios.delete(
-      `${config.baseUrl}/api/v1/product/delete/${id}`,
+      `${config.baseUrl}/api/v1/admin/product/delete/${id}`,
       configData
     );
 
     dispatch({ type: DELETE_PRODUCTS_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: DELETE_PRODUCTS_FAILURE, payload: error.response.data });
+    dispatch({ type: DELETE_PRODUCTS_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
   }
 };
 
@@ -119,7 +119,7 @@ export const adminUpdateProduct = (id, productData) => async (dispatch) => {
     };
 
     const { data } = await axios.patch(
-      `${config.baseUrl}/api/v1/product/update/${id}`,
+      `${config.baseUrl}/api/v1/admin/product/update/${id}`,
       productData,
       configData
     );
@@ -127,7 +127,7 @@ export const adminUpdateProduct = (id, productData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_PRODUCTS_FAILURE,
-      payload: error.response.data,
+      payload: (error.response ? error.response.data : { message: error.message }),
     });
   }
 };
@@ -154,7 +154,7 @@ export const newReview = (reviewData) => async (dispatch) => {
 
     dispatch({ type: NEW_REVIEW_SUCCESS, payload: data.success });
   } catch (error) {
-    dispatch({ type: NEW_REVIEW_FAILURE, payload: error.response.data });
+    dispatch({ type: NEW_REVIEW_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
   }
 };
 

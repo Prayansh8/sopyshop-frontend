@@ -1,35 +1,30 @@
 import React, { useEffect, useState } from "react";
-import AdminLayout from "../../components/admin/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateCategory,
   clearErrors,
+  getCategories,
 } from "../../redux/actions/categoryAction";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
-import { 
-  Box, 
+import { IconButton, 
   Button, 
   Typography, 
-  Paper, 
+  Dialog,
+  DialogTitle,
+  DialogContent,
   TextField, 
-  MenuItem,
   InputAdornment,
-  Grid,
-  useTheme
+  Grid
 } from "@mui/material";
 import {
   Category as CategoryIcon,
   Image as ImageIcon
+, Close as CloseIcon
 } from "@mui/icons-material";
-import { IconButton, alpha } from "@mui/material";
-
-const CategoryUpdate = () => {
-  const theme = useTheme();
+const CategoryUpdate = ({ open, handleClose, categoryId }) => {
   const dispatch = useDispatch();
-  const { id } = useParams();
-  const navigate = useNavigate();
-
+  const id = categoryId;
+  
   const { loading, error, isUpdated } = useSelector((state) => state.categoryOperation);
   const { categories } = useSelector((state) => state.categories);
 
@@ -47,31 +42,37 @@ const CategoryUpdate = () => {
     };
 
     dispatch(updateCategory(id, categoryData));
-    toast.success("Category Updated Successfully!");
-    setTimeout(() => {
-      navigate('/admin/categories');
-    }, 2000);
   };
 
   useEffect(() => {
     if (selectedCategory) {
       setName(selectedCategory.name || "");
-      setImageUrl(selectedCategory.image?.url || "");
+      setImageUrl(selectedCategory.image?.url || (typeof selectedCategory.image === 'string' ? selectedCategory.image : ""));
     }
 
     if (error) {
-      toast.error(error);
+       // Support both string errors and object errors with message property
+      toast.error(typeof error === 'string' ? error : error.message || "An error occurred");
       dispatch(clearErrors());
     }
-  }, [error, dispatch, selectedCategory, id]);
+
+    if (isUpdated) {
+      toast.success("Category Updated Successfully!");
+      dispatch({ type: "UPDATE_CATEGORY_RESET" });
+      dispatch(getCategories());
+      handleClose();
+    }
+  }, [error, dispatch, selectedCategory, id, isUpdated, handleClose]);
 
   return (
-    <AdminLayout title="Update Category">
-      <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4 }}>
-        <Paper elevation={3} sx={{ p: 4, borderRadius: 4 }}>
-          <Typography variant="h5" sx={{ mb: 4, fontWeight: 800, textAlign: 'center' }}>
-            Update Category {name && `- ${name}`}
-          </Typography>
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: 3, boxShadow: 24, margin: 2 } }}>
+      <DialogTitle sx={{ pt: 3, pb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Typography variant="h5" sx={{ fontWeight: 800, textAlign: 'center' }}>
+          Update Category {name && `- ${name}`}
+        </Typography>
+        <IconButton onClick={handleClose} sx={{ color: "text.secondary" }}><CloseIcon /></IconButton>
+      </DialogTitle>
+      <DialogContent dividers sx={{ p: { xs: 2, sm: 4 } }}>
 
           <form onSubmit={categorySubmit}>
             <Grid container spacing={3}>
@@ -128,9 +129,8 @@ const CategoryUpdate = () => {
               </Grid>
             </Grid>
           </form>
-        </Paper>
-      </Box>
-    </AdminLayout>
+      </DialogContent>
+    </Dialog>
   );
 };
 

@@ -115,7 +115,7 @@ export const deleteProductReducer = (state = {}, action) => {
       return {
         ...state,
         loading: false,
-        isDeleteded: true,
+        isDeleted: true,
       };
     case DELETE_PRODUCTS_FAILURE:
       return {
@@ -139,17 +139,17 @@ export const deleteProductReducer = (state = {}, action) => {
 export const updateProductReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_PRODUCTS_REQUEST:
-      return { ...state, loding: true };
+      return { ...state, loading: true };
     case UPDATE_PRODUCTS_SUCCESS:
       return {
         ...state,
-        loding: false,
+        loading: false,
         isUpdated: action.payload,
       };
     case UPDATE_PRODUCTS_FAILURE:
       return {
         ...state,
-        loding: false,
+        loading: false,
         error: action.payload.message,
       };
     case UPDATE_PRODUCTS_RESET:

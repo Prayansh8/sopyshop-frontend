@@ -29,7 +29,7 @@ export const getWishlist = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_WISHLIST_FAIL,
-      payload: error.response.data.message,
+      payload: (error.response ? error.response.data : { message: error.message }).message,
     });
   }
 };
@@ -63,7 +63,7 @@ export const toggleWishlist = (productId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: TOGGLE_WISHLIST_FAIL,
-      payload: error.response.data.message,
+      payload: (error.response ? error.response.data : { message: error.message }).message,
     });
   }
 };
