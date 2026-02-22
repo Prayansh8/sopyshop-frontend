@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
@@ -9,33 +9,35 @@ import { Box, useTheme, Container } from "@mui/material";
 
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-import ProductDetails from "./pages/product/ProductDetails";
-import Products from "./pages/product/Products";
-import LoginSignUp from "./pages/user/LoginSignUp";
-import Account from "./pages/user/Account";
-import UpdateUser from "./pages/user/UpdateUser";
-import Cart from "./pages/cart/Cart";
-import Shipping from "./pages/cart/Shipping";
-import UpdateAvatar from "./pages/user/UpdateAvatar";
-import Dashboard from "./pages/admin/Dashboard";
-import ProductList from "./pages/admin/ProductList";
-import CategoryList from "./pages/admin/CategoryList";
-import CategoryCreate from "./pages/admin/CategoryCreate";
-import CategoryUpdate from "./pages/admin/CategoryUpdate";
-import AdminLayout from "./components/admin/AdminLayout";
-import Users from "./pages/admin/Users";
-import AdminUpdateUser from "./pages/admin/AdminUpdateUser";
-import ConfirmOrder from "./pages/cart/ConfirmOrder";
-import PaymentProcess from "./pages/cart/PaymentProcess";
-import OrderSuccess from "./pages/cart/OrderSuccess";
-import OrdersList from "./pages/admin/OrdersList";
-import OrderUpdate from "./pages/admin/OrderUpdate";
-import MyOrders from "./pages/orders/MyOrders";
-import SingleOrder from "./pages/orders/SingleOrder";
-import Wishlist from "./pages/product/Wishlist";
+import Loader from "./components/common/Loader";
 
-import { Home } from "./pages/Home";
-import Search from "./pages/product/SearchPage";
+// Lazy Loaded Pages
+const Home = lazy(() => import("./pages/Home").then(module => ({ default: module.Home })));
+const ProductDetails = lazy(() => import("./pages/product/ProductDetails"));
+const Products = lazy(() => import("./pages/product/Products"));
+const LoginSignUp = lazy(() => import("./pages/user/LoginSignUp"));
+const Account = lazy(() => import("./pages/user/Account"));
+const UpdateUser = lazy(() => import("./pages/user/UpdateUser"));
+const Cart = lazy(() => import("./pages/cart/Cart"));
+const Shipping = lazy(() => import("./pages/cart/Shipping"));
+const UpdateAvatar = lazy(() => import("./pages/user/UpdateAvatar"));
+const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
+const ProductList = lazy(() => import("./pages/admin/ProductList"));
+const CategoryList = lazy(() => import("./pages/admin/CategoryList"));
+const CategoryCreate = lazy(() => import("./pages/admin/CategoryCreate"));
+const CategoryUpdate = lazy(() => import("./pages/admin/CategoryUpdate"));
+const AdminLayout = lazy(() => import("./components/admin/AdminLayout"));
+const Users = lazy(() => import("./pages/admin/Users"));
+const AdminUpdateUser = lazy(() => import("./pages/admin/AdminUpdateUser"));
+const ConfirmOrder = lazy(() => import("./pages/cart/ConfirmOrder"));
+const PaymentProcess = lazy(() => import("./pages/cart/PaymentProcess"));
+const OrderSuccess = lazy(() => import("./pages/cart/OrderSuccess"));
+const OrdersList = lazy(() => import("./pages/admin/OrdersList"));
+const OrderUpdate = lazy(() => import("./pages/admin/OrderUpdate"));
+const MyOrders = lazy(() => import("./pages/orders/MyOrders"));
+const SingleOrder = lazy(() => import("./pages/orders/SingleOrder"));
+const Wishlist = lazy(() => import("./pages/product/Wishlist"));
+const Search = lazy(() => import("./pages/product/SearchPage"));
 
 // Redux Actions
 import { loadUser } from "./redux/actions/userAction";
@@ -67,7 +69,6 @@ const PublicLayout = ({ isAuthenticated, loading }) => (
     <Box component="main" sx={{ flexGrow: 1 }}>
       <Outlet />
     </Box>
-
     <Footer />
   </>
 );
@@ -92,52 +93,53 @@ function App() {
   return (
     <Router>
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: "background.default"}}>
-        
-        <Routes>
-          {/* Admin Routes with their own standalone layout wrapper */}
-          {userInfo && userInfo.user.role === "admin" && (
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="product" element={<ProductList />} />
-              <Route path="categories" element={<CategoryList />} />
-              <Route path="category/new" element={<CategoryCreate />} />
-              <Route path="update/category/:id" element={<CategoryUpdate />} />
-              <Route path="users" element={<Users />} />
-              <Route path="user/:id" element={<AdminUpdateUser />} />
-              <Route path="orders" element={<OrdersList />} />
-              <Route path="order/:id" element={<OrderUpdate />} />
-            </Route>
-          )}
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            {/* Admin Routes */}
+            {userInfo && userInfo.user.role === "admin" && (
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="product" element={<ProductList />} />
+                <Route path="categories" element={<CategoryList />} />
+                <Route path="category/new" element={<CategoryCreate />} />
+                <Route path="update/category/:id" element={<CategoryUpdate />} />
+                <Route path="users" element={<Users />} />
+                <Route path="user/:id" element={<AdminUpdateUser />} />
+                <Route path="orders" element={<OrdersList />} />
+                <Route path="order/:id" element={<OrderUpdate />} />
+              </Route>
+            )}
 
-          {/* Public Routes with standard Header and Footer */}
-          <Route element={<PublicLayout isAuthenticated={isAuthenticated} loading={loading} />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:keyword" element={<Products />} />
-            
-            {/* Standard Pages constrained to container */}
-            <Route element={<PageLayout />}>
-              <Route path="/product/:id" element={<ProductDetails />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/process/payment" element={<Elements stripe={stripePromise}><PaymentProcess /></Elements>} />
-              <Route path="/cart" element={<Cart isAuthenticated={isAuthenticated} />} />
-              <Route path="/login" element={<LoginSignUp />} />
-              <Route path="/account" element={<Account user={userInfo} isAuthenticated={isAuthenticated} loading={loading} />} />
-              {isAuthenticated && (
-                <>
-                  <Route path="/shipping" element={<Shipping />} />
-                  <Route path="/order/confirm" element={<ConfirmOrder />} />
-                  <Route path="/success" element={<OrderSuccess />} />
-                  <Route path="/orders" element={<MyOrders />} />
-                  <Route path="/order/:id" element={<SingleOrder />} />
-                  <Route path="/update" element={<UpdateUser user={userInfo} loading={loading} />} />
-                  <Route path="/update/avatar" element={<UpdateAvatar user={userInfo} loading={loading} />} />
-                  <Route path="/wishlist" element={<Wishlist />} />
-                </>
-              )}
+            {/* Public Routes */}
+            <Route element={<PublicLayout isAuthenticated={isAuthenticated} loading={loading} />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/products/:keyword" element={<Products />} />
+              
+              <Route element={<PageLayout />}>
+                <Route path="/product/:id" element={<ProductDetails />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/process/payment" element={<Elements stripe={stripePromise}><PaymentProcess /></Elements>} />
+                <Route path="/cart" element={<Cart isAuthenticated={isAuthenticated} />} />
+                <Route path="/login" element={<LoginSignUp />} />
+                <Route path="/account" element={<Account user={userInfo} isAuthenticated={isAuthenticated} loading={loading} />} />
+                
+                {isAuthenticated && (
+                  <>
+                    <Route path="/shipping" element={<Shipping />} />
+                    <Route path="/order/confirm" element={<ConfirmOrder />} />
+                    <Route path="/success" element={<OrderSuccess />} />
+                    <Route path="/orders" element={<MyOrders />} />
+                    <Route path="/order/:id" element={<SingleOrder />} />
+                    <Route path="/update" element={<UpdateUser user={userInfo} loading={loading} />} />
+                    <Route path="/update/avatar" element={<UpdateAvatar user={userInfo} loading={loading} />} />
+                    <Route path="/wishlist" element={<Wishlist />} />
+                  </>
+                )}
+                </Route>
             </Route>
-          </Route>
-        </Routes>
+          </Routes>
+        </Suspense>
 
         <ToastContainer position="bottom-center" autoClose={3000} theme={theme.palette.mode} />
       </Box>
