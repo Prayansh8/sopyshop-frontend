@@ -69,7 +69,7 @@ export const userReducer = (state = initialState, action) => {
 export const loadUserReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_USER_REQUEST:
-      return { ...state, loading: true, isAuthenticated: false };
+      return { ...state, loading: true };
     case USER_REGISTER_SUCCESS:
     case USER_LOGIN_SUCCESS:
     case LOAD_USER_SUCCESS:

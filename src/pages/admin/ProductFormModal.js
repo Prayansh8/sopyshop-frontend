@@ -53,6 +53,7 @@ const ProductFormModal = ({ open, handleClose, productId }) => {
   const [category, setCategory] = useState("");
   const [stock, setStock] = useState("");
   const [imageUrls, setImageUrls] = useState([""]); // Start with 1 empty string
+  const [errors, setErrors] = useState({});
 
   const { categories } = useSelector((state) => state.categories);
 
@@ -86,6 +87,7 @@ const ProductFormModal = ({ open, handleClose, productId }) => {
       setCategory("");
       setStock("");
       setImageUrls([""]);
+      setErrors({});
     }
   }, [dispatch, productId, isEditMode, product]);
 
@@ -115,10 +117,35 @@ const ProductFormModal = ({ open, handleClose, productId }) => {
     }
   }, [error, detailsError, dispatch, success, isUpdated, handleClose]);
 
+  const validateForm = () => {
+    let tempErrors = {};
+    if (!name.trim()) tempErrors.name = "Name is required";
+    else if (name.length > 32) tempErrors.name = "Name cannot exceed 32 characters";
+
+    if (!description.trim()) tempErrors.description = "Description is required";
+    else if (description.length < 2) tempErrors.description = "Description too short";
+    else if (description.length > 1000) tempErrors.description = "Description too long";
+
+    if (!price) tempErrors.price = "Price is required";
+    else if (Number(price) <= 0) tempErrors.price = "Price must be greater than zero";
+
+    if (!category) tempErrors.category = "Category is required";
+
+    if (stock === "" || stock === undefined) tempErrors.stock = "Stock is required";
+    else if (Number(stock) < 0) tempErrors.stock = "Stock cannot be negative";
+
+    const validUrls = imageUrls.filter(url => url.trim() !== "");
+    if (validUrls.length === 0) tempErrors.imageUrls = "At least one image URL is required";
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
   const handleUrlChange = (index, value) => {
     const newUrls = [...imageUrls];
     newUrls[index] = value;
     setImageUrls(newUrls);
+    if (errors.imageUrls) setErrors({ ...errors, imageUrls: null });
   };
 
   const addUrlField = () => {
@@ -133,6 +160,7 @@ const ProductFormModal = ({ open, handleClose, productId }) => {
 
   const productSubmit = (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     
     // We send a plain object because the update action expects application/json
     const productData = {
@@ -194,9 +222,13 @@ const ProductFormModal = ({ open, handleClose, productId }) => {
                 fullWidth
                 label="Product Name"
                 variant="outlined"
-                required
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (errors.name) setErrors({ ...errors, name: null });
+                }}
+                error={!!errors.name}
+                helperText={errors.name}
                 inputProps={{ minLength: 1, maxLength: 32 }}
                 InputProps={{
                   startAdornment: (
@@ -214,9 +246,13 @@ const ProductFormModal = ({ open, handleClose, productId }) => {
                 label="Price"
                 type="number"
                 variant="outlined"
-                required
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                  if (errors.price) setErrors({ ...errors, price: null });
+                }}
+                error={!!errors.price}
+                helperText={errors.price}
                 inputProps={{ maxLength: 6 }}
                 InputProps={{
                   startAdornment: (
@@ -234,9 +270,13 @@ const ProductFormModal = ({ open, handleClose, productId }) => {
                 label="Stock"
                 type="number"
                 variant="outlined"
-                required
                 value={stock}
-                onChange={(e) => setStock(e.target.value)}
+                onChange={(e) => {
+                  setStock(e.target.value);
+                  if (errors.stock) setErrors({ ...errors, stock: null });
+                }}
+                error={!!errors.stock}
+                helperText={errors.stock}
                 inputProps={{ maxLength: 4 }}
                 InputProps={{
                   startAdornment: (
@@ -254,9 +294,13 @@ const ProductFormModal = ({ open, handleClose, productId }) => {
                 fullWidth
                 label="Category"
                 variant="outlined"
-                required
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                  if (errors.category) setErrors({ ...errors, category: null });
+                }}
+                error={!!errors.category}
+                helperText={errors.category}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -282,9 +326,13 @@ const ProductFormModal = ({ open, handleClose, productId }) => {
                 multiline
                 rows={4}
                 variant="outlined"
-                required
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                  if (errors.description) setErrors({ ...errors, description: null });
+                }}
+                error={!!errors.description}
+                helperText={errors.description}
                 inputProps={{ minLength: 2, maxLength: 1000 }}
                 InputProps={{
                   startAdornment: (
@@ -298,8 +346,8 @@ const ProductFormModal = ({ open, handleClose, productId }) => {
 
             {/* Dynamic Image URLs */}
             <Grid item size={12}>
-              <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 700, color: "text.secondary" }}>
-                Product Image URLs
+              <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 700, color: errors.imageUrls ? "error.main" : "text.secondary" }}>
+                Product Image URLs {errors.imageUrls && ` - ${errors.imageUrls}`}
               </Typography>
               {imageUrls.map((url, index) => (
                 <Box key={index} sx={{ display: "flex", gap: 1, mb: 2 }}>

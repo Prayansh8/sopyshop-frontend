@@ -53,7 +53,25 @@ const Shipping = () => {
   const [country, setCountry] = useState(shippingInfo?.country || "");
   const [pinCode, setPinCode] = useState(shippingInfo?.pinCode || "");
   const [phone, setPhone] = useState(shippingInfo?.phone || "");
+  const [errors, setErrors] = useState({});
 
+  const validateForm = () => {
+    let tempErrors = {};
+    if (!name.trim()) tempErrors.name = "Name is required";
+    if (!address.trim()) tempErrors.address = "Address is required";
+    if (!city.trim()) tempErrors.city = "City is required";
+    if (!pinCode.toString().trim()) tempErrors.pinCode = "Pin code is required";
+    if (!phone.toString().trim()) {
+      tempErrors.phone = "Phone number is required";
+    } else if (!/^\d{10}$/.test(phone)) {
+      tempErrors.phone = "Phone number must be 10 digits";
+    }
+    if (!country) tempErrors.country = "Country is required";
+    if (!state) tempErrors.state = "State is required";
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
   const handleSelectSavedAddress = (addr) => {
     setName(addr.name || "");
     setAddress(addr.address || "");
@@ -67,10 +85,7 @@ const Shipping = () => {
 
   const shippingSubmit = (e) => {
     e.preventDefault();
-    if (phone.length !== 10) {
-      toast.error("Phone Number should be 10 digit");
-      return;
-    }
+    if (!validateForm()) return;
 
     const shippingData = {
       name,
@@ -199,9 +214,13 @@ const Shipping = () => {
                       fullWidth
                       label="Full Name"
                       variant="outlined"
-                      required
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                        if (errors.name) setErrors({ ...errors, name: null });
+                      }}
+                      error={!!errors.name}
+                      helperText={errors.name}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -217,11 +236,15 @@ const Shipping = () => {
                       fullWidth
                       label="Address"
                       variant="outlined"
-                      required
                       multiline
                       rows={2}
                       value={address}
-                      onChange={(e) => setAddress(e.target.value)}
+                      onChange={(e) => {
+                        setAddress(e.target.value);
+                        if (errors.address) setErrors({ ...errors, address: null });
+                      }}
+                      error={!!errors.address}
+                      helperText={errors.address}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -237,9 +260,13 @@ const Shipping = () => {
                       fullWidth
                       label="City"
                       variant="outlined"
-                      required
                       value={city}
-                      onChange={(e) => setCity(e.target.value)}
+                      onChange={(e) => {
+                        setCity(e.target.value);
+                        if (errors.city) setErrors({ ...errors, city: null });
+                      }}
+                      error={!!errors.city}
+                      helperText={errors.city}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -255,10 +282,14 @@ const Shipping = () => {
                       fullWidth
                       label="Pin Code"
                       variant="outlined"
-                      required
                       type="number"
                       value={pinCode}
-                      onChange={(e) => setPinCode(e.target.value)}
+                      onChange={(e) => {
+                        setPinCode(e.target.value);
+                        if (errors.pinCode) setErrors({ ...errors, pinCode: null });
+                      }}
+                      error={!!errors.pinCode}
+                      helperText={errors.pinCode}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -274,10 +305,14 @@ const Shipping = () => {
                       fullWidth
                       label="Phone Number"
                       variant="outlined"
-                      required
                       type="number"
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                        if (errors.phone) setErrors({ ...errors, phone: null });
+                      }}
+                      error={!!errors.phone}
+                      helperText={errors.phone}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -294,9 +329,13 @@ const Shipping = () => {
                       fullWidth
                       label="Country"
                       variant="outlined"
-                      required
                       value={country}
-                      onChange={(e) => setCountry(e.target.value)}
+                      onChange={(e) => {
+                        setCountry(e.target.value);
+                        if (errors.country) setErrors({ ...errors, country: null });
+                      }}
+                      error={!!errors.country}
+                      helperText={errors.country}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -321,9 +360,13 @@ const Shipping = () => {
                         fullWidth
                         label="State"
                         variant="outlined"
-                        required
                         value={state}
-                        onChange={(e) => setState(e.target.value)}
+                        onChange={(e) => {
+                          setState(e.target.value);
+                          if (errors.state) setErrors({ ...errors, state: null });
+                        }}
+                        error={!!errors.state}
+                        helperText={errors.state}
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">

@@ -124,6 +124,10 @@ export const loadUser = () => async (dispatch) => {
     };
 
     const { data } = await axios.get(`${config.baseUrl}/api/v1/me`, configData);
+    
+    // Update local storage to keep it in sync with latest backend data (e.g. shipping info)
+    localStorage.setItem('userInfo', JSON.stringify(data));
+    
     dispatch({ type: LOAD_USER_SUCCESS, payload: data });
   } catch (error) {
     const errorData = error.response ? error.response.data : { message: error.message };
@@ -148,20 +152,20 @@ export const logoutUser = () => (dispatch) => {
   window.location.reload();
 };
 
-export const update = (name, username) => async (dispatch) => {
+export const update = (userData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
     const token = localStorage.getItem("sopyshop-token");
     const configData = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": userData instanceof FormData ? "multipart/form-data" : "application/json",
         authorization: `Bearer ${token}`,
       },
     };
 
     const { data } = await axios.patch(
       `${config.baseUrl}/api/v1/me/update`,
-      { name, username },
+      userData,
       configData
     );
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
@@ -294,9 +298,55 @@ export const addShippingInfoAction = (shippingData) => async (dispatch) => {
     // Refresh user data to get updated shippingInfo array
     dispatch(loadUser());
   } catch (error) {
-    // We don't necessarily need a full alert here as shipping info 
-    // is secondary to the checkout process itself
     console.error("Error adding shipping info:", error);
+  }
+};
+
+// Update shipping info
+export const updateShippingInfoAction = (shippingData) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios.patch(
+      `${config.baseUrl}/api/v1/me/shipping/update`,
+      shippingData,
+      configData
+    );
+    
+    // Refresh user data to get updated shippingInfo array
+    dispatch(loadUser());
+  } catch (error) {
+    console.error("Error updating shipping info:", error);
+    throw error;
+  }
+};
+
+// Delete shipping info
+export const deleteShippingInfoAction = (addressId) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios.delete(
+      `${config.baseUrl}/api/v1/me/shipping/delete/${addressId}`,
+      configData
+    );
+    
+    // Refresh user data to get updated shippingInfo array
+    dispatch(loadUser());
+  } catch (error) {
+    console.error("Error deleting shipping info:", error);
+    throw error;
   }
 };
 

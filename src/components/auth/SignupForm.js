@@ -43,16 +43,29 @@ const SignupForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRegistrationData({ ...registrationData, [name]: value });
+    if (errors[name]) setErrors({ ...errors, [name]: null });
   };
 
   const validateForm = () => {
     const newErrors = {};
-    if (!registrationData.firstName) newErrors.firstName = 'First name required';
-    if (!registrationData.lastName) newErrors.lastName = 'Last name required';
-    if (!registrationData.email) newErrors.email = 'Email required';
-    if (!registrationData.phone) newErrors.phone = 'Phone required';
-    if (!registrationData.dob) newErrors.dob = 'Date of birth required';
-    if (registrationData.password.length < 6) newErrors.password = 'Min 6 characters required';
+    if (!registrationData.firstName.trim()) newErrors.firstName = 'First name is required';
+    if (!registrationData.lastName.trim()) newErrors.lastName = 'Last name is required';
+    if (!registrationData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(registrationData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+    if (!registrationData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!/^\d{10}$/.test(registrationData.phone)) {
+      newErrors.phone = 'Phone number must be 10 digits';
+    }
+    if (!registrationData.dob) newErrors.dob = 'Date of birth is required';
+    if (!registrationData.password) {
+      newErrors.password = 'Password is required';
+    } else if (registrationData.password.length < 6) {
+      newErrors.password = 'Min 6 characters required';
+    }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

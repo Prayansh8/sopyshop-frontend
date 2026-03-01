@@ -16,13 +16,10 @@ import {
   alpha,
   Container,
   Breadcrumbs,
-  Chip,
-  Avatar,
 } from "@mui/material";
 import { 
   Add, 
   Remove, 
-  ShoppingCartCheckout, 
   DeleteOutline, 
   ChevronRight,
   ShoppingBagOutlined,

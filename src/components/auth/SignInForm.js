@@ -27,20 +27,38 @@ const SignInForm = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.loadUser);
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
 
+  const validateForm = () => {
+    let tempErrors = {};
+    if (!loginData.email.trim()) {
+      tempErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(loginData.email)) {
+      tempErrors.email = "Email is invalid";
+    }
+    if (!loginData.password) {
+      tempErrors.password = "Password is required";
+    }
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
+    if (errors[name]) setErrors({ ...errors, [name]: null });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser(loginData));
+    if (validateForm()) {
+      dispatch(loginUser(loginData));
+    }
   };
 
   const inputStyles = {
@@ -69,13 +87,14 @@ const SignInForm = () => {
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
       <Stack spacing={3.5}>
         <TextField
-          required
           label="Email Address"
           fullWidth
           name="email"
           type="email"
           value={loginData.email}
           onChange={handleChange}
+          error={!!errors.email}
+          helperText={errors.email}
           variant="outlined"
           sx={inputStyles}
           InputProps={{
@@ -89,12 +108,13 @@ const SignInForm = () => {
         
         <Box>
           <TextField
-            required
             label="Password"
             fullWidth
             name="password"
             value={loginData.password}
             onChange={handleChange}
+            error={!!errors.password}
+            helperText={errors.password}
             variant="outlined"
             type={showPassword ? 'text' : 'password'}
             sx={inputStyles}

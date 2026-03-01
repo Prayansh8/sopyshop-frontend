@@ -15,6 +15,8 @@ import Loader from "./components/common/Loader";
 import { getWishlist } from "./redux/actions/wishlistAction";
 import { getAllProducts } from "./redux/actions/productAction";
 import { getCategories } from "./redux/actions/categoryAction";
+import { getMyOrders } from "./redux/actions/orderAction";
+import { loadUser } from "./redux/actions/userAction";
 
 import { config } from "./config";
 import LoginSignUp from "./pages/user/LoginSignUp";
@@ -73,13 +75,18 @@ const PublicLayout = ({ isAuthenticated, loading }) => (
   </Box>
 );
 
+
+
 function App() {
   const { userInfo, isAuthenticated, loading } = useSelector((state) => state.loadUser);
   const theme = useTheme();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch(loadUser()); // Removed redundant API call as requested
+    const token = localStorage.getItem('sopyshop-token');
+    if (token) {
+      dispatch(loadUser());
+    }
     dispatch(getAllProducts());
     dispatch(getCategories());
   }, [dispatch]);
@@ -87,6 +94,7 @@ function App() {
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(getWishlist());
+      dispatch(getMyOrders());
     }
   }, [dispatch, isAuthenticated]);
 

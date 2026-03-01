@@ -20,7 +20,7 @@ import {
   CheckCircleOutline
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { clearErrors, forgotPassword } from "../../redux/actions/userAction";
 import Metadata from "../../components/layout/Metadata";
