@@ -12,20 +12,21 @@ import Footer from "./components/layout/Footer";
 import Loader from "./components/common/Loader";
 
 // Redux Actions
-import { loadUser } from "./redux/actions/userAction";
 import { getWishlist } from "./redux/actions/wishlistAction";
 import { getAllProducts } from "./redux/actions/productAction";
 import { getCategories } from "./redux/actions/categoryAction";
+import { getMyOrders } from "./redux/actions/orderAction";
+import { loadUser } from "./redux/actions/userAction";
 
 import { config } from "./config";
+import LoginSignUp from "./pages/user/LoginSignUp";
+import Account from "./pages/user/Account";
 import "./App.css";
 
 // Lazy Loaded Pages
 const Home = lazy(() => import("./pages/Home").then(module => ({ default: module.Home })));
 const ProductDetails = lazy(() => import("./pages/product/ProductDetails"));
 const Products = lazy(() => import("./pages/product/Products"));
-const LoginSignUp = lazy(() => import("./pages/user/LoginSignUp"));
-const Account = lazy(() => import("./pages/user/Account"));
 const UpdateUser = lazy(() => import("./pages/user/UpdateUser"));
 const Cart = lazy(() => import("./pages/cart/Cart"));
 const Shipping = lazy(() => import("./pages/cart/Shipping"));
@@ -47,6 +48,7 @@ const MyOrders = lazy(() => import("./pages/orders/MyOrders"));
 const SingleOrder = lazy(() => import("./pages/orders/SingleOrder"));
 const Wishlist = lazy(() => import("./pages/product/Wishlist"));
 const Search = lazy(() => import("./pages/product/SearchPage"));
+const ForgotPassword = lazy(() => import("./pages/user/ForgotPassword"));
 
 const stripeApiKey = config.stripe.stripeApi;
 const stripePromise = loadStripe(stripeApiKey);
@@ -64,14 +66,16 @@ const PageLayout = () => {
 };
 
 const PublicLayout = ({ isAuthenticated, loading }) => (
-  <>
+  <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
     <Header isAuthenticated={isAuthenticated} loading={loading} />
-    <Box component="main" sx={{ flexGrow: 1 }}>
+    <Box component="main" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
       <Outlet />
     </Box>
     <Footer />
-  </>
+  </Box>
 );
+
+
 
 function App() {
   const { userInfo, isAuthenticated, loading } = useSelector((state) => state.loadUser);
@@ -79,7 +83,10 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadUser());
+    const token = localStorage.getItem('sopyshop-token');
+    if (token) {
+      dispatch(loadUser());
+    }
     dispatch(getAllProducts());
     dispatch(getCategories());
   }, [dispatch]);
@@ -87,12 +94,13 @@ function App() {
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(getWishlist());
+      dispatch(getMyOrders());
     }
   }, [dispatch, isAuthenticated]);
 
   return (
     <Router>
-      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: "background.default"}}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', bgcolor: "background.default"}}>
         <Suspense fallback={<Loader />}>
           <Routes>
             {/* Admin Routes */}
@@ -115,14 +123,16 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/:keyword" element={<Products />} />
+              <Route path="/login" element={<LoginSignUp />} />
+              <Route path="/password/forgot" element={<ForgotPassword />} />
               
               <Route element={<PageLayout />}>
                 <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/process/payment" element={<Elements stripe={stripePromise}><PaymentProcess /></Elements>} />
                 <Route path="/cart" element={<Cart isAuthenticated={isAuthenticated} />} />
-                <Route path="/login" element={<LoginSignUp />} />
-                <Route path="/account" element={<Account user={userInfo} isAuthenticated={isAuthenticated} loading={loading} />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/wishlist" element={<Wishlist />} />
                 
                 {isAuthenticated && (
                   <>
@@ -133,7 +143,6 @@ function App() {
                     <Route path="/order/:id" element={<SingleOrder />} />
                     <Route path="/update" element={<UpdateUser user={userInfo} loading={loading} />} />
                     <Route path="/update/avatar" element={<UpdateAvatar user={userInfo} loading={loading} />} />
-                    <Route path="/wishlist" element={<Wishlist />} />
                   </>
                 )}
                 </Route>

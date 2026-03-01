@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { 
-  AppBar, 
+  AppBar,
   Toolbar, 
   Typography, 
   Button, 
   IconButton, 
   Badge, 
   Box, 
-   
+  Container,
   Avatar, 
   Menu, 
   MenuItem, 
+  ListItemIcon,
+  Divider,
   Tooltip,
   useTheme,
   alpha
@@ -20,10 +22,15 @@ import {
   ShoppingCart, 
   DarkMode, 
   LightMode,
-  Favorite
+  Favorite,
+  Person,
+  ShoppingBag,
+  Logout,
+  Dashboard as DashboardIcon
 } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/actions/userAction";
 import { useColorMode } from "../../ThemeContext";
 import logo from "../../assets/logo.png";
 import profile from "../../assets/admin.jpeg";
@@ -36,6 +43,7 @@ export default function Header({ isAuthenticated }) {
   const theme = useTheme();
   const { toggleColorMode } = useColorMode();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -48,20 +56,27 @@ export default function Header({ isAuthenticated }) {
     setAnchorElUser(null);
   };
 
+  const handleLogout = () => {
+    handleCloseUserMenu();
+    dispatch(logoutUser());
+    navigate("/login");
+  };
+
   return (
     <>
       <AppBar 
         position="sticky" 
         elevation={0}
         sx={{ 
-          bgcolor: alpha(theme.palette.background.paper, 0.8),
-          backdropFilter: "blur(20px)",
-          borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+          bgcolor: alpha(theme.palette.background.paper, 0.75),
+          backdropFilter: "blur(25px)",
+          borderBottom: `1px solid ${alpha(theme.palette.divider, 0.08)}`,
           color: theme.palette.text.primary,
-          zIndex: theme.zIndex.appBar
+          zIndex: theme.zIndex.appBar,
+          top: 0
         }}
       >
-        <Box maxWidth="xl" mx={3}>
+        <Container maxWidth="xl">
           <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
             {/* Logo Section */}
             <Box 
@@ -146,24 +161,78 @@ export default function Header({ isAuthenticated }) {
                     horizontal: "right" }}
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
+                  PaperProps={{
+                    sx: {
+                      width: 220,
+                      borderRadius: 3,
+                      mt: 1.5,
+                      boxShadow: '0px 10px 40px rgba(0,0,0,0.1)',
+                      border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                      padding: 1
+                    }
+                  }}
                 >
+                  {/* User Info Header */}
+                  <Box sx={{ px: 2, py: 1.5, mb: 1, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Avatar 
+                      src={userInfo?.user?.avatar || profile} 
+                      sx={{ width: 40, height: 40, border: `2px solid ${alpha(theme.palette.primary.main, 0.2)}` }}
+                    />
+                    <Box sx={{ overflow: 'hidden' }}>
+                      <Typography variant="subtitle2" noWrap sx={{ fontWeight: 800 }}>
+                        {userInfo?.user?.firstName || "Welcome"}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary" noWrap sx={{ display: 'block', textTransform: 'capitalize' }}>
+                        {userInfo?.user?.role || "Guest"}
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  <Divider sx={{ mb: 1, opacity: 0.5 }} />
+
+                  {userInfo?.user?.role === 'admin' && (
+                    <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/admin/dashboard"); }}>
+                      <ListItemIcon>
+                        <DashboardIcon fontSize="small" color="primary" />
+                      </ListItemIcon>
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>Admin Dashboard</Typography>
+                    </MenuItem>
+                  )}
+
                   <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/account"); }}>
-                    <Typography textAlign="center">Profile</Typography>
+                    <ListItemIcon>
+                      <Person fontSize="small" />
+                    </ListItemIcon>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>My Profile</Typography>
                   </MenuItem>
+
                   <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/wishlist"); }}>
-                    <Typography textAlign="center">Wishlist</Typography>
+                    <ListItemIcon>
+                      <Favorite fontSize="small" />
+                    </ListItemIcon>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>Wishlist</Typography>
                   </MenuItem>
+
                   <MenuItem onClick={() => { handleCloseUserMenu(); navigate("/orders"); }}>
-                    <Typography textAlign="center">Orders</Typography>
+                    <ListItemIcon>
+                      <ShoppingBag fontSize="small" />
+                    </ListItemIcon>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>My Orders</Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center" color="error">Logout</Typography>
+
+                  <Divider sx={{ my: 1, opacity: 0.5 }} />
+
+                  <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
+                    <ListItemIcon>
+                      <Logout fontSize="small" color="error" />
+                    </ListItemIcon>
+                    <Typography variant="body2" sx={{ fontWeight: 700 }}>Logout</Typography>
                   </MenuItem>
                 </Menu>
               </Box>
             </Box>
           </Toolbar>
-        </Box>
+        </Container>
       </AppBar>
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>

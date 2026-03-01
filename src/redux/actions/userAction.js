@@ -27,6 +27,12 @@ import {
   DELETE_USER_REQUEST,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAILURE,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
   CLEAR_ERRORS,
   USER_LOGOUT,
 } from "../constants/userConstants";
@@ -39,6 +45,32 @@ export const loginUser = (loginData) => async (dispatch) => {
     dispatch({ type: USER_LOGIN_REQUEST });
 
     const { data } = await axios.post(`${config.baseUrl}/api/v1/get-token`, loginData);
+    const token = data.token;
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    // Store user info and token in local storage
+    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem('sopyshop-token', token);
+  } catch (error) {
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload: error.response && (error.response ? error.response.data : { message: error.message }).message
+        ? (error.response ? error.response.data : { message: error.message }).message
+        : error.message,
+    });
+  }
+};
+
+// Google Login
+export const googleLogin = (idToken) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_LOGIN_REQUEST });
+
+    const { data } = await axios.post(`${config.baseUrl}/api/v1/google/login`, { idToken });
     const token = data.token;
 
     dispatch({
@@ -92,9 +124,22 @@ export const loadUser = () => async (dispatch) => {
     };
 
     const { data } = await axios.get(`${config.baseUrl}/api/v1/me`, configData);
+    
+    // Update local storage to keep it in sync with latest backend data (e.g. shipping info)
+    localStorage.setItem('userInfo', JSON.stringify(data));
+    
     dispatch({ type: LOAD_USER_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: LOAD_USER_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
+    const errorData = error.response ? error.response.data : { message: error.message };
+    
+    // Handle expired token automatically
+    if (errorData.name === "TokenExpiredError") {
+      localStorage.removeItem('userInfo');
+      localStorage.removeItem('sopyshop-token');
+      dispatch({ type: LOAD_USER_FAILURE, payload: "Session expired. Please login again." });
+    } else {
+      dispatch({ type: LOAD_USER_FAILURE, payload: errorData });
+    }
   }
 };
 
@@ -107,20 +152,20 @@ export const logoutUser = () => (dispatch) => {
   window.location.reload();
 };
 
-export const update = (name, username) => async (dispatch) => {
+export const update = (userData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
     const token = localStorage.getItem("sopyshop-token");
     const configData = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": userData instanceof FormData ? "multipart/form-data" : "application/json",
         authorization: `Bearer ${token}`,
       },
     };
 
     const { data } = await axios.patch(
       `${config.baseUrl}/api/v1/me/update`,
-      { name, username },
+      userData,
       configData
     );
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
@@ -253,9 +298,55 @@ export const addShippingInfoAction = (shippingData) => async (dispatch) => {
     // Refresh user data to get updated shippingInfo array
     dispatch(loadUser());
   } catch (error) {
-    // We don't necessarily need a full alert here as shipping info 
-    // is secondary to the checkout process itself
     console.error("Error adding shipping info:", error);
+  }
+};
+
+// Update shipping info
+export const updateShippingInfoAction = (shippingData) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios.patch(
+      `${config.baseUrl}/api/v1/me/shipping/update`,
+      shippingData,
+      configData
+    );
+    
+    // Refresh user data to get updated shippingInfo array
+    dispatch(loadUser());
+  } catch (error) {
+    console.error("Error updating shipping info:", error);
+    throw error;
+  }
+};
+
+// Delete shipping info
+export const deleteShippingInfoAction = (addressId) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("sopyshop-token");
+    const configData = {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios.delete(
+      `${config.baseUrl}/api/v1/me/shipping/delete/${addressId}`,
+      configData
+    );
+    
+    // Refresh user data to get updated shippingInfo array
+    dispatch(loadUser());
+  } catch (error) {
+    console.error("Error deleting shipping info:", error);
+    throw error;
   }
 };
 
@@ -276,6 +367,50 @@ export const deleteUserByAdmin = (id) => async (dispatch) => {
     dispatch({ type: DELETE_USER_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: DELETE_USER_FAILURE, payload: (error.response ? error.response.data : { message: error.message }) });
+  }
+};
+
+// Forgot Password
+export const forgotPassword = (email) => async (dispatch) => {
+  try {
+    dispatch({ type: FORGOT_PASSWORD_REQUEST });
+
+    const configData = {
+      headers: { "Content-Type": "application/json" },
+    };
+
+    const { data } = await axios.post(`${config.baseUrl}/api/v1/password/forgot`, { email }, configData);
+
+    dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAILURE,
+      payload: (error.response ? error.response.data : { message: error.message }).message,
+    });
+  }
+};
+
+// Reset Password
+export const resetPassword = (token, passwords) => async (dispatch) => {
+  try {
+    dispatch({ type: RESET_PASSWORD_REQUEST });
+
+    const configData = {
+      headers: { "Content-Type": "application/json" },
+    };
+
+    const { data } = await axios.put(
+      `${config.baseUrl}/api/v1/password/reset/${token}`,
+      passwords,
+      configData
+    );
+
+    dispatch({ type: RESET_PASSWORD_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: RESET_PASSWORD_FAILURE,
+      payload: (error.response ? error.response.data : { message: error.message }).message,
+    });
   }
 };
 

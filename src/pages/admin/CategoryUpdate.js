@@ -30,11 +30,22 @@ const CategoryUpdate = ({ open, handleClose, categoryId }) => {
 
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let tempErrors = {};
+    if (!name.trim()) tempErrors.name = "Category name is required";
+    else if (name.length > 32) tempErrors.name = "Name cannot exceed 32 characters";
+    
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
 
   const selectedCategory = categories?.find(cat => cat._id === id);
 
   const categorySubmit = (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
 
     const categoryData = {
       name,
@@ -81,9 +92,13 @@ const CategoryUpdate = ({ open, handleClose, categoryId }) => {
                   fullWidth
                   label="Category Name"
                   variant="outlined"
-                  required
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    if (errors.name) setErrors({ ...errors, name: null });
+                  }}
+                  error={!!errors.name}
+                  helperText={errors.name}
                   inputProps={{ minLength: 1, maxLength: 32 }}
                   InputProps={{
                     startAdornment: (

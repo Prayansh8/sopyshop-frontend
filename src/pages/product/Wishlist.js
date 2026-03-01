@@ -17,17 +17,26 @@ import {
   Stack
 } from "@mui/material";
 import { NavigateNext, Favorite, FavoriteBorder, ShoppingCart } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Wishlist() {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const { products, loading } = useSelector((state) => state.wishlist);
+  const { isAuthenticated } = useSelector((state) => state.loadUser);
+
+  useEffect(() => {
+    if (isAuthenticated === false) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
 
   // Wishlist is now pre-fetched in App.js for authenticated users
 
   return (
-    <Box sx={{ bgcolor: "background.default", minHeight: "100vh", py: 4 }}>
+    <Box sx={{ bgcolor: "background.default", flex: 1, py: 4 }}>
       <Metadata title={"My Wishlist | Sopyshop"} />
       <Box maxWidth="xl">
         <Box sx={{ mb: 5 }}>

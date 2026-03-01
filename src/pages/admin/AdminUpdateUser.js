@@ -33,6 +33,10 @@ const AdminUpdateUser = ({ open, handleClose, userId }) => {
 
   const updateProductSubmit = (e) => {
     e.preventDefault();
+    if (!role) {
+      toast.error("Please select a role");
+      return;
+    }
     const formData = new FormData();
     formData.append("role", role);
     formData.append("username", username);

@@ -131,13 +131,18 @@ export default function Products() {
 
     // Filter by Keyword
     if (keywordParam) {
-      result = result.filter(
-        (product) =>
-          product.name.toLowerCase().includes(keywordParam.toLowerCase()) ||
-          product.description
-            .toLowerCase()
-            .includes(keywordParam.toLowerCase()),
-      );
+      const lowerKeyword = keywordParam.toLowerCase();
+      result = result.filter((product) => {
+        const nameMatch = product.name.toLowerCase().includes(lowerKeyword);
+        const descMatch = product.description?.toLowerCase().includes(lowerKeyword);
+
+        // Check if category name matches the keyword
+        const categoryId = product.category?._id || product.category;
+        const productCategory = categories.find((cat) => cat._id === categoryId)?.name || "";
+        const catMatch = productCategory.toLowerCase().includes(lowerKeyword);
+
+        return nameMatch || descMatch || catMatch;
+      });
     }
 
     // Filter by Category

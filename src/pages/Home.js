@@ -135,69 +135,163 @@ export const Home = () => {
   }, [products, categories]);
 
   return (
-    <Box sx={{ minHeight: "100vh" }}>
+    <Box>
       <Metadata title={"Sopyshop | Your One-Stop Store"} />
 
       {/* Banner Section */}
       <Box
         sx={{
-          height: "58vh",
+          flex: 1,
+          minHeight: "70vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           textAlign: "center",
           background: theme.palette.mode === 'light'
-            ? `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.12)} 0%, ${alpha(theme.palette.primary.main, 0.05)} 100%)`
-            : `linear-gradient(135deg, ${theme.palette.background.default} 0%, ${alpha(theme.palette.primary.main, 0.1)} 100%)`,
+            ? `radial-gradient(circle at 20% 30%, ${alpha(theme.palette.primary.main, 0.15)} 0%, transparent 50%), 
+               radial-gradient(circle at 80% 70%, ${alpha(theme.palette.secondary.main, 0.1)} 0%, transparent 50%),
+               ${alpha(theme.palette.background.default, 1)}`
+            : `radial-gradient(circle at 20% 30%, ${alpha(theme.palette.primary.main, 0.2)} 0%, transparent 50%), 
+               radial-gradient(circle at 80% 70%, ${alpha(theme.palette.secondary.main, 0.15)} 0%, transparent 50%),
+               ${theme.palette.background.default}`,
           position: "relative",
           overflow: "hidden",
-          mx: "auto"
+          width: "100%",
+          py: { xs: 8, md: 0 }
         }}
       >
-        <Box maxWidth="lg">
-          <Typography
-            variant="h1"
-            color="text.primary"
-            sx={{
-              mb: 2,
-              fontSize: { xs: "3rem", md: "5rem" },
-              fontWeight: 900,
-              letterSpacing: '-0.02em'
-            }}
-          >
-            Welcome to <Box component="span" sx={{ color: theme.palette.primary.main }}>Sopyshop</Box>
-          </Typography>
+        {/* Animated background elements */}
+        <Box 
+          sx={{ 
+            position: 'absolute', 
+            width: '100%', 
+            height: '100%', 
+            pointerEvents: 'none',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: '-10%',
+              left: '-10%',
+              width: '120%',
+              height: '120%',
+              backgroundImage: theme.palette.mode === 'dark' 
+                ? 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)' 
+                : 'radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px)',
+              backgroundSize: '30px 30px',
+              maskImage: 'radial-gradient(ellipse at center, black, transparent)',
+            }
+          }} 
+        />
+
+        <Box maxWidth="lg" sx={{ px: 3, position: 'relative', zIndex: 1 }}>
+          <Stack spacing={1} alignItems="center" sx={{ mb: 2 }}>
+            <Typography 
+              variant="overline" 
+              sx={{ 
+                fontWeight: 800, 
+                letterSpacing: 4, 
+                color: 'primary.main',
+                bgcolor: alpha(theme.palette.primary.main, 0.1),
+                px: 2,
+                py: 0.5,
+                borderRadius: 2
+              }}
+            >
+              EXPERIENCE THE FUTURE
+            </Typography>
+            <Typography
+              variant="h1"
+              color="text.primary"
+              sx={{
+                fontSize: { xs: "3.5rem", md: "6rem" },
+                fontWeight: 950,
+                letterSpacing: '-0.04em',
+                lineHeight: 1,
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                alignItems: 'center',
+                gap: { xs: 1, md: 2 }
+              }}
+            >
+              Welcome 
+              <Box 
+                component="span" 
+                sx={{ 
+                  bgcolor: theme.palette.primary.main, 
+                  color: '#fff', 
+                  px: 2, 
+                  py: 1, 
+                  borderRadius: 3,
+                  fontSize: { xs: "2.5rem", md: "4.5rem" },
+                  transform: 'rotate(-2deg)',
+                  boxShadow: `0 10px 30px ${alpha(theme.palette.primary.main, 0.4)}`,
+                  display: 'inline-block',
+                  mx: 1
+                }}
+              >
+                to
+              </Box>
+              <Box component="span" sx={{ color: theme.palette.primary.main }}>Sopyshop</Box>
+            </Typography>
+          </Stack>
+          
           <Typography
             variant="h5"
             sx={{
-              mb: 5,
+              mb: 6,
               color: theme.palette.text.secondary,
-              maxWidth: "650px",
+              maxWidth: "700px",
               mx: "auto",
-              lineHeight: 1.6
+              lineHeight: 1.6,
+              fontWeight: 500,
+              fontSize: { xs: '1.1rem', md: '1.4rem' }
             }}
           >
-            From latest electronics to modern home decor and fashion – curated just for you.
+            From latest electronics to modern home decor and fashion – curated with precision for your lifestyle.
           </Typography>
-          <Stack direction="row" spacing={2} justifyContent="center">
+          
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2.5} justifyContent="center">
             <Button
               variant="contained"
               size="large"
               startIcon={<ShoppingBag />}
               href="#featured"
-              sx={{ py: 2, px: 5, fontSize: "1.1rem", borderRadius: 4, fontWeight: 800 }}
+              sx={{ 
+                py: 2.2, 
+                px: 6, 
+                fontSize: "1.1rem", 
+                borderRadius: 4, 
+                fontWeight: 800,
+                boxShadow: `0 20px 40px ${alpha(theme.palette.primary.main, 0.25)}`,
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: `0 25px 50px ${alpha(theme.palette.primary.main, 0.35)}`,
+                }
+              }}
             >
-              Shop Now
+              Start Shopping
             </Button>
             <Button
               variant="outlined"
               size="large"
               endIcon={<ArrowDownward />}
               href="#tech"
-              sx={{ py: 2, px: 5, fontSize: "1.1rem", borderRadius: 4, fontWeight: 800 }}
+              sx={{ 
+                py: 2.2, 
+                px: 6, 
+                fontSize: "1.1rem", 
+                borderRadius: 4, 
+                fontWeight: 800,
+                borderWidth: 2,
+                '&:hover': {
+                  borderWidth: 2,
+                  bgcolor: alpha(theme.palette.primary.main, 0.05),
+                  transform: 'translateY(-4px)',
+                }
+              }}
             >
-              Explore Categories
+              Explore Tech
             </Button>
           </Stack>
         </Box>

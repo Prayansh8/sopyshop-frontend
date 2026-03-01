@@ -23,9 +23,20 @@ const CategoryCreate = ({ open, handleClose }) => {
 
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let tempErrors = {};
+    if (!name.trim()) tempErrors.name = "Category name is required";
+    else if (name.length > 32) tempErrors.name = "Name cannot exceed 32 characters";
+    
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
 
   const categorySubmit = (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     
     // Pass as JSON to actions
     const categoryData = {
@@ -70,9 +81,13 @@ const CategoryCreate = ({ open, handleClose }) => {
                   fullWidth
                   label="Category Name"
                   variant="outlined"
-                  required
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    if (errors.name) setErrors({ ...errors, name: null });
+                  }}
+                  error={!!errors.name}
+                  helperText={errors.name}
                   inputProps={{ minLength: 1, maxLength: 32 }}
                   InputProps={{
                     startAdornment: (
