@@ -35,6 +35,7 @@ export default function ProductCard({ product, horizontal = false }) {
   const { categories } = useSelector(
     (state) => state.categories || { categories: [] },
   );
+  const { isAuthenticated } = useSelector((state) => state.loadUser);
 
   const isWishlisted = wishlistItems.some(
     (item) => (item._id || item) === product._id,
@@ -59,6 +60,12 @@ export default function ProductCard({ product, horizontal = false }) {
   const addToWishlistHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (!isAuthenticated) {
+      toast.warn("Please Login to add items to wishlist");
+      return;
+    }
+
     dispatch(toggleWishlist(product._id));
   };
 

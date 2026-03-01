@@ -32,6 +32,12 @@ import {
   DELETE_USER_SUCCESS,
   DELETE_USER_FAILURE,
   DELETE_USER_RESET,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
 } from "../constants/userConstants";
 
 
@@ -64,13 +70,18 @@ export const loadUserReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_USER_REQUEST:
       return { ...state, loading: true, isAuthenticated: false };
+    case USER_REGISTER_SUCCESS:
+    case USER_LOGIN_SUCCESS:
     case LOAD_USER_SUCCESS:
       return { ...state, loading: false, userInfo: action.payload, isAuthenticated: true };
     case LOAD_USER_FAILURE:
+    case USER_LOGIN_FAIL:
+    case USER_REGISTER_FAIL:
       return {
-        ...state, loading: false,
+        ...state, 
+        loading: false,
         isAuthenticated: false,
-        user: null,
+        userInfo: null,
         error: action.payload
       };
     default:
@@ -231,6 +242,48 @@ export const deleteUserReducer = (state = {}, action) => {
         ...state,
         error: null,
       };
+    default:
+      return state;
+  }
+};
+
+export const forgotPasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FORGOT_PASSWORD_REQUEST:
+    case RESET_PASSWORD_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FORGOT_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        message: action.payload,
+      };
+
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload,
+      };
+
+    case FORGOT_PASSWORD_FAILURE:
+    case RESET_PASSWORD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
     default:
       return state;
   }

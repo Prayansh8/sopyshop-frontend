@@ -1,5 +1,4 @@
-import React, { Fragment } from "react";
-import Loader from "../../components/common/Loader";
+import React, { Fragment, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/actions/userAction";
@@ -30,12 +29,20 @@ import {
 } from "@mui/icons-material";
 import { settingsConfig } from "../../settingsConfig";
 
+import { AccountSkeleton } from "../../components/common/SkeletonLoader";
+
 export default function Account() {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
-  const { userInfo: user, loading, isAuthenticated } = useSelector((state) => state.loadUser);
+  const { userInfo: user, isAuthenticated } = useSelector((state) => state.loadUser);
+
+  useEffect(() => {
+    if (isAuthenticated === false) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -52,15 +59,11 @@ export default function Account() {
     });
   };
 
-  if (isAuthenticated === false) {
-    navigate("/login");
-  }
-
   return (
     <Fragment>
       <Metadata title={`${user?.user?.firstName || 'User'}'s Profile | Sopyshop`} />
-      {loading || !user ? (
-        <Loader />
+      {!user ? (
+        <AccountSkeleton />
       ) : (
         <Box sx={{ bgcolor: "background.default", py: 8, minHeight: "100vh" }}>
           <Box maxWidth="md">

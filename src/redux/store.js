@@ -17,6 +17,7 @@ import {
   userDetailsReducer,
   userReducer,
   deleteUserReducer,
+  forgotPasswordReducer,
 } from "./reducers/userReducer";
 import { cartReducer } from "./reducers/cartReducer";
 import {
@@ -55,6 +56,7 @@ const reducer = combineReducers({
   categories: categoryReducer,
   newCategory: newCategoryReducer,
   categoryOperation: updateDeleteCategoryReducer,
+  forgotPassword: forgotPasswordReducer,
 });
 
 const initialState = {
@@ -66,6 +68,13 @@ const initialState = {
       ? JSON.parse(localStorage.getItem("shippingInfo"))
       : [],
   },
+  loadUser: {
+    userInfo: localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null,
+    isAuthenticated: localStorage.getItem("sopyshop-token") ? true : false,
+    loading: false,
+  }
 };
 
 const middleware = [thunk];

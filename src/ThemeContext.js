@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useMemo, useState, useEffect } from "react";
 import { createTheme, ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { settingsConfig } from "./settingsConfig";
@@ -126,6 +126,14 @@ export const CustomThemeProvider = ({ children }) => {
     },
     [mode]
   );
+
+  useEffect(() => {
+    const bgColor = mode === "light" 
+      ? settingsConfig.themeColors.lightBg 
+      : settingsConfig.themeColors.darkBg;
+    document.body.style.backgroundColor = bgColor;
+    document.documentElement.style.backgroundColor = bgColor;
+  }, [mode]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>

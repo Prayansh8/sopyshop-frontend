@@ -20,7 +20,7 @@ import {
   Payment, 
   Inventory, 
 } from "@mui/icons-material";
-import Loader from "../../components/common/Loader";
+import { OrderSkeleton } from "../../components/common/SkeletonLoader";
 import Metadata from "../../components/layout/Metadata";
 
 const SingleOrder = ({ id: orderIdProp }) => {
@@ -42,7 +42,7 @@ const SingleOrder = ({ id: orderIdProp }) => {
     }
   }, [error, dispatch, id]);
 
-  if (loading) return <Loader />;
+  if (loading) return <OrderSkeleton />;
   if (!order || !order._id) return null;
 
   const shippingInfo = order.shippingInfo;
